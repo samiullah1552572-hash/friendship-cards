@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sami & Mushaf · Friendship Cards</title>
+<style>
+:root{font-family:"Segoe UI",Arial,sans-serif;color:#253640;background:#f6f5f1;font-synthesis:none}*{box-sizing:border-box}body{margin:0}.shell{max-width:1550px;margin:auto;padding:34px}header{margin-bottom:26px}.eyebrow{font-size:12px;letter-spacing:3px;color:#718a8a;font-weight:700}h1{font-family:Georgia,serif;font-size:38px;font-weight:400;margin:8px 0}header p{color:#667278;margin:6px 0;line-height:1.6}.workspace{display:grid;grid-template-columns:310px minmax(0,1fr);gap:30px;align-items:start}.controls{background:#fff;border:1px solid #e4e7e3;border-radius:16px;padding:22px}h2{font-size:17px;margin:0 0 16px}label{display:block;font-size:12px;font-weight:600;color:#63757d;margin:13px 0 5px}input,textarea,select{font:14px "Segoe UI",Arial,sans-serif;width:100%;border:1px solid #d9e0e0;border-radius:7px;padding:9px 10px;background:#fcfdfd;color:#20353f}textarea{resize:vertical;min-height:84px;line-height:1.6}input:focus,textarea:focus,select:focus{outline:2px solid #7db9cb;outline-offset:1px}details{border-top:1px solid #e5e9e7;margin-top:18px;padding-top:16px}summary{cursor:pointer;font-size:14px;font-weight:600}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:20px}button{font:600 13px "Segoe UI",Arial,sans-serif;border:1px solid #d0dadd;border-radius:8px;padding:10px 13px;color:#2c505d;background:#fff;cursor:pointer}button:hover{background:#ecf3f4}button.primary{background:#244f5a;color:white;border-color:#244f5a}button.primary:hover{background:#1a3e48}.hint{font-size:12px;line-height:1.65;color:#728087}.card-wrap{margin-bottom:28px}.card-title{display:flex;justify-content:space-between;align-items:center;gap:15px;margin:0 0 12px}.card-title h2{margin:0}.card-title span{font-size:12px;color:#819094}.card-surface{filter:drop-shadow(0 13px 16px #183a4816)}.card-surface svg{width:100%;height:auto;display:block;border-radius:22px}.card-tools{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:14px}.card-tools label{margin:0;font-size:12px}.upload{position:relative;overflow:hidden;display:inline-block;padding:10px 13px;background:white;border:1px solid #d0dadd;border-radius:8px;color:#2c505d;cursor:pointer}.upload input{position:absolute;inset:0;opacity:0;cursor:pointer}footer{margin:24px 0 0;color:#718087;font-size:12px;line-height:1.7}#toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#244f5a;color:#fff;padding:12px 20px;border-radius:12px;display:none;z-index:5}.print-note{display:none}@media(min-width:1450px){.previews{display:grid;grid-template-columns:1fr 1fr;gap:25px}.card-title{display:block}.card-title span{display:block;margin-top:5px}.card-surface svg{border-radius:15px}}@media(max-width:800px){.shell{padding:20px}.workspace{display:flex;flex-direction:column}.controls,.previews{width:100%}h1{font-size:32px}.card-title span{display:none}}@media print{@page{size:A4 portrait;margin:18mm}:root{background:#fff}html,body{background:white;margin:0}.shell{padding:0;max-width:none}header,.controls,.card-title,.card-tools,footer,#toast{display:none!important}.workspace,.previews{display:block}.card-wrap{margin:0 0 14mm;break-inside:avoid;width:85.6mm;height:54mm}.card-surface{filter:none;width:85.6mm;height:54mm}.card-surface svg{width:85.6mm;height:54mm;border-radius:3mm}.print-note{display:block;font:9pt Arial;color:#596e78;margin-top:8mm}*{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+</style>
+
+<style>
+.side-heading{font-size:11px;letter-spacing:2px;font-weight:800;color:#365966;display:flex;align-items:center;gap:12px;margin-bottom:10px}.side-heading span{font-size:12px;letter-spacing:0;font-weight:400;color:#7a8a92}.back-heading{margin-top:26px}.print-sheets{display:none}.card-title{margin-bottom:20px}button:disabled{opacity:.65;cursor:wait}
+@media print{
+ @page{size:A4 portrait;margin:0}
+ :root,html,body{background:white!important;margin:0!important;padding:0!important}
+ .shell,#toast{display:none!important}
+ .print-sheets{display:block!important}
+ .print-sheet{position:relative;width:210mm;height:297mm;break-after:page;overflow:hidden;background:white}
+ .print-sheet:last-child{break-after:auto}
+ .print-card{position:absolute;top:22mm;width:85.6mm;height:54mm}
+ .print-card.left{left:12mm}.print-card.right{right:12mm}
+ .print-card svg{display:block;width:85.6mm;height:54mm}
+ .sheet-note{position:absolute;top:87mm;left:12mm;right:12mm;font:9pt Arial;line-height:1.6;color:#5a6b74}
+}
+</style>
+</head>
+<body>
+<main class="shell">
+<header><div class="eyebrow">MADE FOR THE TWO OF YOU</div><h1>Your forever friendship, on a card.</h1><p>Two cards, each with a front and back. Edit the details, add your photos, and download either side.</p></header>
+<div class="workspace">
+<aside class="controls"><h2>Make them yours</h2>
+<label for="nameA">Your name</label><input id="nameA" maxlength="36">
+<label for="nameB">Your best friend's name</label><input id="nameB" maxlength="36">
+<label for="themeA">Card 1 colour</label><select id="themeA"><option value="blue">Sky blue</option><option value="lilac">Soft lavender</option><option value="rose">Blush pink</option><option value="mint">Mint green</option></select>
+<label for="themeB">Card 2 colour</label><select id="themeB"><option value="lilac">Soft lavender</option><option value="blue">Sky blue</option><option value="rose">Blush pink</option><option value="mint">Mint green</option></select>
+<details open><summary>Your friendship</summary>
+<label for="level">Friendship level</label><input id="level" maxlength="25">
+<label for="licenseType">License type</label><input id="licenseType" maxlength="32">
+<label for="issued">Issued on</label><input id="issued" maxlength="22">
+<label for="expiry">Valid until</label><input id="expiry" maxlength="22">
+<label for="caption">Photo caption</label><input id="caption" maxlength="28">
+<label for="quote">Bottom message</label><input id="quote" maxlength="76">
+</details>
+<details><summary>The bestie code</summary><label for="codeTitle">Code heading</label><input id="codeTitle" maxlength="20"><label for="rules">Six promises, one per line</label><textarea id="rules" rows="6"></textarea></details>
+<details open><summary>Back side: messages & promises</summary>
+<label for="backHeading">Back heading</label><input id="backHeading" maxlength="28">
+<label for="backSubtitle">Back subtitle</label><input id="backSubtitle" maxlength="64">
+<label for="noteTitle">Message heading</label><input id="noteTitle" maxlength="32">
+<label for="backNoteA">Message on Sami's card</label><textarea id="backNoteA" maxlength="220" rows="4"></textarea>
+<label for="backNoteB">Message on Mushaf's card</label><textarea id="backNoteB" maxlength="220" rows="4"></textarea>
+<label for="backPromisesTitle">Promises heading</label><input id="backPromisesTitle" maxlength="24">
+<label for="backRules">Five back-side promises, one per line</label><textarea id="backRules" rows="5" maxlength="300"></textarea>
+<label for="signatureA">Sami's signature text</label><input id="signatureA" maxlength="36">
+<label for="signatureB">Mushaf's signature text</label><input id="signatureB" maxlength="36">
+<label for="backQuote">Back bottom message</label><input id="backQuote" maxlength="76">
+</details>
+<details><summary>Titles & small details</summary><div id="fineFields"></div></details>
+<div class="actions"><button class="primary" id="save">Save editable HTML</button><button id="print">Print fronts & backs</button></div>
+<p class="hint">“Save editable HTML” downloads a complete index.html with all your changes and photos. Open it to edit again, or upload it to replace index.html on GitHub.</p><p class="hint">Printing uses two A4 pages: fronts on page 1, matching backs on page 2. Print double-sided, flip on the long edge, at 100% / Actual size. Enable background graphics and turn off headers and footers. Each card is 85.6 × 54 mm.</p>
+</aside>
+<section class="previews" aria-label="Both sides of your friendship cards">
+<article class="card-wrap"><div class="card-title"><h2 id="titleA">For Sami ullah</h2><span>01 / SKY BLUE</span></div>
+ <div class="side-heading">FRONT <span>The friendship license</span></div>
+ <div class="card-surface" id="cardA"></div>
+ <div class="card-tools"><label class="upload">Add / replace photo<input type="file" accept="image/*" data-photo="0"></label><button data-remove="0">Use doodles</button><button data-png="0" data-side="front">Front PNG</button><button data-svg="0" data-side="front">Front SVG</button></div>
+ <div class="side-heading back-heading">BACK <span>Your forever pact</span></div>
+ <div class="card-surface" id="backA"></div>
+ <div class="card-tools"><button data-png="0" data-side="back">Back PNG</button><button data-svg="0" data-side="back">Back SVG</button></div>
+ </article>
+<article class="card-wrap"><div class="card-title"><h2 id="titleB">For Mushaf Ali Tanoli</h2><span>02 / SOFT LAVENDER</span></div>
+ <div class="side-heading">FRONT <span>The friendship license</span></div>
+ <div class="card-surface" id="cardB"></div>
+ <div class="card-tools"><label class="upload">Add / replace photo<input type="file" accept="image/*" data-photo="1"></label><button data-remove="1">Use doodles</button><button data-png="1" data-side="front">Front PNG</button><button data-svg="1" data-side="front">Front SVG</button></div>
+ <div class="side-heading back-heading">BACK <span>Your forever pact</span></div>
+ <div class="card-surface" id="backB"></div>
+ <div class="card-tools"><button data-png="1" data-side="back">Back PNG</button><button data-svg="1" data-side="back">Back SVG</button></div>
+ </article>
+</section></div>
+<div class="print-note">FRIENDSHIP LICENSE · Sami ullah & Mushaf Ali Tanoli<br>Print at actual size (100%). Each card measures 85.6 × 54 mm. Cut around the rounded edges.</div>
+<footer>Two matching keepsakes. Four beautiful sides. PNG files are ready to share; SVG files remain editable. Save the complete HTML whenever you want to keep your latest changes.</footer>
+</main><div class="print-sheets" aria-hidden="true"></div><div id="toast" role="status"></div>
+<script id="card-state" type="application/json">{"nameA":"Sami ullah","nameB":"Mushaf Ali Tanoli","themeA":"blue","themeB":"lilac","level":"INFINITY ∞","licenseType":"BEST FRIENDS FOR LIFE","issued":"13 NOV 2026","expiry":"NEVER EXPIRES","caption":"Besties forever","quote":"Different names. One forever friendship.","codeTitle":"THE BESTIE CODE","rules":"Keep our secrets\nAlways have your back\nShare the last bite\nReply to random texts\nLaugh at silly things\nMake more memories","heading":"FRIENDSHIP LICENSE","subtitle":"OFFICIAL BESTIES IDENTIFICATION CARD","holderLabel":"LICENSE HOLDER","friendLabel":"BEST FRIEND","levelLabel":"FRIENDSHIP LEVEL","typeLabel":"LICENSE TYPE","issuedLabel":"ISSUED ON","expiryLabel":"VALID UNTIL","approved":"Approved by the universe","seal":"CERTIFIED","sealTop":"BEST FRIENDS","sealBottom":"LIFETIME CLUB","photoLabel":"YOU + ME","footnote":"JUST FOR FRIENDSHIP & FUN","photos":[null,null],"backHeading":"OUR FOREVER PACT","backSubtitle":"Two besties. A lifetime of memories.","noteTitle":"A note for you","backNoteA":"Life is better with you in it. Wherever we go, whatever changes, you will always have a friend in me.","backNoteB":"From our random laughs to our biggest dreams, every memory is better with you. Here is to a friendship that stays.","backPromisesTitle":"OUR PROMISES","backRules":"Show up for each other\nRespect our differences\nCelebrate every little win\nStay close, even miles apart\nChoose this friendship, always","signatureA":"Sami ullah","signatureB":"Mushaf Ali Tanoli","backQuote":"One friendship. A million memories. Forever to go.","backOwnerLabel":"THIS CARD BELONGS TO","backFriendLabel":"FOREVER TEAMMATE","signatureLabelA":"CARD HOLDER","signatureLabelB":"BEST FRIEND","backFootnote":"A LITTLE CARD. A LIFETIME OF FRIENDSHIP."}</script>
+<script>
+const state=JSON.parse(document.getElementById('card-state').textContent);
+const palettes={blue:{ink:'#25546d',accent:'#438eae',soft:'#deeff8',base:'#f5fbff',edge:'#a9d4e7',blush:'#b2deed'},lilac:{ink:'#66518d',accent:'#8c71b5',soft:'#ece3f8',base:'#fcf9ff',edge:'#d0bfe8',blush:'#d8c4ee'},rose:{ink:'#913d64',accent:'#c65a8d',soft:'#f9e2ed',base:'#fff8fb',edge:'#e9b3ce',blush:'#f2c7dd'},mint:{ink:'#2e6b60',accent:'#5d9f8e',soft:'#e0f2eb',base:'#f7fffc',edge:'#b0d9c8',blush:'#b9e2ce'}};
+const fine={backOwnerLabel:'Back holder label',backFriendLabel:'Back friend label',signatureLabelA:'Holder signature label',signatureLabelB:'Friend signature label',backFootnote:'Back small footer',heading:'Main title',subtitle:'Subtitle',holderLabel:'Holder label',friendLabel:'Best friend label',levelLabel:'Level label',typeLabel:'Type label',issuedLabel:'Issue label',expiryLabel:'Expiry label',approved:'Approval line',seal:'Stamp text',sealTop:'Stamp top',sealBottom:'Stamp bottom',photoLabel:'Doodle caption',footnote:'Small footer'};
+document.getElementById('fineFields').replaceChildren();
+for(const [key,title] of Object.entries(fine)){const l=document.createElement('label');l.htmlFor=key;l.textContent=title;const i=document.createElement('input');i.id=key;i.maxLength=key==='heading'?28:key==='subtitle'?48:38;document.getElementById('fineFields').append(l,i)}
+const esc=v=>String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&apos;'}[c]));
+function txt(x,y,text,size=22,weight=600,extra=''){return `<text x="${x}" y="${y}" font-size="${size}" font-weight="${weight}" ${extra}>${esc(text)}</text>`}
+function fit(text,normal,max){return Math.min(normal,max/Math.max(1,[...String(text)].length)*1.8)}
+function heart(x,y,s,color,rot=0){return `<path d="M0 5C-13-7-26 9 0 25C26 9 13-7 0 5Z" fill="${color}" transform="translate(${x} ${y}) rotate(${rot}) scale(${s})"/>`}
+function star(x,y,s,c){return `<path d="M0-13Q1-1 11 0Q1 1 0 13Q-1 1-11 0Q-1-1 0-13Z" fill="${c}" transform="translate(${x} ${y}) scale(${s})"/>`}
+function pals(x,y,scale,p){return `<g transform="translate(${x} ${y}) scale(${scale})" stroke="${p.ink}" stroke-width="3.2" stroke-linejoin="round"><path d="M-85 39V-9C-85-63-12-68-12-12V38Q-20 49-29 39Q-40 50-50 40Q-64 50-73 40Q-80 48-85 39Z" fill="#fff"/><path d="M-10 37V-17C-10-72 64-72 64-17V38Q56 48 47 39Q34 50 24 39Q12 48 4 39Q-5 47-10 37Z" fill="#fff"/><path d="M-32 9Q-13 26 9 9" fill="none" stroke-linecap="round"/><ellipse cx="-63" cy="-14" rx="3" ry="4" fill="${p.ink}" stroke="none"/><ellipse cx="-41" cy="-14" rx="3" ry="4" fill="${p.ink}" stroke="none"/><path d="M-57-1Q-51 5-46-1" fill="none" stroke-width="2.4" stroke-linecap="round"/><ellipse cx="14" cy="-23" rx="3" ry="4" fill="${p.ink}" stroke="none"/><ellipse cx="36" cy="-23" rx="3" ry="4" fill="${p.ink}" stroke="none"/><path d="M20-9Q25-4 30-9" fill="none" stroke-width="2.4" stroke-linecap="round"/><ellipse cx="-69" cy="-3" rx="7" ry="4" fill="#f4b8cf" stroke="none" opacity=".65"/><ellipse cx="42" cy="-12" rx="7" ry="4" fill="#f4b8cf" stroke="none" opacity=".65"/></g>`}
+function cardSVG(index,scope="preview"){
+const p=palettes[index?state.themeB:state.themeA],owner=index?state.nameB:state.nameA,friend=index?state.nameA:state.nameB,id='c'+index+'-'+scope;
+const label=(x,y,t)=>txt(x,y,t,15,700,`fill="${p.accent}" letter-spacing="1.8"`);
+const rules=state.rules.split('\n').filter(Boolean).slice(0,6);
+let bars='',bx=0;for(let i=0;i<55;i++){let w=[2,3,1,4,2,1,3][(i*3+index)%7];bars+=`<rect x="${bx}" y="0" width="${w}" height="25"/>`;bx+=w+[2,1,2,3][i%4]}
+return `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1200 757" width="1200" height="757" role="img" aria-label="Friendship license for ${esc(owner)}"><defs><linearGradient id="${id}bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="${p.soft}"/><stop offset=".48" stop-color="${p.base}"/><stop offset="1" stop-color="${p.soft}"/></linearGradient><radialGradient id="${id}glow"><stop stop-color="${p.blush}" stop-opacity=".7"/><stop offset="1" stop-color="${p.blush}" stop-opacity="0"/></radialGradient><clipPath id="${id}clip"><rect x="1" y="1" width="1198" height="755" rx="36"/></clipPath><clipPath id="${id}photo"><rect x="89" y="189" width="248" height="334" rx="5"/></clipPath></defs>
+<g clip-path="url(#${id}clip)" font-family="'Segoe UI',Arial,sans-serif" fill="${p.ink}">
+<rect width="1200" height="757" fill="url(#${id}bg)"/>
+<ellipse cx="40" cy="30" rx="400" ry="280" fill="url(#${id}glow)"/><ellipse cx="1190" cy="615" rx="390" ry="310" fill="url(#${id}glow)"/>
+<path d="M-90 635Q100 548 250 653T655 704" stroke="${p.edge}" stroke-width="1.3" fill="none" opacity=".55"/><path d="M810-45Q925 120 1240 120" stroke="${p.edge}" stroke-width="1.5" fill="none" opacity=".5"/>
+<rect x="15" y="15" width="1170" height="727" rx="26" fill="none" stroke="${p.edge}" stroke-width="1.4"/>
+${txt(58,84,state.heading,fit(state.heading,52,790),800,'letter-spacing="2"')}
+${txt(60,119,state.subtitle,16,700,'letter-spacing="2.7"')}
+<path d="M60 145H1136" stroke="${p.edge}" stroke-width="1.2"/>
+${pals(1052,89,.68,p)}${heart(1060,26,.65,'#df84a7',-10)}${star(1150,92,.6,p.accent)}
+<g transform="translate(38 517) rotate(-90)" fill="${p.ink}" opacity=".8">${bars}</g>
+<rect x="77" y="176" width="272" height="419" rx="8" fill="#fff" stroke="${p.edge}" stroke-width="1.3" transform="rotate(-2 213 382)"/>
+<rect x="89" y="189" width="248" height="334" rx="5" fill="${p.soft}"/>
+${state.photos[index]?`<image x="89" y="189" width="248" height="334" preserveAspectRatio="xMidYMid slice" href="${esc(state.photos[index])}" clip-path="url(#${id}photo)"/>`:`<g clip-path="url(#${id}photo)"><circle cx="207" cy="332" r="106" fill="${p.base}" opacity=".75"/>${star(115,235,.6,p.accent)}${star(307,442,.6,p.accent)}${heart(275,259,.8,'#e08aa9',15)}${heart(138,425,.48,'#e08aa9',-15)}${pals(224,363,1.1,p)}${txt(213,477,state.photoLabel,22,700,'text-anchor="middle" letter-spacing="3"')}</g>`}
+${txt(213,568,state.caption,fit(state.caption,31,250),400,`font-family="'Segoe Print','Comic Sans MS',cursive" text-anchor="middle" transform="rotate(-2 213 568)"`)}
+${label(391,195,state.holderLabel)}
+${txt(390,237,owner,fit(owner,36,430),750)}
+${label(391,281,state.friendLabel)}
+${txt(390,317,friend,fit(friend,30,430),650)}
+<path d="M391 341H831" stroke="${p.edge}" stroke-width="1.2"/>
+${label(391,376,state.levelLabel)}
+${txt(390,413,state.level,fit(state.level,29,380),750)}${heart(803,389,.52,'#de88a8',10)}
+${label(391,459,state.typeLabel)}
+${txt(390,494,state.licenseType,fit(state.licenseType,24,425),750)}
+${label(391,547,state.issuedLabel)}${txt(390,577,state.issued,fit(state.issued,22,225),750)}
+${label(650,547,state.expiryLabel)}${txt(649,577,state.expiry,fit(state.expiry,21,205),750)}
+${txt(391,617,state.approved,18,500,'font-style="italic"')}${star(804,611,.5,p.accent)}
+<g transform="translate(1013 235) rotate(-13)"><circle r="73" stroke="${p.accent}" stroke-width="2" fill="none" opacity=".75"/><circle r="65" stroke="${p.accent}" stroke-width="1" fill="none" stroke-dasharray="2 4"/><circle r="51" stroke="${p.accent}" stroke-width="1" fill="none"/>${txt(0,-36,state.sealTop,12,750,'text-anchor="middle" letter-spacing="1.8"')}${heart(0,-28,.7,p.accent)}<rect x="-84" y="-7" width="168" height="34" rx="2" fill="${p.accent}"/>${txt(0,17,state.seal,fit(state.seal,23,160),800,'fill="#fff" text-anchor="middle" letter-spacing="1.5"')}${txt(0,49,state.sealBottom,11,750,'text-anchor="middle" letter-spacing="1.7"')}</g>
+<rect x="886" y="338" width="257" height="278" rx="15" fill="#fff" fill-opacity=".55" stroke="${p.edge}" stroke-width="1.8"/>
+${txt(1014,373,state.codeTitle,fit(state.codeTitle,18,231),800,'text-anchor="middle" letter-spacing="1.2"')}
+<path d="M905 390H1124" stroke="${p.edge}"/>
+${rules.map((r,i)=>`${heart(910,407+i*33,.28,p.accent)}${txt(929,419+i*33,r,fit(r,16,196),600)}`).join('')}
+${txt(60,643,`BFF-00${index+1}`,14,750,'letter-spacing="2"')}${txt(1139,643,state.footnote,12,600,'text-anchor="end" letter-spacing="1.5"')}
+<rect x="0" y="669" width="1200" height="88" fill="${p.accent}"/>
+${heart(80,696,.5,'#fff',-12)}${heart(1120,696,.5,'#fff',12)}
+${txt(600,722,state.quote,fit(state.quote,28,980),650,'text-anchor="middle" fill="#fff"')}
+</g><rect x="1" y="1" width="1198" height="755" rx="36" fill="none" stroke="${p.edge}" stroke-width="2"/></svg>`;
+}
+const measureContext=document.createElement('canvas').getContext('2d');
+function wrapText(text,width,size){
+ measureContext.font=`500 ${size}px "Segoe UI",Arial,sans-serif`;
+ const lines=[];
+ for(const paragraph of String(text).split('\n')){
+  let line='';
+  for(const word of paragraph.split(/\s+/).filter(Boolean)){
+   if(measureContext.measureText(word).width>width){
+    if(line){lines.push(line);line=''}
+    for(const char of word){if(line&&measureContext.measureText(line+char).width>width){lines.push(line);line=''}line+=char}
+   }else if(line&&measureContext.measureText(line+' '+word).width>width){lines.push(line);line=word}
+   else line+=(line?' ':'')+word;
+  }
+  lines.push(line);
+ }
+ return lines;
+}
+function paragraph(x,y,text,width,size,maxLines,lineHeight,extra=''){
+ let lines=wrapText(text,width,size),chosen=size;
+ while(lines.length>maxLines&&chosen>5){chosen-=.5;lines=wrapText(text,width,chosen)}
+ return lines.map((line,i)=>txt(x,y+i*lineHeight,line,chosen,500,extra)).join('');
+}
+function backSVG(index,scope='preview'){
+ const p=palettes[index?state.themeB:state.themeA],owner=index?state.nameB:state.nameA,friend=index?state.nameA:state.nameB,id='b'+index+'-'+scope;
+ const signature=index?state.signatureB:state.signatureA,friendSignature=index?state.signatureA:state.signatureB;
+ const promises=state.backRules.split('\n').filter(Boolean).slice(0,5);
+ const label=(x,y,t)=>txt(x,y,t,15,750,`fill="${p.accent}" letter-spacing="1.8"`);
+ return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 757" width="1200" height="757" role="img" aria-label="Back of friendship card for ${esc(owner)}"><defs><linearGradient id="${id}bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="${p.base}"/><stop offset="1" stop-color="${p.soft}"/></linearGradient><radialGradient id="${id}glow"><stop stop-color="${p.blush}" stop-opacity=".7"/><stop offset="1" stop-color="${p.blush}" stop-opacity="0"/></radialGradient><clipPath id="${id}clip"><rect x="1" y="1" width="1198" height="755" rx="36"/></clipPath></defs>
+ <g clip-path="url(#${id}clip)" font-family="'Segoe UI',Arial,sans-serif" fill="${p.ink}">
+ <rect width="1200" height="757" fill="url(#${id}bg)"/><ellipse cx="60" cy="710" rx="450" ry="360" fill="url(#${id}glow)"/><ellipse cx="1150" cy="30" rx="360" ry="280" fill="url(#${id}glow)"/>
+ <path d="M-25 585Q180 460 355 640T800 690M820-20Q970 140 1225 105" fill="none" stroke="${p.edge}" stroke-width="1.3" opacity=".65"/>
+ <rect x="15" y="15" width="1170" height="727" rx="26" fill="none" stroke="${p.edge}" stroke-width="1.4"/>
+ ${txt(58,84,state.backHeading,fit(state.backHeading,48,810),800,'letter-spacing="2"')}
+ ${txt(60,120,state.backSubtitle,fit(state.backSubtitle,21,800),500)}
+ ${pals(1052,89,.68,p)}${heart(1060,26,.65,'#df84a7',-10)}${star(1150,92,.6,p.accent)}
+ <path d="M60 145H1136" stroke="${p.edge}" stroke-width="1.2"/>
+ ${label(63,192,state.backOwnerLabel)}
+ ${txt(61,237,owner,fit(owner,38,700),750)}
+ ${label(63,282,state.backFriendLabel)}
+ ${txt(61,322,friend,fit(friend,32,700),650)}
+ ${heart(748,234,.65,'#de88a8',12)}${star(781,311,.6,p.accent)}
+ <path d="M63 347H777" stroke="${p.edge}" stroke-width="1.2"/>
+ ${txt(62,386,state.noteTitle,fit(state.noteTitle,27,680),600,`font-family="'Segoe Print','Comic Sans MS',cursive"`)}
+ ${paragraph(63,427,index?state.backNoteB:state.backNoteA,704,26,4,33)}
+ ${txt(63,592,signature,fit(signature,28,325),500,`font-family="'Segoe Print','Comic Sans MS',cursive"`)}
+ ${txt(439,592,friendSignature,fit(friendSignature,28,337),500,`font-family="'Segoe Print','Comic Sans MS',cursive"`)}
+ <path d="M63 604H387M439 604H777" stroke="${p.accent}" stroke-width="1.2"/>
+ ${label(63,630,state.signatureLabelA)}${label(439,630,state.signatureLabelB)}
+ <rect x="833" y="176" width="310" height="454" rx="18" fill="#fff" fill-opacity=".6" stroke="${p.edge}" stroke-width="1.8"/>
+ ${txt(988,215,state.backPromisesTitle,fit(state.backPromisesTitle,21,267),800,'text-anchor="middle" letter-spacing="1.5"')}
+ <path d="M856 233H1120" stroke="${p.edge}" stroke-width="1.2"/>
+ ${promises.map((r,i)=>`${heart(863,261+i*66,.35,p.accent)}${paragraph(886,273+i*66,r,235,20,2,25)}`).join('')}
+ ${txt(988,608,'BFF-00'+(index+1)+' / FOREVER',13,750,'text-anchor="middle" letter-spacing="2"')}
+ ${txt(1138,653,state.backFootnote,12,650,'text-anchor="end" letter-spacing="1.4"')}
+ <rect x="0" y="669" width="1200" height="88" fill="${p.accent}"/>
+ ${heart(80,696,.5,'#fff',-12)}${heart(1120,696,.5,'#fff',12)}
+ ${txt(600,722,state.backQuote,fit(state.backQuote,27,980),650,'text-anchor="middle" fill="#fff"')}
+ </g><rect x="1" y="1" width="1198" height="755" rx="36" fill="none" stroke="${p.edge}" stroke-width="2"/></svg>`;
+}
+function sideSVG(i,side='front',scope='preview'){return side==='back'?backSVG(i,scope):cardSVG(i,scope)}
+function preparePrint(){
+ document.querySelector('.print-sheets').innerHTML=`<div class="print-sheet"><div class="print-card left">${cardSVG(0,'print')}</div><div class="print-card right">${cardSVG(1,'print')}</div><div class="sheet-note"><strong>PAGE 1 / FRONTS</strong><br>Print both pages double-sided on A4, flip on the long edge, at Actual Size (100%).<br>Each card is 85.6 × 54 mm. Enable background graphics and turn off headers and footers.</div></div><div class="print-sheet"><div class="print-card left">${backSVG(1,'print')}</div><div class="print-card right">${backSVG(0,'print')}</div><div class="sheet-note"><strong>PAGE 2 / BACKS</strong><br>The cards are in reverse order so the backs line up with the fronts when printed double-sided.<br>After printing, cut around the rounded card edges.</div></div>`;
+}
+function render(){
+ document.title=state.nameA+' & '+state.nameB+' | Friendship Cards';
+ document.querySelector('label[for="backNoteA"]').textContent='Message on '+state.nameA+"'s card";
+ document.querySelector('label[for="backNoteB"]').textContent='Message on '+state.nameB+"'s card";
+ document.querySelector('label[for="signatureA"]').textContent=state.nameA+"'s signature text";
+ document.querySelector('label[for="signatureB"]').textContent=state.nameB+"'s signature text";
+ ['A','B'].forEach((letter,i)=>{
+  document.getElementById('card'+letter).innerHTML=cardSVG(i);
+  document.getElementById('back'+letter).innerHTML=backSVG(i);
+  document.getElementById('title'+letter).textContent='For '+(i?state.nameB:state.nameA);
+ });
+ document.querySelectorAll('.card-title span').forEach((el,i)=>el.textContent=`0${i+1} / ${({blue:'SKY BLUE',lilac:'SOFT LAVENDER',rose:'BLUSH PINK',mint:'MINT GREEN'})[i?state.themeB:state.themeA]}`);
+ preparePrint();
+}
+for(const [key,val] of Object.entries(state)){
+ const el=document.getElementById(key);
+ if(el){el.value=val;el.addEventListener('input',()=>{
+  state[key]=el.value;
+  if(key==='nameA'||key==='nameB'){
+   const sig=key==='nameA'?'signatureA':'signatureB';
+   if(state[sig]===el.dataset.previous){state[sig]=el.value;document.getElementById(sig).value=el.value}
+   el.dataset.previous=el.value;
+  }
+  render();
+ });if(key==='nameA'||key==='nameB')el.dataset.previous=val}
+}
+function toast(text){const el=document.getElementById('toast');el.textContent=text;el.style.display='block';setTimeout(()=>el.style.display='none',3200)}
+function download(blob,name){const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),5000)}
+function filename(i,side='front'){return (i?state.nameB:state.nameA).trim().replace(/[^\p{L}\p{N}]+/gu,'-')+'-Friendship-Card-'+(side==='back'?'Back':'Front')}
+document.querySelectorAll('[data-photo]').forEach(el=>el.addEventListener('change',async()=>{
+ if(!el.files[0])return;
+ try{const bitmap=await createImageBitmap(el.files[0]),scale=Math.min(1,1600/Math.max(bitmap.width,bitmap.height)),c=document.createElement('canvas');c.width=Math.round(bitmap.width*scale);c.height=Math.round(bitmap.height*scale);c.getContext('2d').drawImage(bitmap,0,0,c.width,c.height);state.photos[Number(el.dataset.photo)]=c.toDataURL('image/jpeg',.92);bitmap.close();render();toast('Photo added. Save the editable HTML to keep it.')}
+ catch(e){toast('Please choose a JPG, PNG or WebP photo.')}
+}));
+document.querySelectorAll('[data-remove]').forEach(el=>el.onclick=()=>{state.photos[Number(el.dataset.remove)]=null;document.querySelector(`[data-photo="${el.dataset.remove}"]`).value='';render()});
+document.querySelectorAll('[data-svg]').forEach(el=>el.onclick=()=>{const i=Number(el.dataset.svg),side=el.dataset.side;download(new Blob([sideSVG(i,side)],{type:'image/svg+xml'}),filename(i,side)+'.svg')});
+async function makePNG(i,side='front'){
+ await document.fonts.ready;
+ const url=URL.createObjectURL(new Blob([sideSVG(i,side)],{type:'image/svg+xml'}));
+ try{
+  const img=new Image();await new Promise((resolve,reject)=>{img.onload=resolve;img.onerror=reject;img.src=url});
+  const c=document.createElement('canvas');c.width=2400;c.height=1514;c.getContext('2d').drawImage(img,0,0,2400,1514);
+  return await new Promise((resolve,reject)=>c.toBlob(b=>b?resolve(b):reject(new Error('PNG export failed')),'image/png'));
+ }finally{URL.revokeObjectURL(url)}
+}
+document.querySelectorAll('[data-png]').forEach(el=>el.onclick=async()=>{
+ const original=el.textContent;el.disabled=true;el.textContent='Saving…';
+ try{const i=Number(el.dataset.png),side=el.dataset.side;download(await makePNG(i,side),filename(i,side)+'.png')}
+ catch(e){toast('PNG could not be saved. Please try SVG.')}
+ finally{el.disabled=false;el.textContent=original}
+});
+document.getElementById('save').onclick=()=>{
+ document.getElementById('card-state').textContent=JSON.stringify(state).replace(/</g,'\\u003c');
+ // Reset transient UI text in the downloaded copy without changing the active editor.
+ const copy=document.documentElement.cloneNode(true);
+ copy.querySelector('#toast').style.display='none';
+ copy.querySelectorAll('[data-png]').forEach(el=>{el.disabled=false;el.textContent=(el.dataset.side==='back'?'Back':'Front')+' PNG'});
+ download(new Blob(['<!doctype html>\n'+copy.outerHTML],{type:'text/html;charset=utf-8'}),'index.html');
+ toast('Complete index.html saved, including both sides and your photos.');
+};
+window.addEventListener('beforeprint',preparePrint);
+document.getElementById('print').onclick=()=>{preparePrint();window.print()};
+render();
+
+</script>
+</body></html>
