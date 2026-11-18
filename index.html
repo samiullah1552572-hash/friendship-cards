@@ -77,6 +77,7 @@ h1, h2, h3, p { margin: 0; }
 .segmented button { min-width: 42px; white-space: nowrap; border: 1px solid transparent; border-radius: 7px; background: transparent; color: var(--muted); padding: 5px 8px; min-height: 29px; font-size: 11px; font-weight: 700; }
 .segmented button[aria-pressed="true"] { background: #fff; color: var(--green); border-color: #dae5da; box-shadow: 0 1px 3px #21462b12; }
 .artboard { padding: clamp(14px, 2.35vw, 36px); min-height: 325px; display: grid; align-content: center; justify-items: center; gap: 25px; background-color: #edf2ea; background-image: radial-gradient(#a4b6a787 1px, transparent 1px); background-size: 17px 17px; border-block: 1px solid #e1e8df; }
+.artboard.two-up { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .preview-side { margin: 0; width: 100%; max-width: 780px; min-width: 0; }
 .preview-side svg { display: block; width: 100%; height: auto; filter: drop-shadow(0 9px 13px #182b2442); }
 .preview-side figcaption { margin-top: 9px; text-align: center; color: #405c50; font-size: 11px; font-weight: 700; }
@@ -122,9 +123,15 @@ dialog::backdrop { background: #142c266b; }
 .gallery-modal { width: min(860px, calc(100% - 28px)); }
 .gallery-modal .modal-head { position: sticky; top: 0; background: white; z-index: 1; }
 .template-gallery { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.template-filters { display: grid; grid-template-columns: 1.35fr 1fr; gap: 10px; margin-bottom: 15px; }
+.template-filters .field { margin: 0; }
+.template-filters label { display: block; margin-bottom: 4px; color: var(--muted); font-size: 12px; font-weight: 700; }
+.template-size { display: block; margin-top: 5px; color: var(--green); font-size: 10px; font-weight: 700; }
+.swap-button { margin-block-end: 13px; width: 100%; }
 .template-option { display: flex; flex-direction: column; width: 100%; min-width: 0; background: #fff; color: inherit; border: 1px solid var(--border); border-radius: 11px; padding: 7px; text-align: start; }
 .template-option:hover { background: #f4f8f3; border-color: #8daf9c; }
 .template-thumb { display: block; aspect-ratio: 1200 / 757; overflow: hidden; width: 100%; border-radius: 7px; background: #f3f5f1; }
+.template-option:not([data-format="formatID"]) .template-thumb { padding: 6px; }
 .template-thumb > svg { display: block; width: 100%; height: 100%; }
 .template-blank { height: 100%; display: grid; place-items: center; color: #507666; }
 .template-blank svg { width: 28px; height: 28px; }
@@ -177,7 +184,8 @@ dialog::backdrop { background: #142c266b; }
   #print-output { display: block; direction: ltr; }
   .print-sheet { width: 210mm; height: 297mm; position: relative; overflow: hidden; break-after: page; }
   .print-sheet:last-child { break-after: auto; }
-  .print-card { width: 85.6mm; height: 54mm; position: absolute; }
+  .print-card { position: absolute; }
+  .print-marks { position: absolute; inset: 0; width: 100%; height: 100%; }
   .print-card svg { width: 100%; height: 100%; display: block; }
   .print-note { position: absolute; top: 270mm; left: 12mm; right: 12mm; color: #3f594d; font: 9pt Arial, sans-serif; }
   * { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
@@ -213,7 +221,7 @@ dialog::backdrop { background: #142c266b; }
       </div>
       <div id="artboard" class="artboard"></div>
       <div class="canvas-footer">
-        <div class="size-label"><span data-icon="ruler"></span><span>85.6 × 54 mm</span></div>
+        <div class="size-label"><span data-icon="ruler"></span><span id="preview-size"></span></div>
         <div class="export-actions"><button class="button quiet" id="print" data-icon="printer" data-i="print"></button><button class="button primary" id="export" data-icon="download" data-i="export"></button></div>
       </div>
     </section>
@@ -235,6 +243,25 @@ dialog::backdrop { background: #142c266b; }
 <script id="studio-data" type="application/json">null</script>
 <script>
 const phrases = {
+  invitation: ['In Bloom Invitation', 'پھولوں والا دعوت نامہ'], invitationDesc: ['A portrait invitation with space for the date, venue and RSVP.', 'عمودی دعوت نامہ، تاریخ، جگہ اور جواب کے لیے جگہ کے ساتھ۔'],
+  postcard: ['Sunset Postcard', 'غروبِ آفتاب کا پوسٹ کارڈ'], postcardDesc: ['A landscape keepsake with a postcard message on the back.', 'افقی یادگار، پچھلی طرف پوسٹ کارڈ کا پیغام۔'],
+  celebration: ['Petal Party', 'پھولوں بھرا جشن'], celebrationDesc: ['A square celebration card with a bold flower border.', 'چوکور کارڈ، پھولوں کی نمایاں آرائش کے ساتھ۔'],
+  bookmark: ['Between the Pages', 'صفحوں کے درمیان'], bookmarkDesc: ['A slim bookmark with a botanical illustration.', 'نباتاتی آرائش والا لمبا بک مارک۔'],
+  giftTag: ['Wrapped with Love', 'محبت سے لپٹا تحفہ'], giftTagDesc: ['A gift tag with a place for the recipient and sender.', 'تحفے کے لیے ٹیگ، دینے اور لینے والے کا نام لکھنے کی جگہ۔'],
+  photoStrip: ['Little Moments', 'چھوٹے چھوٹے لمحے'], photoStripDesc: ['A photo strip with three frames on each side.', 'تصویری پٹی، ہر رخ پر تین فریم۔'],
+  floralInvite: ['Floral Arch', 'پھولوں کی محراب'], sunset: ['Sunset', 'غروبِ آفتاب'], petal: ['Petal Border', 'پھولوں کا حاشیہ'],
+  reading: ['Botanical Bookmark', 'نباتاتی بک مارک'], ribbon: ['Ribbon Tag', 'ربن والا ٹیگ'], film: ['Film Strip', 'فلم کی پٹی'],
+  format: ['Size and shape', 'سائز اور شکل'], formatID: ['Wallet card', 'بٹوے کا کارڈ'], formatPost: ['A6 landscape', 'A6 افقی'],
+  formatPortrait: ['A6 portrait', 'A6 عمودی'], formatSquare: ['Square', 'چوکور'], formatBookmark: ['Bookmark', 'بک مارک'],
+  formatTag: ['Gift tag', 'گفٹ ٹیگ'], formatStrip: ['Photo strip', 'تصویری پٹی'], formatCustom: ['Custom size', 'اپنا سائز'],
+  widthMM: ['Width (mm)', 'چوڑائی (ملی میٹر)'], heightMM: ['Height (mm)', 'اونچائی (ملی میٹر)'], swap: ['Swap width and height', 'چوڑائی اور اونچائی بدلیں'],
+  swapUnavailable: ['That orientation is too wide for the A4 print area.', 'یہ رخ A4 کی پرنٹ جگہ کے لیے بہت چوڑا ہے۔'],
+  squareCorners: ['Square corners', 'چوکور کونے'], punchGuide: ['Show hole-punch guide', 'سوراخ کی جگہ دکھائیں'], cutMarks: ['Add cutting marks', 'کٹائی کے نشان شامل کریں'],
+  searchTemplates: ['Search templates', 'ٹیمپلیٹس تلاش کریں'], allSizes: ['All sizes', 'تمام سائز'], noTemplates: ['No templates match.', 'کوئی ٹیمپلیٹ نہیں ملا۔'],
+  eventWhen: ['Date and time', 'تاریخ اور وقت'], eventWhere: ['Venue', 'جگہ'], eventReply: ['RSVP / contact', 'جواب یا رابطہ'],
+  secondPhoto: ['Frame 2', 'فریم 2'], thirdPhoto: ['Frame 3', 'فریم 3'], firstPhoto: ['Frame 1', 'فریم 1'],
+  cropFrame: ['Frame to edit', 'ایڈٹ کرنے والا فریم'], exportQuality: ['PNG resolution', 'PNG ریزولوشن'], screenQuality: ['Share · 2400 px longest edge', 'شیئرنگ · لمبا کنارہ 2400 پکسل'],
+  standardQuality: ['Print · 300 dpi', 'پرنٹ · 300 dpi'], highQuality: ['Print · 600 dpi', 'پرنٹ · 600 dpi'],
   workspace: ['Card studio', 'کارڈ اسٹوڈیو'], headline: ['Make it a keepsake.', 'دوستی کو یادگار بنائیں'],
   intro: ['Design both sides of your cards, then download or print them.', 'کارڈ کے دونوں رخ ڈیزائن کریں، پھر ڈاؤن لوڈ یا پرنٹ کریں۔'],
   newCard: ['New card', 'نیا کارڈ'], myCards: ['My cards', 'میرے کارڈز'], preview: ['Live preview', 'کارڈ کا پیش منظر'],
@@ -340,6 +367,20 @@ const templates = {
     backTitle: 'A little Eid wish', backSubtitle: 'SENT WITH LOVE', noteTitle: 'For you and yours',
     note: 'May this Eid bring happiness to your home and give you beautiful memories to carry into the year ahead.', backFooter: 'Eid Mubarak'
   },
+  invitation: { layout: 'floralInvite', format: 'formatPortrait', theme: 'sage', font: 'serif', title: 'You’re invited', subtitle: 'AN AFTERNOON TOGETHER',
+    frontMessage: 'Join us for good company and something sweet.', eventWhen: 'Saturday at 4 PM', eventWhere: 'The garden terrace',
+    eventReply: 'Let us know if you can make it', backTitle: 'See you there', note: 'Come as you are. We’ll save you a seat.', backFooter: 'With love' },
+  postcard: { layout: 'sunset', format: 'formatPost', theme: 'amber', font: 'serif', title: 'Wish you were here', subtitle: 'A POSTCARD FOR YOU',
+    frontMessage: 'Sending a little sunshine your way.', backTitle: 'A note from here', note: 'I saw this view and immediately thought of you.',
+    frontFooter: 'See you soon', backFooter: 'Until our next adventure' },
+  celebration: { layout: 'petal', format: 'formatSquare', theme: 'coral', font: 'serif', title: 'Let’s celebrate!', subtitle: 'A LITTLE JOY FOR YOU',
+    frontMessage: 'Good things are even better shared.', backTitle: 'Here’s to you', note: 'I hope today gives you one more reason to smile.', backFooter: 'With love' },
+  bookmark: { layout: 'reading', format: 'formatBookmark', theme: 'emerald', font: 'serif', title: 'One more chapter', subtitle: 'SAVE YOUR PLACE',
+    frontMessage: 'The best stories stay with us.', backTitle: 'Between the pages', note: 'For quiet hours and favourite stories.', backFooter: 'Happy reading' },
+  giftTag: { layout: 'ribbon', format: 'formatTag', theme: 'rose', font: 'serif', punchGuide: true, title: 'Just for you', subtitle: 'A LITTLE SOMETHING',
+    frontMessage: 'Picked with love.', backTitle: 'With love', note: 'Hope this makes your day.' },
+  photoStrip: { layout: 'film', format: 'formatStrip', theme: 'midnight', title: 'Little moments', subtitle: 'KEEP THESE CLOSE',
+    backTitle: 'More memories', note: 'Here’s to more days like these.' },
   blank: { layout: 'simple', theme: 'dusk' }
 };
 
@@ -356,8 +397,17 @@ const palettes = {
   emerald:  { accent: '#276b5e', ink: '#173f38', base: '#fffaec', soft: '#dceee2', edge: '#a6c9b0' }
 };
 
-const layouts = ['classic', 'scrapbook', 'confetti', 'botanical', 'starlight', 'moonlight', 'poster', 'simple'];
+const formats = {
+  formatID: [85.6, 54], formatPost: [148, 105], formatPortrait: [105, 148], formatSquare: [100, 100],
+  formatBookmark: [50, 150], formatTag: [55, 90], formatStrip: [60, 160]
+};
+const customLimits = { width: [45, 190], height: [45, 250] };
+const formatLayouts = ['floralInvite', 'sunset', 'petal', 'reading', 'ribbon', 'film'];
+const layouts = ['classic', 'scrapbook', 'confetti', 'botanical', 'starlight', 'moonlight', ...formatLayouts, 'poster', 'simple'];
 const designedTemplates = { scrapbook: 'memory', confetti: 'birthday', botanical: 'thanks', starlight: 'graduation', moonlight: 'eid' };
+const needsResponsiveArt = card => card.format !== 'formatID' || formatLayouts.includes(card.layout);
+const dimensions = card => card.format === 'formatCustom' ? [card.customWidth, card.customHeight] : formats[card.format];
+const sizeText = card => dimensions(card).join(' × ') + ' mm';
 
 const iconPaths = {
   heart: '<path d="M20.8 8.4c0 4.3-8.8 9.1-8.8 9.1S3.2 12.7 3.2 8.4a4.5 4.5 0 0 1 8.8-1.3 4.5 4.5 0 0 1 8.8 1.3Z"/>',
@@ -377,7 +427,8 @@ const iconPaths = {
 function icon(name) {
   return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${iconPaths[name] || iconPaths.heart}</svg>`;
 }
-const templateIcons = { license: 'ticket', memory: 'photo', birthday: 'star', thanks: 'heart', graduation: 'star', eid: 'star', blank: 'plus' };
+const templateIcons = { license: 'ticket', memory: 'photo', birthday: 'star', thanks: 'heart', graduation: 'star', eid: 'star',
+  invitation: 'heart', postcard: 'photo', celebration: 'star', bookmark: 'ruler', giftTag: 'ticket', photoStrip: 'photo', blank: 'plus' };
 
 const textFields = {
   owner: 56, friend: 56, title: 55, subtitle: 100, level: 44, kind: 60, issued: 35, valid: 35,
@@ -385,7 +436,8 @@ const textFields = {
   backTitle: 55, backSubtitle: 100, noteTitle: 38, note: 360, backListTitle: 34, backRules: 480,
   backFooter: 105, ownerSig: 56, friendSig: 56, holderLabel: 38, friendLabel: 38, levelLabel: 38,
   typeLabel: 38, issuedLabel: 38, expiryLabel: 38, approved: 70, sealTop: 26, sealBottom: 26, photoLabel: 32,
-  footnote: 75, backOwnerLabel: 38, backFriendLabel: 38, signatureLabelA: 38, signatureLabelB: 38, backFootnote: 75
+  footnote: 75, backOwnerLabel: 38, backFriendLabel: 38, signatureLabelA: 38, signatureLabelB: 38, backFootnote: 75,
+  eventWhen: 80, eventWhere: 100, eventReply: 100
 };
 const labelDefaults = {
   holderLabel: 'LICENSE HOLDER', friendLabel: 'BEST FRIEND', levelLabel: 'FRIENDSHIP LEVEL', typeLabel: 'LICENSE TYPE',
@@ -411,10 +463,12 @@ function fresh(template = 'license') {
   const content = templates[template];
   return {
     ...Object.fromEntries(Object.keys(textFields).map(key => [key, ''])),
+    format: 'formatID', customWidth: 100, customHeight: 100, squareCorners: false, punchGuide: false,
     ...(template === 'license' ? labelDefaults : {}), ...content,
     id: id(), template, owner: '', friend: '', customColor: '#397766', font: content.font || 'sans',
     showArt: template !== 'blank', showStamp: template === 'license', showCode: template === 'license',
-    photos: { front: null, back: null }
+    photos: { front: null, back: null },
+    stripPhotos: { front: [null, null], back: [null, null] }
   };
 }
 
@@ -438,6 +492,7 @@ function refreshUntouchedSamples(cards) {
   const matchingSample = (card, sample) => Object.keys(sample).every(key => {
     if (['id', 'owner', 'friend'].includes(key)) return true;
     if (key === 'photos') return !card.photos.front && !card.photos.back;
+    if (key === 'stripPhotos') return ['front', 'back'].every(side => !card.stripPhotos[side].some(Boolean));
     return card[key] === sample[key];
   });
   return cards.map(card => {
@@ -466,9 +521,15 @@ function cleanCard(value) {
   if (Object.hasOwn(palettes, value.theme) || value.theme === 'custom') card.theme = value.theme;
   if (typeof value.customColor === 'string' && /^#[\da-f]{6}$/i.test(value.customColor)) card.customColor = value.customColor;
   if (layouts.includes(value.layout)) card.layout = value.layout;
+  if (Object.hasOwn(formats, value.format) || value.format === 'formatCustom') card.format = value.format;
+  card.customWidth = bounded(value.customWidth, ...customLimits.width, card.customWidth);
+  card.customHeight = bounded(value.customHeight, ...customLimits.height, card.customHeight);
   if (['sans', 'serif'].includes(value.font)) card.font = value.font;
-  for (const key of ['showArt', 'showStamp', 'showCode']) if (typeof value[key] === 'boolean') card[key] = value[key];
-  for (const side of ['front', 'back']) card.photos[side] = cleanPhoto(value.photos?.[side]);
+  for (const key of ['showArt', 'showStamp', 'showCode', 'squareCorners', 'punchGuide']) if (typeof value[key] === 'boolean') card[key] = value[key];
+  for (const side of ['front', 'back']) {
+    card.photos[side] = cleanPhoto(value.photos?.[side]);
+    card.stripPhotos[side] = [0, 1].map(index => cleanPhoto(value.stripPhotos?.[side]?.[index]));
+  }
   return card;
 }
 
@@ -567,8 +628,7 @@ function doodle(x, y, scale, p) {
   </g>`;
 }
 
-function picture(card, side, p, id, x, y, width, height) {
-  const photo = card.photos[side];
+function picture(card, side, p, id, x, y, width, height, photo = card.photos[side]) {
   if (!photo && !card.showArt) return '';
   let contents;
   if (photo) {
@@ -675,13 +735,15 @@ function backContent(card, p, id, font) {
 function art(card, side) {
   const p = colors(card), front = side === 'front', font = lettering[card.font];
   const id = `art-${card.id}-${side}-${++art.sequence}`;
+  if (needsResponsiveArt(card)) return formattedArt(card, side, p, id, font);
   if (Object.hasOwn(designedTemplates, card.layout)) return designArt(card, side, p, id, font);
+  const rounding = card.squareCorners ? 0 : 36;
   const title = front ? card.title : card.backTitle, subtitle = front ? card.subtitle : card.backSubtitle;
   const footer = front ? card.frontFooter : card.backFooter, footnote = front ? card.footnote : card.backFootnote;
   const minimal = card.layout === 'simple';
   return `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="img">
     <title>${cleanXML(`${card.owner || title || 'Friendship card'} · ${side}`)}</title>
-    <defs><clipPath id="${id}-trim"><rect x="1" y="1" width="1198" height="755" rx="36"/></clipPath>
+    <defs><clipPath id="${id}-trim"><rect x="1" y="1" width="1198" height="755" rx="${rounding}"/></clipPath>
       <linearGradient id="${id}-paper" x2="1" y2="1"><stop stop-color="${front ? p.soft : p.base}"/><stop offset=".55" stop-color="${p.base}"/><stop offset="1" stop-color="${p.soft}"/></linearGradient>
       <radialGradient id="${id}-glow"><stop stop-color="${p.edge}" stop-opacity=".6"/><stop offset="1" stop-color="${p.edge}" stop-opacity="0"/></radialGradient></defs>
     <g clip-path="url(#${id}-trim)">
@@ -698,7 +760,7 @@ function art(card, side) {
     ${footer ? `<rect y="669" width="1200" height="88" fill="${p.accent}"/>
       ${heart(80, 696, .54, '#fff', -12)}${heart(1120, 696, .54, '#fff', 12)}
       ${line(600, 722, footer, 974, 29, { align: 'center', color: '#fff', font, weight: 700 })}` : ''}
-    </g><rect x="1" y="1" width="1198" height="755" rx="36" fill="none" stroke="${p.edge}" stroke-width="2"/>
+    </g><rect x="1" y="1" width="1198" height="755" rx="${rounding}" fill="none" stroke="${p.edge}" stroke-width="2"/>
   </svg>`;
 }
 art.sequence = 0;
@@ -922,11 +984,195 @@ function styledBack(card, p, id, font) {
 
 function designArt(card, side, p, id, font) {
   const content = side === 'front' ? styledFronts[card.layout](card, p, id, font) : styledBack(card, p, id, font);
+  const rounding = card.squareCorners ? 0 : 36;
   return `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="img">
     <title>${cleanXML(`${card.owner || card.title || 'Friendship card'} · ${side}`)}</title>
-    <defs><clipPath id="${id}-trim"><rect x="1" y="1" width="1198" height="755" rx="36"/></clipPath></defs>
+    <defs><clipPath id="${id}-trim"><rect x="1" y="1" width="1198" height="755" rx="${rounding}"/></clipPath></defs>
     <g clip-path="url(#${id}-trim)">${content}</g>
-    <rect x="1" y="1" width="1198" height="755" rx="36" fill="none" stroke="${p.edge}" stroke-width="1.8"/>
+    <rect x="1" y="1" width="1198" height="755" rx="${rounding}" fill="none" stroke="${p.edge}" stroke-width="1.8"/>
+  </svg>`;
+}
+
+
+function artSize(card) {
+  if (!needsResponsiveArt(card)) return [W, H];
+  const [width, height] = dimensions(card), scale = 760 / Math.min(width, height);
+  return [Math.round(width * scale), Math.round(height * scale)];
+}
+
+function framePhoto(card, side, index) {
+  return index === 0 ? card.photos[side] : card.stripPhotos[side][index - 1];
+}
+
+function setFramePhoto(card, side, index, photo) {
+  if (index === 0) card.photos[side] = photo;
+  else card.stripPhotos[side][index - 1] = photo;
+}
+
+function hasFilmFrames(card) { return card.layout === 'film'; }
+
+function botanicalBouquet(p, x, y, scale) {
+  return `<g transform="translate(${x} ${y}) scale(${scale})">
+    ${stem(-41, -9, 1.15, p.accent, -26)}${stem(32, -5, 1.13, p.accent, 28)}
+    ${stem(-10, 39, .95, p.accent, 14)}${flower(-56, -35, .86, '#dca190', '#aa7849')}
+    ${flower(12, -72, 1.16, '#e7be9e', '#a77248')}${flower(63, -29, .81, '#ddb1ae', '#94634d')}
+    <path d="M-22 87q19-15 43 0m-27-2-21 18m27-18 24 18" stroke="${p.accent}" fill="none" stroke-width="2.5" stroke-linecap="round"/>
+  </g>`;
+}
+
+function ribbonBow(p, x, y, scale) {
+  return `<g transform="translate(${x} ${y}) scale(${scale})" stroke="${p.ink}" stroke-width="2.3" stroke-linejoin="round">
+    <path d="M-12 9Q-38 46-49 87l31-10 13 20Q8 60 5 18M10 8q34 46 40 83L21 77l-12 19Q-2 56-4 14" fill="${p.edge}"/>
+    <path d="M-7-5Q-74-65-83-31Q-96 20-47 21Q-24 20-6 9M7-5Q74-65 83-31Q96 20 47 21Q24 20 6 9" fill="${p.soft}"/>
+    <path d="M-12 3q-34-29-50-22M12 3q34-29 50-22" fill="none" stroke="${p.accent}"/>
+    <rect x="-12" y="-12" width="24" height="33" rx="8" fill="${p.accent}"/>
+  </g>`;
+}
+
+function openBook(p, x, y, scale) {
+  return `<g transform="translate(${x} ${y}) scale(${scale})" fill="${p.base}" stroke="${p.accent}" stroke-width="3" stroke-linejoin="round">
+    <path d="M0-36q-42-39-100-23v101q54-15 100 18 46-33 100-18V-59Q42-75 0-36Z"/>
+    <path d="M0-36v96M-82-37q37-6 65 15M-82-12q35-6 65 15M-82 13q35-6 65 15M82-37q-37-6-65 15M82-12q-35-6-65 15M82 13q-35-6-65 15" fill="none" opacity=".62"/>
+    ${stem(44, -46, .6, p.accent, 7)}${sparkle(-75, -89, 10, p.accent)}${sparkle(77, 63, 9, p.accent)}
+  </g>`;
+}
+
+function motif(card, p, id, x, y, width, height) {
+  if (!card.showArt) return '';
+  const cx = x + width / 2, cy = y + height / 2, scale = Math.min(width, height) / 240;
+  const small = Math.min(width, height);
+  if (['sunset', 'scrapbook'].includes(card.layout)) return mountainPicture(x, y, width, height, p, id, true);
+  if (['floralInvite', 'botanical', 'petal'].includes(card.layout)) {
+    const art = botanicalBouquet(p, cx, cy - 8 * scale, scale * .81);
+    return `<ellipse cx="${cx}" cy="${cy}" rx="${small * .44}" ry="${small * .44}" fill="${p.soft}"/>${art}`;
+  }
+  if (card.layout === 'reading') return openBook(p, cx, cy, scale * .87);
+  if (card.layout === 'ribbon') return ribbonBow(p, cx, cy - 11 * scale, scale * .9);
+  if (card.layout === 'moonlight') return crescent(cx, cy, scale * 1.14, p.accent) + sparkle(cx + small * .28, cy - small * .21, 14 * scale, p.accent);
+  if (card.layout === 'starlight') return graduationCap(cx, cy, scale * .84, p.accent, p.ink);
+  if (card.layout === 'confetti') return balloon(cx - small * .17, cy - small * .14, scale * .6, p.accent, p.ink, -10) +
+    balloon(cx + small * .16, cy - small * .2, scale * .65, '#e999b0', p.ink, 17);
+  return doodle(cx + 11 * scale, cy, scale * 1.2, p) + heart(cx + small * .25, cy - small * .3, scale * .62, '#d58da6', 15);
+}
+
+function formatDecor(card, p, width, height, side) {
+  const unit = Math.min(width, height) / 760;
+  const trim = `<rect x="${24 * unit}" y="${24 * unit}" width="${width - 48 * unit}" height="${height - 48 * unit}" rx="${card.squareCorners ? 0 : 18 * unit}" fill="none" stroke="${p.edge}" stroke-width="${2 * unit}"/>`;
+  if (card.layout === 'petal' && card.showArt) {
+    const flowers = [[.07,.07,1.14],[.92,.105,.97],[.085,.895,.9],[.935,.928,1.22]];
+    return trim + flowers.map(([x,y,s], index) => flower(x * width, y * height, s * unit, index % 2 ? p.edge : '#e6adad', p.accent)).join('');
+  }
+  if (['ribbon', 'floralInvite'].includes(card.layout)) {
+    return trim + `<rect x="${38 * unit}" y="${38 * unit}" width="${width - 76 * unit}" height="${height - 76 * unit}" rx="${card.squareCorners ? 0 : 14 * unit}" fill="none" stroke="${p.edge}" opacity=".72"/>`;
+  }
+  if (card.layout === 'reading') {
+    return trim + `<path d="M${width * .12} ${height * .84}Q${width * .48} ${height * .71} ${width * .9} ${height * .86}V${height}H0Z" fill="${p.soft}" opacity=".65"/>`;
+  }
+  if (card.layout === 'sunset' && side === 'back' && !card.photos.back && width > height * 1.16) {
+    return trim + `<path d="M${width * .64} ${height * .19}V${height * .84}" stroke="${p.edge}" stroke-width="2"/>
+      <rect x="${width * .83}" y="${height * .12}" width="${width * .08}" height="${height * .14}" rx="5" fill="none" stroke="${p.edge}" stroke-width="3" stroke-dasharray="6 4"/>
+      ${[.53, .61, .69, .77].map(y => `<path d="M${width * .69} ${height * y}H${width * .91}" stroke="${p.edge}" stroke-width="2"/>`).join('')}`;
+  }
+  return trim;
+}
+
+function formatDetails(entries, x, y, width, size, step, p, font, align) {
+  return entries.map((value, i) => line(x, y + step * i, value, width, size,
+    { font, align, color: p.accent, weight: 720 })).join('');
+}
+
+function formatCopy(card, side, p, box, font) {
+  const { x, y, width, height, align = 'left' } = box;
+  const at = align === 'center' ? x + width / 2 : x;
+  const front = side === 'front';
+  const title = front ? card.title : card.backTitle, subtitle = front ? card.subtitle : card.backSubtitle;
+  const owner = front ? card.owner : (card.ownerSig || card.owner), friend = front ? card.friend : (card.friendSig || card.friend);
+  const caption = front ? card.frontFooter : card.backFooter;
+  const content = front ? card.frontMessage : card.note;
+  const flyerLine = !front && card.noteTitle ? card.noteTitle : '';
+  const list = (front ? card.frontRules : card.backRules).trim().split('\n').filter(Boolean);
+  const entries = front ? [card.eventWhen, card.eventWhere, card.eventReply, card.level, card.kind,
+    [card.issued, card.valid].filter(Boolean).join(' · ')].filter(Boolean) : [];
+  const hasEvent = entries.length > 0;
+  const hasDetails = hasEvent || list.length;
+  const bodyStart = flyerLine ? .48 : .42;
+  const rows = hasDetails ? (flyerLine ? 3 : 4) : (flyerLine ? 5 : 6);
+  const bodySize = Math.min(30, height * .061, width * .075), step = Math.min(bodySize * 1.27, height * (hasDetails ? .052 : .064));
+  const nameLine = card.layout === 'ribbon' ? '' : [owner, friend].filter(Boolean).join('  ·  ');
+  const detailStart = entries.length > 3 || list.length ? .63 : .68;
+  const detailStep = height * (entries.length > 3 ? .046 : .072);
+  const detailSize = Math.min(entries.length > 3 ? 22 : 26, detailStep * .74);
+  const tagFields = card.layout === 'ribbon' ? ['To', 'From'].map((label, i) => {
+    const value = [owner, friend][i];
+    const row = y + height * (.71 + i * .12);
+    const labelX = x + width * .105, fieldX = x + width * .30, max = width * .61;
+    return line(labelX, row, label, width * .16, Math.min(27, height * .062), { font, color: p.accent, italic: true }) +
+      (value ? line(fieldX + 5, row, value, max, Math.min(32, height * .08), { font, color: p.ink }) :
+        `<path d="M${fieldX} ${row + 3}h${max}" stroke="${p.edge}" stroke-width="1.7"/>`);
+  }).join('') : '';
+  return `${line(at, y + .06 * height, subtitle, width, Math.min(21, height * .055), { align, color: p.accent, weight: 800, spacing: 2 })}
+    ${line(at, y + .24 * height, title, width, Math.min(78, height * .155), { align, font, color: p.ink, weight: 780 })}
+    ${line(at, y + .34 * height, nameLine, width, Math.min(36, height * .075), { align, font, color: p.accent, weight: 680 })}
+    ${line(at, y + .42 * height, flyerLine, width, bodySize, { align, font, color: p.ink, italic: true })}
+    ${paragraph(at, y + bodyStart * height, content, width, bodySize, rows, step, { align, color: p.ink, font })}
+    ${formatDetails(entries, at, y + detailStart * height, width, detailSize, detailStep, p, font, align)}${tagFields}
+    ${list.length ? line(at, y + (hasEvent ? .903 : .82) * height, list.join(' · '), width, Math.min(19, height * .042), { align, font, color: p.accent }) : ''}
+    ${line(at, y + .975 * height, caption, width, Math.min(23, height * .052), { align, font, color: p.ink, italic: true })}`;
+}
+
+function filmArt(card, side, p, id, width, height, font) {
+  const tall = height >= width, unit = Math.min(width, height);
+  const front = side === 'front', color = '#fff7e6', band = mix(p.ink, '#151527', .42);
+  const frameWidth = tall ? width * .68 : width * .245;
+  const frameHeight = tall ? height * .213 : height * .57;
+  const startX = tall ? width * .16 : width * .08, startY = height * .19;
+  const spacing = tall ? height * .23 : width * .298;
+  const frames = Array.from({ length: 3 }, (_, i) => {
+    const x = startX + (tall ? 0 : i * spacing), y = startY + (tall ? i * spacing : 0);
+    const photo = framePhoto(card, side, i);
+    const fallback = card.showArt ? motif({ ...card, layout: ['sunset', 'botanical', 'ribbon'][i] }, p, `${id}-${i}`, x, y, frameWidth, frameHeight) : '';
+    return `<rect x="${x}" y="${y}" width="${frameWidth}" height="${frameHeight}" rx="12" fill="${p.base}"/>${photo ? picture(card, side, p, `${id}-${i}`, x, y, frameWidth, frameHeight, photo) : fallback}`;
+  }).join('');
+  const holes = Array.from({ length: Math.ceil((tall ? height : width) / (unit * .12)) }, (_, i) => {
+    const offset = unit * (.046 + i * .12), size = unit * .04;
+    return tall ? `<rect x="${width * .042}" y="${offset}" width="${size}" height="${size * 1.48}" rx="4"/><rect x="${width * .918}" y="${offset}" width="${size}" height="${size * 1.48}" rx="4"/>` :
+      `<rect x="${offset}" y="${height * .035}" width="${size * 1.48}" height="${size}" rx="4"/><rect x="${offset}" y="${height * .925}" width="${size * 1.48}" height="${size}" rx="4"/>`;
+  }).join('');
+  const titleOptions = { color, font, align: 'center', weight: 780 };
+  return `<rect width="${width}" height="${height}" fill="${band}"/>
+    ${card.showArt ? `<g fill="#f1ecd9" opacity=".82">${holes}</g>` : ''}
+    ${line(width / 2, height * .105, front ? card.subtitle : card.backSubtitle, width * .73, 20, { ...titleOptions, spacing: 2 })}
+    ${line(width / 2, height * .154, front ? card.title : card.backTitle, width * .73, Math.min(unit * .086, height * .055), titleOptions)}
+    ${frames}
+    ${paragraph(width / 2, height * .87, (front ? card.frontMessage : card.note) || (front ? card.caption : card.backFooter), width * .73, 25, 2, 30, titleOptions)}
+    ${line(width / 2, height * (tall ? .957 : .913), [card.owner, card.friend].filter(Boolean).join(' · '), width * .7, 24, titleOptions)}`;
+}
+
+function formattedArt(card, side, p, id, font) {
+  const [width, height] = artSize(card);
+  const wide = width > height * 1.15, one = Math.min(width, height), front = side === 'front';
+  const rounding = card.squareCorners ? 0 : one * .037;
+  const photo = card.photos[side];
+  const postcardBack = card.layout === 'sunset' && !front && wide;
+  const showFeature = Boolean(photo || (card.showArt && !postcardBack));
+  const artBounds = wide ? [width * .59, height * .14, width * .34, height * .69] : [width * .14, height * .105, width * .72, height * .30];
+  let composition;
+  if (hasFilmFrames(card)) composition = filmArt(card, side, p, id, width, height, font);
+  else {
+    const box = wide ? { x: width * .075, y: height * .17, width: width * (showFeature || postcardBack ? .47 : .85), height: height * .66 } :
+      { x: width * .12, y: height * (showFeature ? .466 : .22), width: width * .76, height: height * (showFeature ? .44 : .60), align: 'center' };
+    const [ax, ay, aw, ah] = artBounds;
+    const feature = !showFeature ? '' : photo ? picture(card, side, p, id, ax, ay, aw, ah) : motif(card, p, id, ax, ay, aw, ah);
+    const hole = card.punchGuide ? `<circle cx="${width / 2}" cy="${Math.min(height * .053, one * .11)}" r="${one * .032}" stroke="${p.accent}" stroke-width="2.4" stroke-dasharray="5 4" fill="${p.base}"/>` : '';
+    composition = `<rect width="${width}" height="${height}" fill="${p.base}"/>${formatDecor(card, p, width, height, side)}${feature}${hole}
+      ${front && photo ? line(ax + aw / 2, ay + ah + Math.min(28, height * .029), card.caption, aw, Math.min(24, height * .026), { align: 'center', font, color: p.ink, italic: true }) : ''}
+      ${formatCopy(card, side, p, box, font)}`;
+  }
+  return `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 ${width} ${height}" width="${width}" height="${height}" role="img">
+    <title>${cleanXML(`${card.owner || (front ? card.title : card.backTitle) || 'Card'} · ${side}`)}</title>
+    <defs><clipPath id="${id}-trim"><rect width="${width}" height="${height}" rx="${rounding}"/></clipPath></defs>
+    <g clip-path="url(#${id}-trim)">${composition}</g>
+    <rect x="1" y="1" width="${width - 2}" height="${height - 2}" rx="${rounding}" fill="none" stroke="${p.edge}" stroke-width="2"/>
   </svg>`;
 }
 
@@ -941,6 +1187,7 @@ const storageKey = embedded?.projectId ? 'copy-' + embedded.projectId : 'main';
 const modal = $('#modal');
 const editor = $('#editor');
 let lang = 'en', cards = [], activeId = '', view = 'front', editSide = 'front', tab = 'text';
+let activeFrame = 0;
 let database, storageState = 'saving', toastTimer, busy = false, saveTimer, saveVersion = 0;
 let printSelection;
 
@@ -1033,12 +1280,18 @@ function redrawLibrary() {
 }
 function redrawPreview() {
   const card = cardNow();
+  const [width, height] = card ? dimensions(card) : [W, H];
+  const tall = height > width;
+  const artboard = $('#artboard');
+  artboard.classList.toggle('two-up', tall && view === 'both');
+  $('#preview-size').textContent = card ? sizeText(card) : '';
+  $('.size-label').hidden = !card;
   $('#preview-heading').textContent = card ? cardName(card) : t('myCards');
   $('#edit-description').textContent = card ? t(editSide === 'front' ? 'editingFront' : 'editingBack') : '';
   $$('[data-view]').forEach(button => button.setAttribute('aria-pressed', button.dataset.view === view));
   $$('[data-tab]').forEach(button => button.setAttribute('aria-pressed', button.dataset.tab === tab));
-  $('#artboard').innerHTML = card ? (view === 'both' ? ['front', 'back'] : [view]).map(side =>
-    `<figure class="preview-side">${art(card, side)}${view === 'both' ? `<figcaption>${escapeHTML(t(side))}</figcaption>` : ''}</figure>`).join('') : `<p>${escapeHTML(t('empty'))}</p>`;
+  artboard.innerHTML = card ? (view === 'both' ? ['front', 'back'] : [view]).map(side =>
+    `<figure class="preview-side"${tall ? ` style="max-width:${Math.round(530 * width / height)}px"` : ''}>${art(card, side)}${view === 'both' ? `<figcaption>${escapeHTML(t(side))}</figcaption>` : ''}</figure>`).join('') : `<p>${escapeHTML(t('empty'))}</p>`;
   for (const key of ['duplicate', 'delete', 'print', 'export']) $('#' + key).disabled = !card;
 }
 
@@ -1066,25 +1319,34 @@ function textPanel(card) {
         ['backOwnerLabel', 'backFriendLabel', 'signatureLabelA', 'signatureLabelB', 'backFootnote'].map(key => f(key)).join(''));
   }
   const classic = card.layout === 'classic';
+  const events = card.template === 'invitation' || card.layout === 'floralInvite' || [card.eventWhen, card.eventWhere, card.eventReply].some(Boolean);
   const added = classic ? f('level') + f('kind') + `<div class="field-pair">${f('issued')}${f('valid')}</div>` : f('frontMessage', 'note', true);
-  return names + f('title', 'mainTitle') + f('subtitle') + added + f('frontFooter', 'footer') + details(f('caption', 'photoCaption') + f('stamp') +
+  return names + f('title', 'mainTitle') + f('subtitle') + added + (events ? f('eventWhen') + f('eventWhere') + f('eventReply') : '') + f('frontFooter', 'footer') + details(f('caption', 'photoCaption') + f('stamp') +
     (classic ? f('frontListTitle', 'ruleTitle') + f('frontRules', 'frontRules', true) : '') +
     (classic ? ['holderLabel', 'friendLabel', 'levelLabel', 'typeLabel', 'issuedLabel', 'expiryLabel', 'approved'] : []).concat(['sealTop', 'sealBottom', 'photoLabel', 'footnote']).map(key => f(key)).join(''));
 }
 function designPanel(card) {
   const paletteButtons = Object.entries(palettes).map(([key, p]) => `<button type="button" class="swatch" data-palette="${key}" aria-pressed="${key === card.theme}"><i style="background:${p.accent}"></i>${escapeHTML(t(key))}</button>`).join('');
-  const styled = Object.hasOwn(designedTemplates, card.layout);
-  const toggles = styled ? ['showArt'] : ['showArt', 'showStamp', ...(card.layout === 'classic' ? ['showCode'] : [])];
+  const styled = Object.hasOwn(designedTemplates, card.layout) || needsResponsiveArt(card);
+  const toggles = ['squareCorners', ...(needsResponsiveArt(card) && !hasFilmFrames(card) ? ['punchGuide'] : []),
+    ...(styled ? ['showArt'] : ['showArt', 'showStamp', ...(card.layout === 'classic' ? ['showCode'] : [])])];
   const checks = toggles.map(key => `<div class="field"><label class="check-label"><input type="checkbox" data-field="${key}"${card[key] ? ' checked' : ''}>${escapeHTML(t(styled && key === 'showArt' ? 'illustrations' : key))}</label></div>`).join('');
-  return selectField('layout', 'layout', card.layout, layouts) + `<p class="edit-note">${escapeHTML(t('styleHint'))}</p><span class="field-label">${escapeHTML(t('colors'))}</span><div class="swatches">${paletteButtons}</div>
+  const sizeOptions = Object.entries(formats).map(([key, size]) => `<option value="${key}"${card.format === key ? ' selected' : ''}>${escapeHTML(t(key))} · ${size.join(' × ')}</option>`).join('');
+  const dimensionInput = (axis, label, value, limits) => `<div class="field"><label for="size-${axis}">${escapeHTML(t(label))}</label><input id="size-${axis}" type="number" data-dimension="${axis}" min="${limits[0]}" max="${limits[1]}" step="0.1" value="${value}"></div>`;
+  const custom = card.format === 'formatCustom' ? `<div class="field-pair">${dimensionInput('Width', 'widthMM', card.customWidth, customLimits.width)}${dimensionInput('Height', 'heightMM', card.customHeight, customLimits.height)}</div>` : '';
+  return `<div class="field"><label for="field-format">${escapeHTML(t('format'))}</label><select id="field-format" data-field="format">${sizeOptions}<option value="formatCustom"${card.format === 'formatCustom' ? ' selected' : ''}>${escapeHTML(t('formatCustom'))}</option></select></div>` +
+    custom + `<button type="button" class="button secondary swap-button" data-swap-size>${escapeHTML(t('swap'))}</button>` +
+    selectField('layout', 'layout', card.layout, layouts) + `<p class="edit-note">${escapeHTML(t('styleHint'))}</p><span class="field-label">${escapeHTML(t('colors'))}</span><div class="swatches">${paletteButtons}</div>
     <div class="field"><label for="field-customColor">${escapeHTML(t('custom'))}</label><input aria-label="${escapeHTML(t('customColor'))}" type="color" id="field-customColor" data-field="customColor" value="${card.customColor}"></div>` +
     selectField('font', 'font', card.font, ['sans', 'serif']) + checks;
 }
 function photoPanel(card) {
-  const photo = card.photos[editSide];
+  const film = hasFilmFrames(card);
+  const frameOptions = film ? `<div class="field"><label for="photo-frame">${escapeHTML(t('cropFrame'))}</label><select id="photo-frame" data-frame-control>${['firstPhoto', 'secondPhoto', 'thirdPhoto'].map((key, index) => `<option value="${index}"${index === activeFrame ? ' selected' : ''}>${escapeHTML(t(key))}</option>`).join('')}</select></div>` : '';
+  const photo = framePhoto(card, editSide, film ? activeFrame : 0);
   const sliders = photo ? [['zoom', 'zoom', '1', '3', '.01'], ['x', 'positionX', '-100', '100', '1'], ['y', 'positionY', '-100', '100', '1']].map(([key, label, min, max, step]) =>
     `<div class="field"><label for="crop-${key}">${escapeHTML(t(label))}</label><input dir="ltr" id="crop-${key}" data-crop="${key}" type="range" min="${min}" max="${max}" step="${step}" value="${photo[key]}"></div>`).join('') : '';
-  return `<p class="edit-note">${escapeHTML(t('photoHint'))}</p><div class="field"><label for="photo-file">${escapeHTML(t('photoFile'))}</label><input type="file" class="photo-file" id="photo-file" accept="image/png,image/jpeg,image/webp,image/gif,image/avif,image/bmp"></div>${sliders}
+  return `<p class="edit-note">${escapeHTML(t('photoHint'))}</p>${frameOptions}<div class="field"><label for="photo-file">${escapeHTML(t('photoFile'))}</label><input type="file" class="photo-file" id="photo-file" accept="image/png,image/jpeg,image/webp,image/gif,image/avif,image/bmp"></div>${sliders}
     ${photo ? `<div class="top-actions"><button type="button" class="button secondary" data-photo-action="reset">${escapeHTML(t('resetCrop'))}</button><button type="button" class="button quiet danger" data-photo-action="remove">${escapeHTML(t('removePhoto'))}</button></div>` : ''}`;
 }
 function redrawEditor() {
@@ -1098,6 +1360,7 @@ function redraw() { redrawLibrary(); redrawPreview(); redrawEditor(); }
 function chooseCard(card) {
   if (!card) return;
   activeId = card.id;
+  activeFrame = 0;
   scheduleSave(true);
   redraw();
   $(`[data-card="${activeId}"]`)?.scrollIntoView({ block: 'nearest', inline: 'nearest' });
@@ -1140,12 +1403,27 @@ function showTemplates() {
     if (template !== 'blank') sample.owner = template === 'license' ? starterLabels[0] : 'For You';
     if (template === 'license') sample.friend = starterLabels[1];
     const thumbnail = template === 'blank' ? `<div class="template-blank">${icon('plus')}</div>` : art(sample, 'front');
-    return `<button type="button" class="template-option" data-action="${template}">
+    const keywords = [t(template), t(template + 'Desc'), t(sample.format), phrases[template][0], sizeText(sample)].join(' ');
+    return `<button type="button" class="template-option" data-action="${template}" data-format="${sample.format}" data-keywords="${escapeHTML(keywords)}">
       <span class="template-thumb" aria-hidden="true">${thumbnail}</span>
-      <span class="template-copy"><strong>${escapeHTML(t(template))}</strong><small>${escapeHTML(t(template + 'Desc'))}</small></span>
+      <span class="template-copy"><strong>${escapeHTML(t(template))}</strong><small>${escapeHTML(t(template + 'Desc'))}</small><span class="template-size">${escapeHTML(t(sample.format))} · <bdi>${sizeText(sample)}</bdi></span></span>
     </button>`;
   }).join('');
-  modalOpen('newCard', `<p class="modal-description">${escapeHTML(t('chooseTemplate'))}</p><div class="template-gallery">${gallery}</div>${pairOption ? `<div class="pair-option">${pairOption}</div>` : ''}`);
+  const filters = `<div class="template-filters"><div class="field"><label for="template-search">${escapeHTML(t('searchTemplates'))}</label><input type="search" id="template-search" dir="auto"></div>
+    ${selectField('template-size', 'format', 'allSizes', ['allSizes', ...Object.keys(formats)])}</div>`;
+  modalOpen('newCard', `<p class="modal-description">${escapeHTML(t('chooseTemplate'))}</p>${filters}<div class="template-gallery">${gallery}</div><p id="no-templates" class="modal-description" role="status" hidden>${escapeHTML(t('noTemplates'))}</p>${pairOption ? `<div class="pair-option">${pairOption}</div>` : ''}`);
+  const filterGallery = () => {
+    const words = $('#template-search').value.toLocaleLowerCase().trim().split(/\s+/).filter(Boolean);
+    const size = $('#field-template-size').value;
+    const visible = $$('.template-option').filter(button => {
+      const matches = (size === 'allSizes' || size === button.dataset.format) && words.every(word => button.dataset.keywords.toLocaleLowerCase().includes(word));
+      button.hidden = !matches;
+      return matches;
+    });
+    $('#no-templates').hidden = visible.length > 0;
+  };
+  $('#template-search').oninput = filterGallery;
+  $('#field-template-size').onchange = filterGallery;
   $('#modal-body').onclick = event => {
     const template = event.target.closest('[data-action]')?.dataset.action;
     if (template === 'pair') { showPair(); return; }
@@ -1221,8 +1499,31 @@ function changeField(input) {
   }
   redrawPreview();
   if (key === 'owner' || key === 'title' || key === 'backTitle' || key === 'customColor') redrawLibrary();
-  if (key === 'layout') redrawEditor();
+  if (key === 'layout' || key === 'format') redrawEditor();
   scheduleSave();
+}
+
+function changeDimension(card, input, commit = false) {
+  const axis = input.dataset.dimension;
+  const [min, max] = customLimits[axis.toLowerCase()];
+  const key = 'custom' + axis;
+  let value = input.valueAsNumber;
+  if (!Number.isFinite(value)) value = card[key];
+  if (commit) input.value = bounded(value, min, max, card[key]);
+  else if (!input.value || value < min || value > max) return;
+  card[key] = bounded(value, min, max, card[key]);
+  redrawPreview();
+  scheduleSave();
+}
+
+function swapDimensions(card) {
+  const [width, height] = dimensions(card);
+  if (height > customLimits.width[1] || width > customLimits.height[1]) { toast('swapUnavailable'); return; }
+  if (width === height) return;
+  const preset = Object.keys(formats).find(key => formats[key][0] === height && formats[key][1] === width);
+  card.format = preset || 'formatCustom';
+  if (!preset) { card.customWidth = height; card.customHeight = width; }
+  redrawPreview(); redrawEditor(); scheduleSave(true);
 }
 async function loadImage(file) {
   if (file.size > 32_000_000) throw new Error('Image too large');
@@ -1241,8 +1542,9 @@ async function loadImage(file) {
 editor.addEventListener('input', event => {
   const input = event.target, card = cardNow();
   if (!card) return;
-  if (input.dataset.crop) {
-    const photo = card.photos[editSide];
+  if (input.dataset.dimension) changeDimension(card, input);
+  else if (input.dataset.crop) {
+    const photo = framePhoto(card, editSide, hasFilmFrames(card) ? activeFrame : 0);
     if (photo) photo[input.dataset.crop] = Number(input.value);
     redrawPreview();
     scheduleSave();
@@ -1252,35 +1554,41 @@ editor.addEventListener('input', event => {
 });
 editor.addEventListener('change', async event => {
   const input = event.target, card = cardNow(), side = editSide;
+  if (!card) return;
+  if (input.dataset.dimension) { changeDimension(card, input, true); return; }
+  if (input.hasAttribute('data-frame-control')) { activeFrame = Number(input.value); redrawEditor(); return; }
   if (input.dataset.sideControl) {
     editSide = input.value;
     redrawPreview(); redrawEditor();
     return;
   }
-  if (!card || input.id !== 'photo-file' || !input.files[0]) return;
+  if (input.id !== 'photo-file' || !input.files[0]) return;
+  const frame = hasFilmFrames(card) ? activeFrame : 0;
   const file = input.files[0];
   input.disabled = true;
   try {
     const photo = await loadImage(file);
     if (!cards.includes(card)) return;
-    card.photos[side] = photo;
+    setFramePhoto(card, side, frame, photo);
     scheduleSave(true);
     redrawPreview();
-    if (cardNow() === card && editSide === side && tab === 'photo') redrawEditor();
+    if (cardNow() === card && editSide === side && tab === 'photo' && (hasFilmFrames(card) ? activeFrame : 0) === frame) redrawEditor();
   } catch { toast('badPhoto'); }
   finally { input.disabled = false; input.value = ''; }
 });
 editor.addEventListener('click', event => {
   const button = event.target.closest('button'), card = cardNow();
   if (!button || !card) return;
+  if (button.hasAttribute('data-swap-size')) { swapDimensions(card); return; }
+  const frame = hasFilmFrames(card) ? activeFrame : 0;
   if (button.dataset.palette) {
     card.theme = button.dataset.palette;
     $$('[data-palette]').forEach(choice => choice.setAttribute('aria-pressed', String(choice === button)));
   } else if (button.dataset.photoAction === 'remove') {
-    card.photos[editSide] = null;
+    setFramePhoto(card, editSide, frame, null);
     redrawEditor();
-  } else if (button.dataset.photoAction === 'reset' && card.photos[editSide]) {
-    Object.assign(card.photos[editSide], { zoom: 1, x: 0, y: 0 });
+  } else if (button.dataset.photoAction === 'reset' && framePhoto(card, editSide, frame)) {
+    Object.assign(framePhoto(card, editSide, frame), { zoom: 1, x: 0, y: 0 });
     redrawEditor();
   } else return;
   redrawLibrary(); redrawPreview(); scheduleSave(true);
@@ -1296,15 +1604,42 @@ function download(data, name, mediaType) {
 function basename(card) {
   return (card.owner.trim() || card.title.trim() || 'Friendship-Card').replace(/[^\p{L}\p{N}]+/gu, '-').replace(/^-|-$/g, '') || 'Friendship-Card';
 }
-async function png(svg) {
+function svgDownload(svg, card) {
+  const [width, height] = dimensions(card);
+  return svg.replace(/(<svg\b[^>]*?\s)width="\d+" height="\d+"/, `$1width="${width}mm" height="${height}mm"`);
+}
+
+async function pngDensity(blob, dpi) {
+  const bytes = new Uint8Array(await blob.arrayBuffer());
+  const meter = Math.round(dpi / .0254);
+  const chunk = new DataView(new ArrayBuffer(21));
+  chunk.setUint32(0, 9);
+  chunk.setUint32(4, 0x70485973); // pHYs
+  chunk.setUint32(8, meter); chunk.setUint32(12, meter); chunk.setUint8(16, 1);
+  chunk.setUint32(17, crc32(new Uint8Array(chunk.buffer, 4, 13)));
+  const rest = [];
+  const original = new DataView(bytes.buffer);
+  for (let i = 33; i < bytes.length;) {
+    const length = original.getUint32(i), next = i + length + 12;
+    if (original.getUint32(i + 4) !== 0x70485973) rest.push(bytes.subarray(i, next));
+    i = next;
+  }
+  return new Blob([bytes.subarray(0, 33), chunk.buffer, ...rest], { type: 'image/png' });
+}
+
+async function png(svg, card, quality = 'screenQuality') {
   const url = URL.createObjectURL(new Blob([svg], { type: 'image/svg+xml' }));
   try {
     const image = new Image(); image.src = url;
     await image.decode();
     const canvas = document.createElement('canvas');
-    canvas.width = W * 2; canvas.height = H * 2;
+    const dpi = quality === 'standardQuality' ? 300 : quality === 'highQuality' ? 600 : 0;
+    const [width, height] = dpi ? dimensions(card) : artSize(card);
+    const ratio = dpi ? dpi / 25.4 : 2400 / Math.max(width, height);
+    canvas.width = Math.round(width * ratio); canvas.height = Math.round(height * ratio);
     canvas.getContext('2d').drawImage(image, 0, 0, canvas.width, canvas.height);
-    return await new Promise((resolve, reject) => canvas.toBlob(blob => blob ? resolve(blob) : reject(new Error('PNG creation failed')), 'image/png'));
+    const result = await new Promise((resolve, reject) => canvas.toBlob(blob => blob ? resolve(blob) : reject(new Error('PNG creation failed')), 'image/png'));
+    return dpi ? await pngDensity(result, dpi) : result;
   } finally { URL.revokeObjectURL(url); }
 }
 
@@ -1341,12 +1676,12 @@ function zip(entries) {
   end.setUint32(12, dirSize, true); end.setUint32(16, offset, true);
   return new Blob([...files, ...directory, end.buffer], { type: 'application/zip' });
 }
-async function pack(format) {
+async function pack(format, quality) {
   const entries = [], collection = structuredClone(cards);
   for (const [i, card] of collection.entries()) {
     for (const side of ['front', 'back']) {
       const svg = art(card, side);
-      const bytes = format === 'png' ? new Uint8Array(await (await png(svg)).arrayBuffer()) : encoder.encode(svg);
+      const bytes = format === 'png' ? new Uint8Array(await (await png(svg, card, quality)).arrayBuffer()) : encoder.encode(svgDownload(svg, card));
       entries.push({ filename: `${String(i + 1).padStart(2, '0')}-${basename(card)}-${side}.${format}`, bytes });
     }
   }
@@ -1366,6 +1701,7 @@ function showExport() {
   if (!card) return;
   modalOpen('export', `<p class="modal-description">${escapeHTML(t('exportHint'))}</p>` +
     selectField('export-side', 'exportSide', view === 'both' ? editSide : view, ['front', 'back']) +
+    selectField('png-quality', 'exportQuality', 'screenQuality', ['screenQuality', 'standardQuality', 'highQuality']) +
     `<div class="modal-options">${modalOption('png', 'PNG', 'pngDesc', 'photo')}${modalOption('svg', 'SVG', 'svgDesc', 'star')}</div>` +
     `<div class="field"><label for="zip-format">${escapeHTML(t('zipFormat'))}</label><select id="zip-format"><option value="svg">SVG</option><option value="png">PNG</option></select></div>` +
     `<div class="modal-buttons">${modalButton('zip', 'zip', true)}</div>`);
@@ -1373,12 +1709,12 @@ function showExport() {
     const button = event.target.closest('[data-action]');
     if (!button) return;
     const action = button.dataset.action;
-    const side = $('#field-export-side').value, format = $('#zip-format').value;
+    const side = $('#field-export-side').value, format = $('#zip-format').value, quality = $('#field-png-quality').value;
     runDownload(button, async () => {
-      if (action === 'zip') download(await pack(format), `Friendship-Cards-${format.toUpperCase()}.zip`);
+      if (action === 'zip') download(await pack(format, quality), `Friendship-Cards-${format.toUpperCase()}.zip`);
       else {
         const content = art(card, side);
-        download(action === 'png' ? await png(content) : content, `${basename(card)}-${side}.${action}`, 'image/svg+xml');
+        download(action === 'png' ? await png(content, card, quality) : svgDownload(content, card), `${basename(card)}-${side}.${action}`, 'image/svg+xml');
       }
     });
   };
@@ -1408,7 +1744,7 @@ function readImport(text) {
   return payload.cards.map(cleanCard);
 }
 async function setImportedDimensions(card) {
-  for (const photo of Object.values(card.photos)) {
+  for (const photo of [...Object.values(card.photos), ...Object.values(card.stripPhotos).flat()]) {
     if (!photo) continue;
     try {
       const image = new Image(); image.src = photo.data;
@@ -1435,19 +1771,41 @@ async function importFile(file) {
   } catch { toast('importError'); }
 }
 
+function packPrintPages(collection) {
+  const left = 10, right = 200, top = 12, bottom = 265, gap = 8;
+  const pages = [];
+  let slots = [], x = left, y = top, rowHeight = 0;
+  for (const card of collection) {
+    const [width, height] = dimensions(card);
+    if (x + width > right + .001) { x = left; y += rowHeight + gap; rowHeight = 0; }
+    if (y + height > bottom + .001) { pages.push(slots); slots = []; x = left; y = top; rowHeight = 0; }
+    slots.push({ card, x, y, width, height });
+    x += width + gap;
+    rowHeight = Math.max(rowHeight, height);
+  }
+  if (slots.length) pages.push(slots);
+  return pages;
+}
+
+function printMarks(slots) {
+  const marks = slots.flatMap(({ x, y, width, height }) => {
+    const right = x + width, bottom = y + height, inner = 1, outer = 3;
+    return [y, bottom].flatMap(cy => [[x - outer, cy, x - inner, cy], [right + inner, cy, right + outer, cy]])
+      .concat([x, right].flatMap(cx => [[cx, y - outer, cx, y - inner], [cx, bottom + inner, cx, bottom + outer]]));
+  });
+  return `<svg class="print-marks" viewBox="0 0 210 297" aria-hidden="true" stroke="#596966" stroke-width=".22" fill="none">${marks.map(([x1, y1, x2, y2]) => `<path d="M${x1} ${y1}L${x2} ${y2}"/>`).join('')}</svg>`;
+}
+
 function printSheets(selection = printSelection) {
   const collection = selection?.scope === 'allCards' ? cards : cardNow() ? [cardNow()] : [];
   const sides = selection?.sides || 'both';
   const pages = [];
-  for (let start = 0; start < collection.length; start += 8) {
-    const group = collection.slice(start, start + 8);
+  for (const group of packPrintPages(collection)) {
     for (const side of (sides === 'both' ? ['front', 'back'] : [sides])) {
       const mirror = side === 'back' && sides === 'both';
-      const slots = group.map((card, index) => {
-        const column = mirror ? 1 - index % 2 : index % 2, row = Math.floor(index / 2);
-        return `<div class="print-card" style="top:${15 + 63 * row}mm;left:${12 + 100.4 * column}mm">${art(card, side)}</div>`;
-      }).join('');
-      pages.push(`<section class="print-sheet">${slots}<p class="print-note" dir="auto">${escapeHTML(t(side))} · A4 · 100% / Actual size${sides === 'both' ? ' · ' + escapeHTML(lang === 'ur' ? 'لمبے کنارے سے پلٹیں' : 'Flip on the long edge') : ''}</p></section>`);
+      const slotInfo = mirror ? group.map(slot => ({ ...slot, x: 210 - slot.x - slot.width })) : group;
+      const slots = slotInfo.map(({ card, x, y, width, height }) => `<div class="print-card" style="top:${y}mm;left:${x}mm;width:${width}mm;height:${height}mm">${art(card, side)}</div>`).join('');
+      pages.push(`<section class="print-sheet">${slots}${selection?.marks ? printMarks(slotInfo) : ''}<p class="print-note" dir="auto">${escapeHTML(t(side))} · A4 · 100% / Actual size${sides === 'both' ? ' · ' + escapeHTML(lang === 'ur' ? 'لمبے کنارے سے پلٹیں' : 'Flip on the long edge') : ''}</p></section>`);
     }
   }
   $('#print-output').innerHTML = pages.join('');
@@ -1455,10 +1813,11 @@ function printSheets(selection = printSelection) {
 function showPrint() {
   modalOpen('print', `<p class="modal-description">${escapeHTML(t('printHint'))}</p>` +
     selectField('print-scope', 'printCards', 'selected', ['selected', 'allCards']) +
-    selectField('print-sides', 'printSides', 'both', ['both', 'front', 'back']) + `<div class="modal-buttons">${modalButton('print', 'openPrint', true)}</div>`);
+    selectField('print-sides', 'printSides', 'both', ['both', 'front', 'back']) +
+    `<div class="field"><label class="check-label"><input type="checkbox" id="cut-marks">${escapeHTML(t('cutMarks'))}</label></div><div class="modal-buttons">${modalButton('print', 'openPrint', true)}</div>`);
   $('#modal-body').onclick = event => {
     if (event.target.closest('[data-action]')?.dataset.action !== 'print') return;
-    printSelection = { scope: $('#field-print-scope').value, sides: $('#field-print-sides').value };
+    printSelection = { scope: $('#field-print-scope').value, sides: $('#field-print-sides').value, marks: $('#cut-marks').checked };
     modal.close();
     printSheets();
     window.print();
