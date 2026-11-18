@@ -1,265 +1,1219 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Sami & Mushaf · Friendship Cards</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Design, save and print personalised friendship cards.">
+<title>Friendship Card Studio</title>
 <style>
-:root{font-family:"Segoe UI",Arial,sans-serif;color:#253640;background:#f6f5f1;font-synthesis:none}*{box-sizing:border-box}body{margin:0}.shell{max-width:1550px;margin:auto;padding:34px}header{margin-bottom:26px}.eyebrow{font-size:12px;letter-spacing:3px;color:#718a8a;font-weight:700}h1{font-family:Georgia,serif;font-size:38px;font-weight:400;margin:8px 0}header p{color:#667278;margin:6px 0;line-height:1.6}.workspace{display:grid;grid-template-columns:310px minmax(0,1fr);gap:30px;align-items:start}.controls{background:#fff;border:1px solid #e4e7e3;border-radius:16px;padding:22px}h2{font-size:17px;margin:0 0 16px}label{display:block;font-size:12px;font-weight:600;color:#63757d;margin:13px 0 5px}input,textarea,select{font:14px "Segoe UI",Arial,sans-serif;width:100%;border:1px solid #d9e0e0;border-radius:7px;padding:9px 10px;background:#fcfdfd;color:#20353f}textarea{resize:vertical;min-height:84px;line-height:1.6}input:focus,textarea:focus,select:focus{outline:2px solid #7db9cb;outline-offset:1px}details{border-top:1px solid #e5e9e7;margin-top:18px;padding-top:16px}summary{cursor:pointer;font-size:14px;font-weight:600}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:20px}button{font:600 13px "Segoe UI",Arial,sans-serif;border:1px solid #d0dadd;border-radius:8px;padding:10px 13px;color:#2c505d;background:#fff;cursor:pointer}button:hover{background:#ecf3f4}button.primary{background:#244f5a;color:white;border-color:#244f5a}button.primary:hover{background:#1a3e48}.hint{font-size:12px;line-height:1.65;color:#728087}.card-wrap{margin-bottom:28px}.card-title{display:flex;justify-content:space-between;align-items:center;gap:15px;margin:0 0 12px}.card-title h2{margin:0}.card-title span{font-size:12px;color:#819094}.card-surface{filter:drop-shadow(0 13px 16px #183a4816)}.card-surface svg{width:100%;height:auto;display:block;border-radius:22px}.card-tools{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:14px}.card-tools label{margin:0;font-size:12px}.upload{position:relative;overflow:hidden;display:inline-block;padding:10px 13px;background:white;border:1px solid #d0dadd;border-radius:8px;color:#2c505d;cursor:pointer}.upload input{position:absolute;inset:0;opacity:0;cursor:pointer}footer{margin:24px 0 0;color:#718087;font-size:12px;line-height:1.7}#toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#244f5a;color:#fff;padding:12px 20px;border-radius:12px;display:none;z-index:5}.print-note{display:none}@media(min-width:1450px){.previews{display:grid;grid-template-columns:1fr 1fr;gap:25px}.card-title{display:block}.card-title span{display:block;margin-top:5px}.card-surface svg{border-radius:15px}}@media(max-width:800px){.shell{padding:20px}.workspace{display:flex;flex-direction:column}.controls,.previews{width:100%}h1{font-size:32px}.card-title span{display:none}}@media print{@page{size:A4 portrait;margin:18mm}:root{background:#fff}html,body{background:white;margin:0}.shell{padding:0;max-width:none}header,.controls,.card-title,.card-tools,footer,#toast{display:none!important}.workspace,.previews{display:block}.card-wrap{margin:0 0 14mm;break-inside:avoid;width:85.6mm;height:54mm}.card-surface{filter:none;width:85.6mm;height:54mm}.card-surface svg{width:85.6mm;height:54mm;border-radius:3mm}.print-note{display:block;font:9pt Arial;color:#596e78;margin-top:8mm}*{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
-</style>
-
-<style>
-.side-heading{font-size:11px;letter-spacing:2px;font-weight:800;color:#365966;display:flex;align-items:center;gap:12px;margin-bottom:10px}.side-heading span{font-size:12px;letter-spacing:0;font-weight:400;color:#7a8a92}.back-heading{margin-top:26px}.print-sheets{display:none}.card-title{margin-bottom:20px}button:disabled{opacity:.65;cursor:wait}
-@media print{
- @page{size:A4 portrait;margin:0}
- :root,html,body{background:white!important;margin:0!important;padding:0!important}
- .shell,#toast{display:none!important}
- .print-sheets{display:block!important}
- .print-sheet{position:relative;width:210mm;height:297mm;break-after:page;overflow:hidden;background:white}
- .print-sheet:last-child{break-after:auto}
- .print-card{position:absolute;top:22mm;width:85.6mm;height:54mm}
- .print-card.left{left:12mm}.print-card.right{right:12mm}
- .print-card svg{display:block;width:85.6mm;height:54mm}
- .sheet-note{position:absolute;top:87mm;left:12mm;right:12mm;font:9pt Arial;line-height:1.6;color:#5a6b74}
+:root {
+  font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
+  color: #20322f;
+  background: #f5f6f0;
+  --green: #235749;
+  --dark: #194335;
+  --muted: #566961;
+  --border: #dbe4db;
+  --panel: #fff;
+  --pale: #edf4ee;
+  --shadow: 0 5px 24px #243b2710;
+  line-height: 1.5;
+}
+* { box-sizing: border-box; }
+body { margin: 0; min-width: 300px; }
+button, input, select, textarea { font: inherit; }
+button { cursor: pointer; }
+button:disabled { cursor: wait; opacity: .55; }
+button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible, a:focus-visible { outline: 3px solid #519783; outline-offset: 2px; }
+[hidden] { display: none !important; }
+h1, h2, h3, p { margin: 0; }
+.topbar { background: #fcfdf8; border-bottom: 1px solid var(--border); }
+.top-inner, .shell { max-width: 1540px; padding-inline: clamp(16px, 3.45vw, 52px); margin-inline: auto; }
+.top-inner { display: flex; justify-content: space-between; align-items: center; gap: 14px; min-height: 72px; }
+.brand { color: var(--dark); display: inline-flex; align-items: center; gap: 10px; text-decoration: none; font-size: 17px; font-weight: 800; white-space: nowrap; }
+.brand-mark { inline-size: 35px; block-size: 35px; display: grid; place-items: center; background: #e3efe4; border-radius: 10px; }
+.brand-muted { font-weight: 500; }
+.top-actions, .export-actions, .library-actions { display: flex; align-items: center; gap: 8px; }
+.save-status { color: var(--muted); font-size: 12px; padding-inline: 7px; }
+.save-status::before { content: '●'; color: #589679; margin-inline-end: 6px; font-size: 8px; vertical-align: 2px; }
+.save-status[data-error]::before { color: #a33947; }
+.button, .icon-button { border: 1px solid transparent; background: transparent; color: var(--green); display: inline-flex; justify-content: center; align-items: center; gap: 8px; border-radius: 9px; font-size: 13px; font-weight: 700; min-height: 38px; padding: 8px 12px; line-height: 1.3; }
+.button svg, .icon-button svg, .brand-mark svg, .size-label svg { width: 17px; height: 17px; flex: none; }
+.icon-button { min-width: 36px; padding: 7px; border-color: var(--border); }
+.primary { background: var(--green); color: #fff; border-color: var(--green); }
+.primary:hover { background: var(--dark); }
+.quiet:hover, .icon-button:hover { background: var(--pale); }
+.secondary { background: #fff; border-color: var(--border); }
+.secondary:hover { background: #f3f7f2; }
+.danger { color: #9a394c; }
+.shell { padding-block: 36px 22px; }
+.intro { display: flex; justify-content: space-between; align-items: end; gap: 18px; margin-bottom: 29px; }
+.eyebrow { color: #477261; font-size: 10px; font-weight: 800; letter-spacing: .15em; text-transform: uppercase; }
+.intro h1 { color: #1b382f; font-family: Georgia, 'Segoe UI', serif; font-weight: 500; font-size: clamp(29px, 4.1vw, 57px); line-height: 1.13; letter-spacing: -.038em; margin: 6px 0 8px; }
+.intro p, .panel-head p { color: var(--muted); font-size: 13px; }
+.intro .primary { padding: 11px 16px; white-space: nowrap; }
+.workspace { display: grid; grid-template-columns: minmax(175px, .83fr) minmax(360px, 2.6fr) minmax(235px, 1.1fr); align-items: start; gap: 16px; }
+.panel { min-width: 0; background: var(--panel); border: 1px solid var(--border); box-shadow: var(--shadow); border-radius: 16px; }
+.panel-head { padding: 16px; display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.panel-head h2 { font-size: 16px; font-weight: 750; overflow-wrap: anywhere; }
+.panel-head p { margin-top: 3px; font-size: 12px; }
+.library-list { padding: 0 10px 10px; display: grid; gap: 5px; max-height: 500px; overflow: auto; }
+.library-item { width: 100%; text-align: start; display: flex; gap: 10px; align-items: center; border: 1px solid transparent; background: transparent; border-radius: 9px; padding: 9px 7px; color: inherit; }
+.library-item:hover { background: #f5f8f4; }
+.library-item[aria-current="true"] { background: var(--pale); border-color: #d4e5d7; }
+.thumb { flex: 0 0 49px; height: 33px; border: 1px solid #bfcdc2; border-radius: 6px; display: grid; place-items: center; }
+.thumb svg { width: 19px; height: 19px; }
+.item-copy { min-width: 0; }
+.item-copy strong, .item-copy small { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; display: block; }
+.item-copy strong { color: #243a30; font-size: 12px; }
+.item-copy small { color: var(--muted); font-size: 11px; margin-top: 3px; }
+.library-actions { border-top: 1px solid var(--border); padding: 9px 7px; flex-wrap: wrap; }
+.library-actions .button { padding-inline: 7px; font-size: 11px; }
+.library-actions .button svg { width: 14px; height: 14px; }
+.canvas-title { min-width: 0; }
+.canvas-title .eyebrow { margin-bottom: 3px; }
+.canvas-title h2 { font-size: 18px; }
+.segmented { display: flex; padding: 3px; background: #f1f5ef; border-radius: 9px; gap: 1px; flex: none; }
+.segmented button { min-width: 42px; white-space: nowrap; border: 1px solid transparent; border-radius: 7px; background: transparent; color: var(--muted); padding: 5px 8px; min-height: 29px; font-size: 11px; font-weight: 700; }
+.segmented button[aria-pressed="true"] { background: #fff; color: var(--green); border-color: #dae5da; box-shadow: 0 1px 3px #21462b12; }
+.artboard { padding: clamp(14px, 2.35vw, 36px); min-height: 325px; display: grid; align-content: center; justify-items: center; gap: 25px; background-color: #edf2ea; background-image: radial-gradient(#a4b6a787 1px, transparent 1px); background-size: 17px 17px; border-block: 1px solid #e1e8df; }
+.preview-side { margin: 0; width: 100%; max-width: 780px; min-width: 0; }
+.preview-side svg { display: block; width: 100%; height: auto; filter: drop-shadow(0 9px 13px #182b2442); }
+.preview-side figcaption { margin-top: 9px; text-align: center; color: #405c50; font-size: 11px; font-weight: 700; }
+.canvas-footer { padding: 11px 14px; display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.size-label { display: flex; align-items: center; gap: 7px; color: var(--muted); font-size: 11px; white-space: nowrap; direction: ltr; }
+.editor-tabs { display: flex; border-block: 1px solid var(--border); padding: 0 11px; }
+.editor-tabs button { flex: 1; border: 0; border-bottom: 2px solid transparent; background: transparent; color: var(--muted); font-size: 12px; font-weight: 700; padding: 10px 4px; }
+.editor-tabs button[aria-pressed="true"] { border-bottom-color: var(--green); color: var(--green); }
+.editor { padding: 15px; }
+.editor label, .field-label { display: block; margin-bottom: 5px; color: #3e534a; font-size: 12px; font-weight: 700; }
+.field { margin-bottom: 12px; min-width: 0; }
+.field:last-child { margin-bottom: 0; }
+.field input:not([type="checkbox"]), .field select, .field textarea { width: 100%; min-width: 0; border: 1px solid #cfdcd2; border-radius: 7px; color: #253b31; background: #fcfdfb; font-size: 13px; padding: 7px 8px; }
+.field textarea { resize: vertical; min-height: 66px; }
+.field input[type="color"] { height: 39px; padding: 3px; }
+.field input[type="range"] { padding: 0; accent-color: var(--green); }
+.field input[type="checkbox"] { accent-color: var(--green); }
+.field .check-label { display: flex; align-items: center; gap: 8px; }
+.field-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.edit-note, .modal-description { color: var(--muted); font-size: 12px; margin-bottom: 12px; }
+.field-detail { margin-top: 13px; border-top: 1px solid var(--border); padding-top: 12px; }
+.field-detail summary { cursor: pointer; margin-bottom: 12px; font-size: 12px; font-weight: 700; }
+.swatches { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-bottom: 13px; }
+.swatch { border: 1px solid var(--border); border-radius: 8px; background: #fff; padding: 6px 2px; font-size: 10px; font-weight: 650; color: #2b4439; }
+.swatch i { display: block; width: 21px; height: 21px; border-radius: 50%; border: 1px solid #788c7b80; margin: 0 auto 4px; }
+.swatch[aria-pressed="true"] { background: var(--pale); outline: 1px solid var(--green); }
+.photo-file { width: 100%; margin-bottom: 9px; color: var(--muted); font-size: 12px; }
+.photo-file::file-selector-button { padding: 6px 8px; border: 1px solid var(--border); color: var(--green); font: inherit; background: #fff; border-radius: 6px; margin-inline-end: 8px; }
+.footer { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding-top: 12px; color: var(--muted); font-size: 12px; }
+dialog { width: min(540px, calc(100% - 28px)); max-height: calc(100dvh - 30px); overflow: auto; border: 1px solid var(--border); border-radius: 16px; box-shadow: 0 24px 75px #152a274d; color: inherit; padding: 0; }
+dialog::backdrop { background: #142c266b; }
+.modal-head { display: flex; justify-content: space-between; align-items: center; padding: 17px 19px; border-bottom: 1px solid var(--border); gap: 16px; }
+.modal-head h2 { font-size: 19px; }
+.modal-body { padding: 18px 19px; }
+.modal-options { display: grid; gap: 8px; margin-bottom: 12px; }
+.option { padding: 10px 12px; text-align: start; border: 1px solid var(--border); background: #fff; color: var(--green); border-radius: 8px; display: flex; align-items: center; gap: 12px; }
+.option:hover { background: var(--pale); }
+.option strong, .option small { display: block; }
+.option strong { font-size: 13px; }
+.option small { color: var(--muted); font-size: 12px; margin-top: 2px; }
+.option svg { width: 22px; height: 22px; flex: none; }
+.modal-buttons { display: flex; gap: 8px; justify-content: end; flex-wrap: wrap; }
+.help-list { padding-inline-start: 22px; font-size: 13px; }
+.help-list li { margin-bottom: 9px; }
+#toast { position: fixed; z-index: 10; inset-block-end: 18px; inset-inline-start: 50%; translate: -50% 0; background: #234e41; color: #fff; padding: 11px 16px; border-radius: 9px; width: max-content; max-width: calc(100vw - 24px); box-shadow: 0 4px 19px #213c3080; font-size: 13px; }
+[dir="rtl"] #toast { translate: 50% 0; }
+[dir="rtl"] .intro h1 { font-family: 'Segoe UI', Tahoma, Arial, sans-serif; letter-spacing: 0; line-height: 1.5; }
+[dir="rtl"] .eyebrow { letter-spacing: 0; }
+.brand { direction: ltr; }
+#print-output { display: none; }
+@media (max-width: 1010px) {
+  .workspace { grid-template-columns: minmax(0, 1.8fr) minmax(222px, 1fr); }
+  .library { grid-column: 1 / -1; display: flex; align-items: center; }
+  .library .panel-head { padding: 10px; }
+  .library-list { display: flex; flex: 1; overflow-x: auto; padding-block: 7px; }
+  .library-item { min-width: 145px; }
+  .library-actions { border-top: 0; }
+}
+@media (max-width: 650px) {
+  .top-inner { min-height: 59px; gap: 8px; }
+  .top-actions { gap: 1px; }
+  .top-actions .button { padding-inline: 6px; font-size: 11px; }
+  .top-actions .button svg, .save-status { display: none; }
+  .brand { font-size: 13px; gap: 6px; }
+  .brand-mark { inline-size: 28px; block-size: 28px; }
+  .shell { padding-block-start: 23px; }
+  .intro { align-items: flex-start; flex-direction: column; margin-bottom: 16px; }
+  .workspace { display: flex; flex-direction: column; gap: 12px; }
+  .panel { width: 100%; }
+  .library { flex-wrap: wrap; }
+  .library .panel-head { width: 100%; }
+  .library-list { flex-basis: 100%; padding-top: 0; }
+  .library-actions { padding: 2px 8px 6px; }
+  .canvas-head { padding: 11px; }
+  .artboard { min-height: 0; }
+  .footer { align-items: start; }
+}
+@page { size: A4 portrait; margin: 0; }
+@media print {
+  :root, body { background: #fff; }
+  body > :not(#print-output) { display: none !important; }
+  #print-output { display: block; direction: ltr; }
+  .print-sheet { width: 210mm; height: 297mm; position: relative; overflow: hidden; break-after: page; }
+  .print-sheet:last-child { break-after: auto; }
+  .print-card { width: 85.6mm; height: 54mm; position: absolute; }
+  .print-card svg { width: 100%; height: 100%; display: block; }
+  .print-note { position: absolute; top: 270mm; left: 12mm; right: 12mm; color: #3f594d; font: 9pt Arial, sans-serif; }
+  * { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
 }
 </style>
 </head>
 <body>
-<main class="shell">
-<header><div class="eyebrow">MADE FOR THE TWO OF YOU</div><h1>Your forever friendship, on a card.</h1><p>Two cards, each with a front and back. Edit the details, add your photos, and download either side.</p></header>
-<div class="workspace">
-<aside class="controls"><h2>Make them yours</h2>
-<label for="nameA">Your name</label><input id="nameA" maxlength="36">
-<label for="nameB">Your best friend's name</label><input id="nameB" maxlength="36">
-<label for="themeA">Card 1 colour</label><select id="themeA"><option value="blue">Sky blue</option><option value="lilac">Soft lavender</option><option value="rose">Blush pink</option><option value="mint">Mint green</option></select>
-<label for="themeB">Card 2 colour</label><select id="themeB"><option value="lilac">Soft lavender</option><option value="blue">Sky blue</option><option value="rose">Blush pink</option><option value="mint">Mint green</option></select>
-<details open><summary>Your friendship</summary>
-<label for="level">Friendship level</label><input id="level" maxlength="25">
-<label for="licenseType">License type</label><input id="licenseType" maxlength="32">
-<label for="issued">Issued on</label><input id="issued" maxlength="22">
-<label for="expiry">Valid until</label><input id="expiry" maxlength="22">
-<label for="caption">Photo caption</label><input id="caption" maxlength="28">
-<label for="quote">Bottom message</label><input id="quote" maxlength="76">
-</details>
-<details><summary>The bestie code</summary><label for="codeTitle">Code heading</label><input id="codeTitle" maxlength="20"><label for="rules">Six promises, one per line</label><textarea id="rules" rows="6"></textarea></details>
-<details open><summary>Back side: messages & promises</summary>
-<label for="backHeading">Back heading</label><input id="backHeading" maxlength="28">
-<label for="backSubtitle">Back subtitle</label><input id="backSubtitle" maxlength="64">
-<label for="noteTitle">Message heading</label><input id="noteTitle" maxlength="32">
-<label for="backNoteA">Message on Sami's card</label><textarea id="backNoteA" maxlength="220" rows="4"></textarea>
-<label for="backNoteB">Message on Mushaf's card</label><textarea id="backNoteB" maxlength="220" rows="4"></textarea>
-<label for="backPromisesTitle">Promises heading</label><input id="backPromisesTitle" maxlength="24">
-<label for="backRules">Five back-side promises, one per line</label><textarea id="backRules" rows="5" maxlength="300"></textarea>
-<label for="signatureA">Sami's signature text</label><input id="signatureA" maxlength="36">
-<label for="signatureB">Mushaf's signature text</label><input id="signatureB" maxlength="36">
-<label for="backQuote">Back bottom message</label><input id="backQuote" maxlength="76">
-</details>
-<details><summary>Titles & small details</summary><div id="fineFields"></div></details>
-<div class="actions"><button class="primary" id="save">Save editable HTML</button><button id="print">Print fronts & backs</button></div>
-<p class="hint">“Save editable HTML” downloads a complete index.html with all your changes and photos. Open it to edit again, or upload it to replace index.html on GitHub.</p><p class="hint">Printing uses two A4 pages: fronts on page 1, matching backs on page 2. Print double-sided, flip on the long edge, at 100% / Actual size. Enable background graphics and turn off headers and footers. Each card is 85.6 × 54 mm.</p>
-</aside>
-<section class="previews" aria-label="Both sides of your friendship cards">
-<article class="card-wrap"><div class="card-title"><h2 id="titleA">For Sami ullah</h2><span>01 / SKY BLUE</span></div>
- <div class="side-heading">FRONT <span>The friendship license</span></div>
- <div class="card-surface" id="cardA"></div>
- <div class="card-tools"><label class="upload">Add / replace photo<input type="file" accept="image/*" data-photo="0"></label><button data-remove="0">Use doodles</button><button data-png="0" data-side="front">Front PNG</button><button data-svg="0" data-side="front">Front SVG</button></div>
- <div class="side-heading back-heading">BACK <span>Your forever pact</span></div>
- <div class="card-surface" id="backA"></div>
- <div class="card-tools"><button data-png="0" data-side="back">Back PNG</button><button data-svg="0" data-side="back">Back SVG</button></div>
- </article>
-<article class="card-wrap"><div class="card-title"><h2 id="titleB">For Mushaf Ali Tanoli</h2><span>02 / SOFT LAVENDER</span></div>
- <div class="side-heading">FRONT <span>The friendship license</span></div>
- <div class="card-surface" id="cardB"></div>
- <div class="card-tools"><label class="upload">Add / replace photo<input type="file" accept="image/*" data-photo="1"></label><button data-remove="1">Use doodles</button><button data-png="1" data-side="front">Front PNG</button><button data-svg="1" data-side="front">Front SVG</button></div>
- <div class="side-heading back-heading">BACK <span>Your forever pact</span></div>
- <div class="card-surface" id="backB"></div>
- <div class="card-tools"><button data-png="1" data-side="back">Back PNG</button><button data-svg="1" data-side="back">Back SVG</button></div>
- </article>
-</section></div>
-<div class="print-note">FRIENDSHIP LICENSE · Sami ullah & Mushaf Ali Tanoli<br>Print at actual size (100%). Each card measures 85.6 × 54 mm. Cut around the rounded edges.</div>
-<footer>Two matching keepsakes. Four beautiful sides. PNG files are ready to share; SVG files remain editable. Save the complete HTML whenever you want to keep your latest changes.</footer>
-</main><div class="print-sheets" aria-hidden="true"></div><div id="toast" role="status"></div>
-<script id="card-state" type="application/json">{"nameA":"Sami ullah","nameB":"Mushaf Ali Tanoli","themeA":"blue","themeB":"lilac","level":"INFINITY ∞","licenseType":"BEST FRIENDS FOR LIFE","issued":"13 NOV 2026","expiry":"NEVER EXPIRES","caption":"Besties forever","quote":"Different names. One forever friendship.","codeTitle":"THE BESTIE CODE","rules":"Keep our secrets\nAlways have your back\nShare the last bite\nReply to random texts\nLaugh at silly things\nMake more memories","heading":"FRIENDSHIP LICENSE","subtitle":"OFFICIAL BESTIES IDENTIFICATION CARD","holderLabel":"LICENSE HOLDER","friendLabel":"BEST FRIEND","levelLabel":"FRIENDSHIP LEVEL","typeLabel":"LICENSE TYPE","issuedLabel":"ISSUED ON","expiryLabel":"VALID UNTIL","approved":"Approved by the universe","seal":"CERTIFIED","sealTop":"BEST FRIENDS","sealBottom":"LIFETIME CLUB","photoLabel":"YOU + ME","footnote":"JUST FOR FRIENDSHIP & FUN","photos":[null,null],"backHeading":"OUR FOREVER PACT","backSubtitle":"Two besties. A lifetime of memories.","noteTitle":"A note for you","backNoteA":"Life is better with you in it. Wherever we go, whatever changes, you will always have a friend in me.","backNoteB":"From our random laughs to our biggest dreams, every memory is better with you. Here is to a friendship that stays.","backPromisesTitle":"OUR PROMISES","backRules":"Show up for each other\nRespect our differences\nCelebrate every little win\nStay close, even miles apart\nChoose this friendship, always","signatureA":"Sami ullah","signatureB":"Mushaf Ali Tanoli","backQuote":"One friendship. A million memories. Forever to go.","backOwnerLabel":"THIS CARD BELONGS TO","backFriendLabel":"FOREVER TEAMMATE","signatureLabelA":"CARD HOLDER","signatureLabelB":"BEST FRIEND","backFootnote":"A LITTLE CARD. A LIFETIME OF FRIENDSHIP."}</script>
+<header class="topbar">
+  <div class="top-inner">
+    <a class="brand" href="#studio" aria-label="Friendship Card Studio"><span class="brand-mark" data-icon="heart"></span><span>Friendship<span class="brand-muted"> Studio</span></span></a>
+    <div class="top-actions">
+      <span class="save-status" id="save-status" role="status"></span>
+      <button type="button" class="button quiet" id="language" aria-label="Switch language">اردو</button>
+      <button type="button" class="button quiet" id="import" data-icon="upload" data-i="import"></button>
+      <button type="button" class="button secondary" id="project" data-icon="folder" data-i="project"></button>
+    </div>
+  </div>
+</header>
+<main id="studio" class="shell">
+  <section class="intro" aria-labelledby="page-title">
+    <div><div class="eyebrow" data-i="workspace"></div><h1 id="page-title" data-i="headline"></h1><p data-i="intro"></p></div>
+    <button type="button" class="button primary" id="new-card" data-icon="plus" data-i="newCard"></button>
+  </section>
+  <div class="workspace">
+    <aside class="panel library" aria-labelledby="library-heading">
+      <div class="panel-head"><div><h2 id="library-heading" data-i="myCards"></h2><p id="card-count"></p></div><button type="button" class="icon-button" id="library-add" data-icon="plus" data-label="newCard"></button></div>
+      <div id="library-list" class="library-list"></div>
+      <div class="library-actions"><button class="button quiet" id="duplicate" data-icon="copy" data-i="duplicate"></button><button class="button quiet danger" id="delete" data-icon="trash" data-i="delete"></button></div>
+    </aside>
+    <section class="panel canvas" aria-labelledby="preview-heading">
+      <div class="panel-head canvas-head"><div class="canvas-title"><div class="eyebrow" data-i="preview"></div><h2 id="preview-heading" dir="auto"></h2></div>
+        <div class="segmented sides" aria-label="Card side"><button type="button" data-view="front" data-i="front"></button><button type="button" data-view="back" data-i="back"></button><button type="button" data-view="both" data-i="both"></button></div>
+      </div>
+      <div id="artboard" class="artboard"></div>
+      <div class="canvas-footer">
+        <div class="size-label"><span data-icon="ruler"></span><span>85.6 × 54 mm</span></div>
+        <div class="export-actions"><button class="button quiet" id="print" data-icon="printer" data-i="print"></button><button class="button primary" id="export" data-icon="download" data-i="export"></button></div>
+      </div>
+    </section>
+    <aside class="panel inspector" aria-labelledby="edit-heading">
+      <div class="panel-head"><div><h2 id="edit-heading" data-i="edit"></h2><p id="edit-description"></p></div></div>
+      <div class="editor-tabs" aria-label="Editor tools"><button data-tab="text" data-i="text"></button><button data-tab="design" data-i="design"></button><button data-tab="photo" data-i="photo"></button></div>
+      <div id="editor" class="editor"></div>
+    </aside>
+  </div>
+  <footer class="footer"><span data-i="localNotice"></span><button class="button quiet" id="help" data-i="help"></button></footer>
+</main>
+<div id="print-output" aria-hidden="true"></div>
+<div id="toast" role="status" aria-live="polite" hidden></div>
+<input type="file" id="import-file" accept=".json,.html,.htm,application/json,text/html" hidden>
+<dialog id="modal" aria-labelledby="modal-title">
+  <div class="modal-head"><h2 id="modal-title"></h2><form method="dialog"><button class="icon-button" data-icon="close" data-label="close"></button></form></div>
+  <div id="modal-body" class="modal-body"></div>
+</dialog>
+<script id="studio-data" type="application/json">null</script>
 <script>
-const state=JSON.parse(document.getElementById('card-state').textContent);
-const palettes={blue:{ink:'#25546d',accent:'#438eae',soft:'#deeff8',base:'#f5fbff',edge:'#a9d4e7',blush:'#b2deed'},lilac:{ink:'#66518d',accent:'#8c71b5',soft:'#ece3f8',base:'#fcf9ff',edge:'#d0bfe8',blush:'#d8c4ee'},rose:{ink:'#913d64',accent:'#c65a8d',soft:'#f9e2ed',base:'#fff8fb',edge:'#e9b3ce',blush:'#f2c7dd'},mint:{ink:'#2e6b60',accent:'#5d9f8e',soft:'#e0f2eb',base:'#f7fffc',edge:'#b0d9c8',blush:'#b9e2ce'}};
-const fine={backOwnerLabel:'Back holder label',backFriendLabel:'Back friend label',signatureLabelA:'Holder signature label',signatureLabelB:'Friend signature label',backFootnote:'Back small footer',heading:'Main title',subtitle:'Subtitle',holderLabel:'Holder label',friendLabel:'Best friend label',levelLabel:'Level label',typeLabel:'Type label',issuedLabel:'Issue label',expiryLabel:'Expiry label',approved:'Approval line',seal:'Stamp text',sealTop:'Stamp top',sealBottom:'Stamp bottom',photoLabel:'Doodle caption',footnote:'Small footer'};
-document.getElementById('fineFields').replaceChildren();
-for(const [key,title] of Object.entries(fine)){const l=document.createElement('label');l.htmlFor=key;l.textContent=title;const i=document.createElement('input');i.id=key;i.maxLength=key==='heading'?28:key==='subtitle'?48:38;document.getElementById('fineFields').append(l,i)}
-const esc=v=>String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&apos;'}[c]));
-function txt(x,y,text,size=22,weight=600,extra=''){return `<text x="${x}" y="${y}" font-size="${size}" font-weight="${weight}" ${extra}>${esc(text)}</text>`}
-function fit(text,normal,max){return Math.min(normal,max/Math.max(1,[...String(text)].length)*1.8)}
-function heart(x,y,s,color,rot=0){return `<path d="M0 5C-13-7-26 9 0 25C26 9 13-7 0 5Z" fill="${color}" transform="translate(${x} ${y}) rotate(${rot}) scale(${s})"/>`}
-function star(x,y,s,c){return `<path d="M0-13Q1-1 11 0Q1 1 0 13Q-1 1-11 0Q-1-1 0-13Z" fill="${c}" transform="translate(${x} ${y}) scale(${s})"/>`}
-function pals(x,y,scale,p){return `<g transform="translate(${x} ${y}) scale(${scale})" stroke="${p.ink}" stroke-width="3.2" stroke-linejoin="round"><path d="M-85 39V-9C-85-63-12-68-12-12V38Q-20 49-29 39Q-40 50-50 40Q-64 50-73 40Q-80 48-85 39Z" fill="#fff"/><path d="M-10 37V-17C-10-72 64-72 64-17V38Q56 48 47 39Q34 50 24 39Q12 48 4 39Q-5 47-10 37Z" fill="#fff"/><path d="M-32 9Q-13 26 9 9" fill="none" stroke-linecap="round"/><ellipse cx="-63" cy="-14" rx="3" ry="4" fill="${p.ink}" stroke="none"/><ellipse cx="-41" cy="-14" rx="3" ry="4" fill="${p.ink}" stroke="none"/><path d="M-57-1Q-51 5-46-1" fill="none" stroke-width="2.4" stroke-linecap="round"/><ellipse cx="14" cy="-23" rx="3" ry="4" fill="${p.ink}" stroke="none"/><ellipse cx="36" cy="-23" rx="3" ry="4" fill="${p.ink}" stroke="none"/><path d="M20-9Q25-4 30-9" fill="none" stroke-width="2.4" stroke-linecap="round"/><ellipse cx="-69" cy="-3" rx="7" ry="4" fill="#f4b8cf" stroke="none" opacity=".65"/><ellipse cx="42" cy="-12" rx="7" ry="4" fill="#f4b8cf" stroke="none" opacity=".65"/></g>`}
-function cardSVG(index,scope="preview"){
-const p=palettes[index?state.themeB:state.themeA],owner=index?state.nameB:state.nameA,friend=index?state.nameA:state.nameB,id='c'+index+'-'+scope;
-const label=(x,y,t)=>txt(x,y,t,15,700,`fill="${p.accent}" letter-spacing="1.8"`);
-const rules=state.rules.split('\n').filter(Boolean).slice(0,6);
-let bars='',bx=0;for(let i=0;i<55;i++){let w=[2,3,1,4,2,1,3][(i*3+index)%7];bars+=`<rect x="${bx}" y="0" width="${w}" height="25"/>`;bx+=w+[2,1,2,3][i%4]}
-return `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1200 757" width="1200" height="757" role="img" aria-label="Friendship license for ${esc(owner)}"><defs><linearGradient id="${id}bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="${p.soft}"/><stop offset=".48" stop-color="${p.base}"/><stop offset="1" stop-color="${p.soft}"/></linearGradient><radialGradient id="${id}glow"><stop stop-color="${p.blush}" stop-opacity=".7"/><stop offset="1" stop-color="${p.blush}" stop-opacity="0"/></radialGradient><clipPath id="${id}clip"><rect x="1" y="1" width="1198" height="755" rx="36"/></clipPath><clipPath id="${id}photo"><rect x="89" y="189" width="248" height="334" rx="5"/></clipPath></defs>
-<g clip-path="url(#${id}clip)" font-family="'Segoe UI',Arial,sans-serif" fill="${p.ink}">
-<rect width="1200" height="757" fill="url(#${id}bg)"/>
-<ellipse cx="40" cy="30" rx="400" ry="280" fill="url(#${id}glow)"/><ellipse cx="1190" cy="615" rx="390" ry="310" fill="url(#${id}glow)"/>
-<path d="M-90 635Q100 548 250 653T655 704" stroke="${p.edge}" stroke-width="1.3" fill="none" opacity=".55"/><path d="M810-45Q925 120 1240 120" stroke="${p.edge}" stroke-width="1.5" fill="none" opacity=".5"/>
-<rect x="15" y="15" width="1170" height="727" rx="26" fill="none" stroke="${p.edge}" stroke-width="1.4"/>
-${txt(58,84,state.heading,fit(state.heading,52,790),800,'letter-spacing="2"')}
-${txt(60,119,state.subtitle,16,700,'letter-spacing="2.7"')}
-<path d="M60 145H1136" stroke="${p.edge}" stroke-width="1.2"/>
-${pals(1052,89,.68,p)}${heart(1060,26,.65,'#df84a7',-10)}${star(1150,92,.6,p.accent)}
-<g transform="translate(38 517) rotate(-90)" fill="${p.ink}" opacity=".8">${bars}</g>
-<rect x="77" y="176" width="272" height="419" rx="8" fill="#fff" stroke="${p.edge}" stroke-width="1.3" transform="rotate(-2 213 382)"/>
-<rect x="89" y="189" width="248" height="334" rx="5" fill="${p.soft}"/>
-${state.photos[index]?`<image x="89" y="189" width="248" height="334" preserveAspectRatio="xMidYMid slice" href="${esc(state.photos[index])}" clip-path="url(#${id}photo)"/>`:`<g clip-path="url(#${id}photo)"><circle cx="207" cy="332" r="106" fill="${p.base}" opacity=".75"/>${star(115,235,.6,p.accent)}${star(307,442,.6,p.accent)}${heart(275,259,.8,'#e08aa9',15)}${heart(138,425,.48,'#e08aa9',-15)}${pals(224,363,1.1,p)}${txt(213,477,state.photoLabel,22,700,'text-anchor="middle" letter-spacing="3"')}</g>`}
-${txt(213,568,state.caption,fit(state.caption,31,250),400,`font-family="'Segoe Print','Comic Sans MS',cursive" text-anchor="middle" transform="rotate(-2 213 568)"`)}
-${label(391,195,state.holderLabel)}
-${txt(390,237,owner,fit(owner,36,430),750)}
-${label(391,281,state.friendLabel)}
-${txt(390,317,friend,fit(friend,30,430),650)}
-<path d="M391 341H831" stroke="${p.edge}" stroke-width="1.2"/>
-${label(391,376,state.levelLabel)}
-${txt(390,413,state.level,fit(state.level,29,380),750)}${heart(803,389,.52,'#de88a8',10)}
-${label(391,459,state.typeLabel)}
-${txt(390,494,state.licenseType,fit(state.licenseType,24,425),750)}
-${label(391,547,state.issuedLabel)}${txt(390,577,state.issued,fit(state.issued,22,225),750)}
-${label(650,547,state.expiryLabel)}${txt(649,577,state.expiry,fit(state.expiry,21,205),750)}
-${txt(391,617,state.approved,18,500,'font-style="italic"')}${star(804,611,.5,p.accent)}
-<g transform="translate(1013 235) rotate(-13)"><circle r="73" stroke="${p.accent}" stroke-width="2" fill="none" opacity=".75"/><circle r="65" stroke="${p.accent}" stroke-width="1" fill="none" stroke-dasharray="2 4"/><circle r="51" stroke="${p.accent}" stroke-width="1" fill="none"/>${txt(0,-36,state.sealTop,12,750,'text-anchor="middle" letter-spacing="1.8"')}${heart(0,-28,.7,p.accent)}<rect x="-84" y="-7" width="168" height="34" rx="2" fill="${p.accent}"/>${txt(0,17,state.seal,fit(state.seal,23,160),800,'fill="#fff" text-anchor="middle" letter-spacing="1.5"')}${txt(0,49,state.sealBottom,11,750,'text-anchor="middle" letter-spacing="1.7"')}</g>
-<rect x="886" y="338" width="257" height="278" rx="15" fill="#fff" fill-opacity=".55" stroke="${p.edge}" stroke-width="1.8"/>
-${txt(1014,373,state.codeTitle,fit(state.codeTitle,18,231),800,'text-anchor="middle" letter-spacing="1.2"')}
-<path d="M905 390H1124" stroke="${p.edge}"/>
-${rules.map((r,i)=>`${heart(910,407+i*33,.28,p.accent)}${txt(929,419+i*33,r,fit(r,16,196),600)}`).join('')}
-${txt(60,643,`BFF-00${index+1}`,14,750,'letter-spacing="2"')}${txt(1139,643,state.footnote,12,600,'text-anchor="end" letter-spacing="1.5"')}
-<rect x="0" y="669" width="1200" height="88" fill="${p.accent}"/>
-${heart(80,696,.5,'#fff',-12)}${heart(1120,696,.5,'#fff',12)}
-${txt(600,722,state.quote,fit(state.quote,28,980),650,'text-anchor="middle" fill="#fff"')}
-</g><rect x="1" y="1" width="1198" height="755" rx="36" fill="none" stroke="${p.edge}" stroke-width="2"/></svg>`;
-}
-const measureContext=document.createElement('canvas').getContext('2d');
-function wrapText(text,width,size){
- measureContext.font=`500 ${size}px "Segoe UI",Arial,sans-serif`;
- const lines=[];
- for(const paragraph of String(text).split('\n')){
-  let line='';
-  for(const word of paragraph.split(/\s+/).filter(Boolean)){
-   if(measureContext.measureText(word).width>width){
-    if(line){lines.push(line);line=''}
-    for(const char of word){if(line&&measureContext.measureText(line+char).width>width){lines.push(line);line=''}line+=char}
-   }else if(line&&measureContext.measureText(line+' '+word).width>width){lines.push(line);line=word}
-   else line+=(line?' ':'')+word;
-  }
-  lines.push(line);
- }
- return lines;
-}
-function paragraph(x,y,text,width,size,maxLines,lineHeight,extra=''){
- let lines=wrapText(text,width,size),chosen=size;
- while(lines.length>maxLines&&chosen>5){chosen-=.5;lines=wrapText(text,width,chosen)}
- return lines.map((line,i)=>txt(x,y+i*lineHeight,line,chosen,500,extra)).join('');
-}
-function backSVG(index,scope='preview'){
- const p=palettes[index?state.themeB:state.themeA],owner=index?state.nameB:state.nameA,friend=index?state.nameA:state.nameB,id='b'+index+'-'+scope;
- const signature=index?state.signatureB:state.signatureA,friendSignature=index?state.signatureA:state.signatureB;
- const promises=state.backRules.split('\n').filter(Boolean).slice(0,5);
- const label=(x,y,t)=>txt(x,y,t,15,750,`fill="${p.accent}" letter-spacing="1.8"`);
- return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 757" width="1200" height="757" role="img" aria-label="Back of friendship card for ${esc(owner)}"><defs><linearGradient id="${id}bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="${p.base}"/><stop offset="1" stop-color="${p.soft}"/></linearGradient><radialGradient id="${id}glow"><stop stop-color="${p.blush}" stop-opacity=".7"/><stop offset="1" stop-color="${p.blush}" stop-opacity="0"/></radialGradient><clipPath id="${id}clip"><rect x="1" y="1" width="1198" height="755" rx="36"/></clipPath></defs>
- <g clip-path="url(#${id}clip)" font-family="'Segoe UI',Arial,sans-serif" fill="${p.ink}">
- <rect width="1200" height="757" fill="url(#${id}bg)"/><ellipse cx="60" cy="710" rx="450" ry="360" fill="url(#${id}glow)"/><ellipse cx="1150" cy="30" rx="360" ry="280" fill="url(#${id}glow)"/>
- <path d="M-25 585Q180 460 355 640T800 690M820-20Q970 140 1225 105" fill="none" stroke="${p.edge}" stroke-width="1.3" opacity=".65"/>
- <rect x="15" y="15" width="1170" height="727" rx="26" fill="none" stroke="${p.edge}" stroke-width="1.4"/>
- ${txt(58,84,state.backHeading,fit(state.backHeading,48,810),800,'letter-spacing="2"')}
- ${txt(60,120,state.backSubtitle,fit(state.backSubtitle,21,800),500)}
- ${pals(1052,89,.68,p)}${heart(1060,26,.65,'#df84a7',-10)}${star(1150,92,.6,p.accent)}
- <path d="M60 145H1136" stroke="${p.edge}" stroke-width="1.2"/>
- ${label(63,192,state.backOwnerLabel)}
- ${txt(61,237,owner,fit(owner,38,700),750)}
- ${label(63,282,state.backFriendLabel)}
- ${txt(61,322,friend,fit(friend,32,700),650)}
- ${heart(748,234,.65,'#de88a8',12)}${star(781,311,.6,p.accent)}
- <path d="M63 347H777" stroke="${p.edge}" stroke-width="1.2"/>
- ${txt(62,386,state.noteTitle,fit(state.noteTitle,27,680),600,`font-family="'Segoe Print','Comic Sans MS',cursive"`)}
- ${paragraph(63,427,index?state.backNoteB:state.backNoteA,704,26,4,33)}
- ${txt(63,592,signature,fit(signature,28,325),500,`font-family="'Segoe Print','Comic Sans MS',cursive"`)}
- ${txt(439,592,friendSignature,fit(friendSignature,28,337),500,`font-family="'Segoe Print','Comic Sans MS',cursive"`)}
- <path d="M63 604H387M439 604H777" stroke="${p.accent}" stroke-width="1.2"/>
- ${label(63,630,state.signatureLabelA)}${label(439,630,state.signatureLabelB)}
- <rect x="833" y="176" width="310" height="454" rx="18" fill="#fff" fill-opacity=".6" stroke="${p.edge}" stroke-width="1.8"/>
- ${txt(988,215,state.backPromisesTitle,fit(state.backPromisesTitle,21,267),800,'text-anchor="middle" letter-spacing="1.5"')}
- <path d="M856 233H1120" stroke="${p.edge}" stroke-width="1.2"/>
- ${promises.map((r,i)=>`${heart(863,261+i*66,.35,p.accent)}${paragraph(886,273+i*66,r,235,20,2,25)}`).join('')}
- ${txt(988,608,'BFF-00'+(index+1)+' / FOREVER',13,750,'text-anchor="middle" letter-spacing="2"')}
- ${txt(1138,653,state.backFootnote,12,650,'text-anchor="end" letter-spacing="1.4"')}
- <rect x="0" y="669" width="1200" height="88" fill="${p.accent}"/>
- ${heart(80,696,.5,'#fff',-12)}${heart(1120,696,.5,'#fff',12)}
- ${txt(600,722,state.backQuote,fit(state.backQuote,27,980),650,'text-anchor="middle" fill="#fff"')}
- </g><rect x="1" y="1" width="1198" height="755" rx="36" fill="none" stroke="${p.edge}" stroke-width="2"/></svg>`;
-}
-function sideSVG(i,side='front',scope='preview'){return side==='back'?backSVG(i,scope):cardSVG(i,scope)}
-function preparePrint(){
- document.querySelector('.print-sheets').innerHTML=`<div class="print-sheet"><div class="print-card left">${cardSVG(0,'print')}</div><div class="print-card right">${cardSVG(1,'print')}</div><div class="sheet-note"><strong>PAGE 1 / FRONTS</strong><br>Print both pages double-sided on A4, flip on the long edge, at Actual Size (100%).<br>Each card is 85.6 × 54 mm. Enable background graphics and turn off headers and footers.</div></div><div class="print-sheet"><div class="print-card left">${backSVG(1,'print')}</div><div class="print-card right">${backSVG(0,'print')}</div><div class="sheet-note"><strong>PAGE 2 / BACKS</strong><br>The cards are in reverse order so the backs line up with the fronts when printed double-sided.<br>After printing, cut around the rounded card edges.</div></div>`;
-}
-function render(){
- document.title=state.nameA+' & '+state.nameB+' | Friendship Cards';
- document.querySelector('label[for="backNoteA"]').textContent='Message on '+state.nameA+"'s card";
- document.querySelector('label[for="backNoteB"]').textContent='Message on '+state.nameB+"'s card";
- document.querySelector('label[for="signatureA"]').textContent=state.nameA+"'s signature text";
- document.querySelector('label[for="signatureB"]').textContent=state.nameB+"'s signature text";
- ['A','B'].forEach((letter,i)=>{
-  document.getElementById('card'+letter).innerHTML=cardSVG(i);
-  document.getElementById('back'+letter).innerHTML=backSVG(i);
-  document.getElementById('title'+letter).textContent='For '+(i?state.nameB:state.nameA);
- });
- document.querySelectorAll('.card-title span').forEach((el,i)=>el.textContent=`0${i+1} / ${({blue:'SKY BLUE',lilac:'SOFT LAVENDER',rose:'BLUSH PINK',mint:'MINT GREEN'})[i?state.themeB:state.themeA]}`);
- preparePrint();
-}
-for(const [key,val] of Object.entries(state)){
- const el=document.getElementById(key);
- if(el){el.value=val;el.addEventListener('input',()=>{
-  state[key]=el.value;
-  if(key==='nameA'||key==='nameB'){
-   const sig=key==='nameA'?'signatureA':'signatureB';
-   if(state[sig]===el.dataset.previous){state[sig]=el.value;document.getElementById(sig).value=el.value}
-   el.dataset.previous=el.value;
-  }
-  render();
- });if(key==='nameA'||key==='nameB')el.dataset.previous=val}
-}
-function toast(text){const el=document.getElementById('toast');el.textContent=text;el.style.display='block';setTimeout(()=>el.style.display='none',3200)}
-function download(blob,name){const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),5000)}
-function filename(i,side='front'){return (i?state.nameB:state.nameA).trim().replace(/[^\p{L}\p{N}]+/gu,'-')+'-Friendship-Card-'+(side==='back'?'Back':'Front')}
-document.querySelectorAll('[data-photo]').forEach(el=>el.addEventListener('change',async()=>{
- if(!el.files[0])return;
- try{const bitmap=await createImageBitmap(el.files[0]),scale=Math.min(1,1600/Math.max(bitmap.width,bitmap.height)),c=document.createElement('canvas');c.width=Math.round(bitmap.width*scale);c.height=Math.round(bitmap.height*scale);c.getContext('2d').drawImage(bitmap,0,0,c.width,c.height);state.photos[Number(el.dataset.photo)]=c.toDataURL('image/jpeg',.92);bitmap.close();render();toast('Photo added. Save the editable HTML to keep it.')}
- catch(e){toast('Please choose a JPG, PNG or WebP photo.')}
-}));
-document.querySelectorAll('[data-remove]').forEach(el=>el.onclick=()=>{state.photos[Number(el.dataset.remove)]=null;document.querySelector(`[data-photo="${el.dataset.remove}"]`).value='';render()});
-document.querySelectorAll('[data-svg]').forEach(el=>el.onclick=()=>{const i=Number(el.dataset.svg),side=el.dataset.side;download(new Blob([sideSVG(i,side)],{type:'image/svg+xml'}),filename(i,side)+'.svg')});
-async function makePNG(i,side='front'){
- await document.fonts.ready;
- const url=URL.createObjectURL(new Blob([sideSVG(i,side)],{type:'image/svg+xml'}));
- try{
-  const img=new Image();await new Promise((resolve,reject)=>{img.onload=resolve;img.onerror=reject;img.src=url});
-  const c=document.createElement('canvas');c.width=2400;c.height=1514;c.getContext('2d').drawImage(img,0,0,2400,1514);
-  return await new Promise((resolve,reject)=>c.toBlob(b=>b?resolve(b):reject(new Error('PNG export failed')),'image/png'));
- }finally{URL.revokeObjectURL(url)}
-}
-document.querySelectorAll('[data-png]').forEach(el=>el.onclick=async()=>{
- const original=el.textContent;el.disabled=true;el.textContent='Saving…';
- try{const i=Number(el.dataset.png),side=el.dataset.side;download(await makePNG(i,side),filename(i,side)+'.png')}
- catch(e){toast('PNG could not be saved. Please try SVG.')}
- finally{el.disabled=false;el.textContent=original}
-});
-document.getElementById('save').onclick=()=>{
- document.getElementById('card-state').textContent=JSON.stringify(state).replace(/</g,'\\u003c');
- // Reset transient UI text in the downloaded copy without changing the active editor.
- const copy=document.documentElement.cloneNode(true);
- copy.querySelector('#toast').style.display='none';
- copy.querySelectorAll('[data-png]').forEach(el=>{el.disabled=false;el.textContent=(el.dataset.side==='back'?'Back':'Front')+' PNG'});
- download(new Blob(['<!doctype html>\n'+copy.outerHTML],{type:'text/html;charset=utf-8'}),'index.html');
- toast('Complete index.html saved, including both sides and your photos.');
+const phrases = {
+  workspace: ['Card studio', 'کارڈ اسٹوڈیو'], headline: ['Make it a keepsake.', 'دوستی کو یادگار بنائیں'],
+  intro: ['Design both sides of your cards, then download or print them.', 'کارڈ کے دونوں رخ ڈیزائن کریں، پھر ڈاؤن لوڈ یا پرنٹ کریں۔'],
+  newCard: ['New card', 'نیا کارڈ'], myCards: ['My cards', 'میرے کارڈز'], preview: ['Live preview', 'کارڈ کا پیش منظر'],
+  pair: ['Matching pair', 'دو مماثل کارڈ'], pairDesc: ['Create one friendship license for each friend with the names swapped.', 'ہر دوست کے لیے ایک لائسنس بنائیں۔ دوسرے کارڈ پر ناموں کی جگہ بدل جائے گی۔'],
+  firstName: ['First friend', 'پہلا دوست'], secondName: ['Second friend', 'دوسرا دوست'], createPair: ['Create both cards', 'دونوں کارڈ بنائیں'],
+  twoNames: ['Enter both names to create a pair.', 'جوڑا بنانے کے لیے دونوں نام لکھیں۔'],
+  front: ['Front', 'اگلا رخ'], back: ['Back', 'پچھلا رخ'], both: ['Both', 'دونوں رخ'], edit: ['Edit card', 'کارڈ ایڈٹ کریں'],
+  text: ['Text', 'متن'], design: ['Design', 'ڈیزائن'], photo: ['Photo', 'تصویر'], print: ['Print', 'پرنٹ'], export: ['Download', 'ڈاؤن لوڈ'],
+  project: ['Save project', 'پروجیکٹ محفوظ کریں'], import: ['Import', 'درآمد کریں'], duplicate: ['Duplicate', 'کاپی بنائیں'], delete: ['Delete', 'حذف کریں'],
+  localNotice: ['Drafts are saved in this browser. Download a backup to move them to another device.', 'ڈرافٹ اسی براؤزر میں محفوظ ہیں۔ دوسرے آلے کے لیے بیک اَپ ڈاؤن لوڈ کریں۔'],
+  help: ['Help', 'مدد'], close: ['Close', 'بند کریں'], cancel: ['Cancel', 'منسوخ کریں'], saved: ['Saved on this device', 'اس آلے پر محفوظ ہے'],
+  saving: ['Saving…', 'محفوظ ہو رہا ہے…'], storageError: ['Auto-save unavailable. Save a backup.', 'خودکار سیو دستیاب نہیں۔ بیک اَپ محفوظ کریں۔'],
+  empty: ['Add a card to start designing.', 'ڈیزائن شروع کرنے کے لیے کارڈ شامل کریں۔'], total: ['cards', 'کارڈز'],
+  chooseTemplate: ['Choose a starting design. You can edit all the text after adding it.', 'ایک ڈیزائن منتخب کریں۔ کارڈ شامل کرنے کے بعد آپ پورا متن بدل سکتے ہیں۔'],
+  license: ['Friendship License', 'فرینڈشپ لائسنس'], licenseDesc: ['A playful ID with a bestie code and promises.', 'دوستی کا شناختی کارڈ، عہد اور وعدوں کے ساتھ۔'],
+  memory: ['Memory Card', 'یادگار کارڈ'], memoryDesc: ['A favourite moment and a note to keep.', 'ایک پسندیدہ لمحہ اور یادگار پیغام۔'],
+  birthday: ['Birthday Card', 'سالگرہ کا کارڈ'], birthdayDesc: ['A birthday wish with room for a personal message.', 'ذاتی پیغام کے ساتھ سالگرہ کی مبارک باد۔'],
+  thanks: ['Thank You Card', 'شکریے کا کارڈ'], thanksDesc: ['A small thank you for someone who showed up.', 'ایک عزیز دوست کے لیے شکریے کا کارڈ۔'],
+  blank: ['Blank design', 'خالی ڈیزائن'], blankDesc: ['Start with empty text fields.', 'خالی خانوں سے اپنا ڈیزائن شروع کریں۔'],
+  holder: ['Name on card', 'کارڈ پر نام'], friend: ['Friend’s name', 'دوست کا نام'], mainTitle: ['Title', 'عنوان'], subtitle: ['Subtitle', 'ذیلی عنوان'],
+  note: ['Message', 'پیغام'], noteTitle: ['Message heading', 'پیغام کا عنوان'], footer: ['Bottom caption', 'نیچے کا جملہ'],
+  frontRules: ['Bestie code (one item per line)', 'دوستی کے اصول، ہر سطر میں ایک'], backRules: ['Promises (one item per line)', 'وعدے، ہر سطر میں ایک'],
+  ruleTitle: ['List heading', 'فہرست کا عنوان'], more: ['More text fields', 'مزید متن'], level: ['Friendship level', 'دوستی کا درجہ'],
+  kind: ['License type', 'لائسنس کی قسم'], issued: ['Issued on', 'جاری ہونے کی تاریخ'], valid: ['Valid until', 'کارآمد تا'],
+  photoCaption: ['Photo caption', 'تصویر کے نیچے متن'], stamp: ['Stamp text', 'مہر کا متن'], ownerSig: ['Holder’s signature', 'کارڈ والے کے دستخط'],
+  friendSig: ['Friend’s signature', 'دوست کے دستخط'], photoSide: ['Photo side', 'تصویر والا رخ'], photoFile: ['Choose a photo', 'تصویر منتخب کریں'],
+  photoHint: ['Choose a photo for this side. Zoom and move it to adjust the crop.', 'اس رخ کے لیے تصویر منتخب کریں۔ زوم اور پوزیشن سے فریم میں درست جگہ رکھیں۔'],
+  zoom: ['Zoom', 'زوم'], positionX: ['Horizontal position', 'دائیں بائیں پوزیشن'], positionY: ['Vertical position', 'اوپر نیچے پوزیشن'],
+  removePhoto: ['Remove photo', 'تصویر ہٹائیں'], resetCrop: ['Reset crop', 'کراپ دوبارہ سیٹ کریں'], badPhoto: ['This photo could not be opened. Try JPG, PNG or WebP.', 'تصویر نہیں کھلی۔ JPG، PNG یا WebP آزمائیں۔'],
+  layout: ['Layout', 'ترتیب'], classic: ['License', 'لائسنس'], poster: ['Postcard', 'پوسٹ کارڈ'], simple: ['Minimal', 'سادہ'],
+  colors: ['Colour palette', 'رنگوں کا انتخاب'], sky: ['Sky', 'آسمانی'], lavender: ['Lavender', 'لیونڈر'], rose: ['Rose', 'گلابی'],
+  mint: ['Mint', 'پودینہ'], amber: ['Honey', 'شہد'], dusk: ['Indigo', 'نیلا جامنی'], custom: ['Custom accent', 'اپنا رنگ'],
+  customColor: ['Pick an accent', 'پسند کا رنگ منتخب کریں'], font: ['Card lettering', 'کارڈ کا فونٹ'], sans: ['Clean', 'صاف'], serif: ['Classic', 'روایتی'],
+  showArt: ['Show friendship doodles', 'دوستی کی ڈرائنگ دکھائیں'], showStamp: ['Show stamp', 'مہر دکھائیں'], showCode: ['Show decorative barcode', 'سجاوٹی بارکوڈ دکھائیں'],
+  editingFront: ['Editing the front', 'اگلے رخ کی ایڈیٹنگ'], editingBack: ['Editing the back', 'پچھلے رخ کی ایڈیٹنگ'],
+  editSide: ['Side to edit', 'ایڈٹ کرنے والا رخ'], exportHint: ['Choose a file for one side or download a ZIP of the full collection.', 'ایک رخ کی فائل یا پورے مجموعے کی ZIP ڈاؤن لوڈ کریں۔'],
+  exportSide: ['Side for individual download', 'انفرادی ڈاؤن لوڈ کا رخ'], pngDesc: ['High resolution image for sharing.', 'شیئر کرنے کے لیے اعلیٰ معیار کی تصویر۔'],
+  svgDesc: ['Vector file with editable text.', 'قابلِ ترمیم متن والی ویکٹر فائل۔'], zip: ['All sides as ZIP', 'تمام رخ ایک ZIP میں'],
+  zipDesc: ['Fronts and backs of every card. Choose PNG or SVG.', 'تمام کارڈز کے دونوں رخ۔ PNG یا SVG منتخب کریں۔'], zipFormat: ['ZIP file format', 'ZIP کے اندر فائل کی قسم'],
+  printHint: ['A4, 100% / Actual size. For both sides, turn on double-sided printing and flip on the long edge.', 'A4 اور 100% / Actual size منتخب کریں۔ دونوں رخ کے لیے ڈبل سائیڈ پرنٹ اور لمبے کنارے سے پلٹنے کا آپشن چنیں۔'],
+  selected: ['Selected card', 'منتخب کارڈ'], allCards: ['All cards', 'تمام کارڈز'], printCards: ['Cards to print', 'پرنٹ کے کارڈز'],
+  printSides: ['Sides to print', 'پرنٹ کے رخ'], openPrint: ['Open print window', 'پرنٹ ونڈو کھولیں'],
+  jsonBackup: ['Download project backup', 'پروجیکٹ بیک اَپ ڈاؤن لوڈ کریں'], jsonDesc: ['Reopen your cards in the studio, including their photos and settings.', 'اسٹوڈیو میں اپنے کارڈ، تصاویر اور سیٹنگز دوبارہ کھولیں۔'],
+  htmlBackup: ['Download complete index.html', 'مکمل index.html ڈاؤن لوڈ کریں'], htmlDesc: ['A standalone copy with your current cards embedded as the starting deck.', 'مکمل فائل، جس میں موجودہ کارڈ شروع سے شامل ہوں گے۔'],
+  publishNotice: ['If you publish an HTML copy, the cards and photos embedded in it will be visible to visitors.', 'اگر آپ HTML کاپی پبلش کریں گے تو اس میں شامل کارڈز اور تصاویر ویب سائٹ کے وزیٹرز کو دکھائی دیں گی۔'],
+  importError: ['No saved cards found. Choose a Studio backup or a previous editable HTML file.', 'محفوظ کارڈ نہیں ملے۔ اسٹوڈیو بیک اَپ یا پچھلی قابلِ ترمیم HTML منتخب کریں۔'],
+  importTitle: ['Import cards', 'کارڈز درآمد کریں'], append: ['Add to my cards', 'میرے کارڈز میں شامل کریں'], replace: ['Replace my cards', 'موجودہ کارڈز بدل دیں'],
+  importConfirm: ['Choose whether to add these cards or replace your current collection.', 'ان کارڈز کو شامل کریں یا ان سے موجودہ مجموعہ بدل دیں۔'],
+  deleteQuestion: ['Delete this card from your collection?', 'یہ کارڈ اپنے مجموعے سے حذف کریں؟'], undo: ['Undo', 'واپس لائیں'],
+  deleted: ['Card deleted.', 'کارڈ حذف ہو گیا۔'], ready: ['File downloaded.', 'فائل ڈاؤن لوڈ ہو گئی۔'],
+  exporting: ['Preparing download…', 'ڈاؤن لوڈ تیار ہو رہا ہے…'], exportError: ['Download failed. Try again or choose SVG.', 'ڈاؤن لوڈ ناکام رہا۔ دوبارہ کوشش کریں یا SVG منتخب کریں۔'],
+  uploadError: ['This file is too large or could not be read.', 'فائل بہت بڑی ہے یا پڑھی نہیں جا سکی۔'], unnamed: ['Untitled card', 'بغیر عنوان کارڈ'],
+  help1: ['Use New card to start from a template, then switch between the front and back to edit each side.', 'نیا کارڈ دبائیں، ٹیمپلیٹ چنیں، پھر ہر رخ کو الگ ایڈٹ کریں۔'],
+  help2: ['Download a PNG to share, SVG to edit in a vector app, or a ZIP for every card.', 'شیئر کرنے کے لیے PNG، ویکٹر ایڈیٹنگ کے لیے SVG یا تمام کارڈز کے لیے ZIP ڈاؤن لوڈ کریں۔'],
+  help3: ['Use Save project for a backup. Use Import to reopen your backup or bring in an older editable HTML file.', 'بیک اَپ کے لیے پروجیکٹ محفوظ کریں۔ پرانی قابلِ ترمیم HTML یا بیک اَپ کھولنے کے لیے درآمد کریں۔'],
+  help4: ['For GitHub Pages, place index.html in the publishing folder your repository uses.', 'GitHub Pages کے لیے index.html اپنی repository کے اسی فولڈر میں رکھیں جہاں سے سائٹ پبلش ہوتی ہے۔']
 };
-window.addEventListener('beforeprint',preparePrint);
-document.getElementById('print').onclick=()=>{preparePrint();window.print()};
-render();
+
+const templates = {
+  license: {
+    layout: 'classic', theme: 'sky', title: 'FRIENDSHIP LICENSE', subtitle: 'OFFICIAL BESTIES IDENTIFICATION CARD',
+    level: 'INFINITY ∞', kind: 'BEST FRIENDS FOR LIFE', issued: '', valid: 'NEVER EXPIRES', caption: 'Besties forever', stamp: 'CERTIFIED',
+    frontFooter: 'Different names. One forever friendship.', frontListTitle: 'THE BESTIE CODE',
+    frontRules: 'Keep our secrets\nAlways have your back\nShare the last bite\nReply to random texts\nLaugh at silly things\nMake more memories',
+    backTitle: 'OUR FOREVER PACT', backSubtitle: 'Two besties. A lifetime of memories.', noteTitle: 'A note for you',
+    note: 'Life is better with you in it. Wherever we go, whatever changes, you will always have a friend in me.',
+    backListTitle: 'OUR PROMISES', backRules: 'Show up for each other\nRespect our differences\nCelebrate every little win\nStay close, even miles apart\nChoose this friendship, always',
+    backFooter: 'One friendship. A million memories. Forever to go.'
+  },
+  memory: {
+    layout: 'poster', theme: 'mint', title: 'A MEMORY TO KEEP', subtitle: 'One of my favourite moments with you',
+    frontMessage: 'The best stories always start with us.', caption: 'Our favourite moment', frontFooter: 'Here’s to more days like this.',
+    backTitle: 'THE STORY BEHIND IT', backSubtitle: 'A little piece of our friendship', noteTitle: 'What I remember',
+    note: 'I hope we keep telling this story for years. Even the small details make me smile.', backFooter: 'Keep this one close.'
+  },
+  birthday: {
+    layout: 'poster', theme: 'amber', title: 'HAPPY BIRTHDAY!', subtitle: 'For someone who makes ordinary days fun',
+    frontMessage: 'Here’s to your best year yet, bestie.', caption: 'Birthday memories', frontFooter: 'Make a wish!',
+    backTitle: 'A WISH FOR YOU', backSubtitle: 'Today is yours', noteTitle: 'Happy birthday',
+    note: 'I hope this year brings you good surprises, big laughs and plenty of things worth celebrating.', backFooter: 'So glad I get to celebrate you.'
+  },
+  thanks: {
+    layout: 'simple', theme: 'rose', title: 'THANK YOU, BESTIE', subtitle: 'For the big things and the little things',
+    frontMessage: 'You made a difference just by being there.', frontFooter: 'With love and gratitude.',
+    backTitle: 'A LITTLE NOTE', backSubtitle: 'For a friend I’m lucky to have', noteTitle: 'What it meant to me',
+    note: 'Thank you for listening, making me laugh and always knowing when to check in. I’m glad we found each other.', backFooter: 'I’ll be there for you, too.'
+  },
+  blank: { layout: 'simple', theme: 'dusk' }
+};
+
+const palettes = {
+  sky:    { accent: '#2f748f', ink: '#214e63', base: '#f7fcff', soft: '#dfedf6', edge: '#a5cbdc' },
+  lavender: { accent: '#785fa0', ink: '#534170', base: '#fcf9ff', soft: '#eee6f8', edge: '#cdbce4' },
+  rose:   { accent: '#a74c70', ink: '#70324e', base: '#fff8fb', soft: '#f8e4ed', edge: '#e4b5ca' },
+  mint:   { accent: '#397766', ink: '#28564b', base: '#f4fcf7', soft: '#ddf1e9', edge: '#a9d5c5' },
+  amber:  { accent: '#91581f', ink: '#663d20', base: '#fffaf1', soft: '#faedce', edge: '#e3c38f' },
+  dusk:   { accent: '#4d609f', ink: '#353e71', base: '#f7f8ff', soft: '#e4e9fa', edge: '#b7c3e6' }
+};
+
+const iconPaths = {
+  heart: '<path d="M20.8 8.4c0 4.3-8.8 9.1-8.8 9.1S3.2 12.7 3.2 8.4a4.5 4.5 0 0 1 8.8-1.3 4.5 4.5 0 0 1 8.8 1.3Z"/>',
+  plus: '<path d="M12 5v14M5 12h14"/>', close: '<path d="m6 6 12 12M6 18 18 6"/>',
+  copy: '<rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/>',
+  trash: '<path d="M4 6h16M9 6V4h6v2M6 6l1 14h10l1-14m-8 4v6m4-6v6"/>',
+  upload: '<path d="M12 16V4m-4 4 4-4 4 4M4 16v4h16v-4"/>',
+  download: '<path d="M12 4v12m-4-4 4 4 4-4M4 16v4h16v-4"/>',
+  folder: '<path d="M3 7a2 2 0 0 1 2-2h5l2 2h7a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"/>',
+  printer: '<path d="M7 8V4h10v4M7 17H4V9h16v8h-3M7 14h10v6H7zm9-3h1"/>',
+  ruler: '<path d="M3 8h18v8H3zm4 0v4m5-4v3m5-3v4"/>',
+  star: '<path d="M12 3l2.8 5.8 6.4 1-4.6 4.4 1 6.3-5.6-3-5.6 3 1-6.3-4.6-4.4 6.4-1Z"/>',
+  ticket: '<path d="M3 6h18v4a2 2 0 0 0 0 4v4H3v-4a2 2 0 0 0 0-4zm13 2v2m0 1v2m0 1v2"/>',
+  photo: '<rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="9" r="1.5"/><path d="m4 18 5-5 4 4 3-4 4 5"/>'
+};
+
+function icon(name) {
+  return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${iconPaths[name] || iconPaths.heart}</svg>`;
+}
+const templateIcons = { license: 'ticket', memory: 'photo', birthday: 'star', thanks: 'heart', blank: 'plus' };
+
+const textFields = {
+  owner: 56, friend: 56, title: 55, subtitle: 100, level: 44, kind: 60, issued: 35, valid: 35,
+  caption: 45, stamp: 25, frontFooter: 105, frontListTitle: 34, frontRules: 480, frontMessage: 220,
+  backTitle: 55, backSubtitle: 100, noteTitle: 38, note: 360, backListTitle: 34, backRules: 480,
+  backFooter: 105, ownerSig: 56, friendSig: 56, holderLabel: 38, friendLabel: 38, levelLabel: 38,
+  typeLabel: 38, issuedLabel: 38, expiryLabel: 38, approved: 70, sealTop: 26, sealBottom: 26, photoLabel: 32,
+  footnote: 75, backOwnerLabel: 38, backFriendLabel: 38, signatureLabelA: 38, signatureLabelB: 38, backFootnote: 75
+};
+const labelDefaults = {
+  holderLabel: 'LICENSE HOLDER', friendLabel: 'BEST FRIEND', levelLabel: 'FRIENDSHIP LEVEL', typeLabel: 'LICENSE TYPE',
+  issuedLabel: 'ISSUED ON', expiryLabel: 'VALID UNTIL', approved: 'Approved by the universe', sealTop: 'BEST FRIENDS',
+  sealBottom: 'LIFETIME CLUB', photoLabel: 'YOU + ME', footnote: 'JUST FOR FRIENDSHIP & FUN', backOwnerLabel: 'THIS CARD BELONGS TO',
+  backFriendLabel: 'FOREVER TEAMMATE', signatureLabelA: 'CARD HOLDER', signatureLabelB: 'BEST FRIEND', backFootnote: 'A LITTLE CARD. A LIFETIME OF FRIENDSHIP.'
+};
+const labelNames = {
+  holderLabel: ['Holder label', 'کارڈ والے کا لیبل'], friendLabel: ['Friend label', 'دوست کا لیبل'],
+  levelLabel: ['Level label', 'درجے کا لیبل'], typeLabel: ['Type label', 'قسم کا لیبل'], issuedLabel: ['Issue date label', 'جاری ہونے کی تاریخ کا لیبل'],
+  expiryLabel: ['Expiry label', 'میعاد کا لیبل'], approved: ['Approval line', 'منظوری کی عبارت'], sealTop: ['Top of stamp', 'مہر کے اوپر'],
+  sealBottom: ['Bottom of stamp', 'مہر کے نیچے'], photoLabel: ['Doodle label', 'ڈرائنگ کا لیبل'], footnote: ['Front small print', 'اگلے رخ کا چھوٹا متن'],
+  backOwnerLabel: ['Back holder label', 'پچھلے رخ پر کارڈ والے کا لیبل'], backFriendLabel: ['Back friend label', 'پچھلے رخ پر دوست کا لیبل'],
+  signatureLabelA: ['Holder signature label', 'کارڈ والے کے دستخط کا لیبل'], signatureLabelB: ['Friend signature label', 'دوست کے دستخط کا لیبل'],
+  backFootnote: ['Back small print', 'پچھلے رخ کا چھوٹا متن']
+};
+
+function id() {
+  return Array.from(crypto.getRandomValues(new Uint8Array(10)), byte => byte.toString(16).padStart(2, '0')).join('');
+}
+
+function fresh(template = 'license') {
+  const content = templates[template];
+  return {
+    ...Object.fromEntries(Object.keys(textFields).map(key => [key, ''])),
+    ...(template === 'blank' ? {} : labelDefaults), ...content,
+    id: id(), template, owner: '', friend: '', customColor: '#397766', font: 'sans',
+    showArt: template !== 'blank', showStamp: template === 'license', showCode: template === 'license',
+    photos: { front: null, back: null }
+  };
+}
+
+function starterCards() {
+  return [
+    { ...fresh(), owner: 'Sami ullah', friend: 'Mushaf Ali Tanoli', issued: '13 NOV 2026' },
+    { ...fresh(), owner: 'Mushaf Ali Tanoli', friend: 'Sami ullah', issued: '13 NOV 2026', theme: 'lavender',
+      note: 'From our random laughs to our biggest dreams, every memory is better with you. Here’s to a friendship that stays.' }
+  ];
+}
+
+const bounded = (value, low, high, fallback) => Number.isFinite(value) ? Math.max(low, Math.min(high, value)) : fallback;
+
+function cleanPhoto(value) {
+  const photo = typeof value === 'string' ? { data: value } : value;
+  if (!photo || typeof photo.data !== 'string' || !/^data:image\/(?:png|jpeg|webp|gif);base64,[A-Za-z0-9+/=]+$/.test(photo.data)) return null;
+  if (photo.data.length > 12_000_000) throw new Error('Photo too large');
+  return { data: photo.data, width: bounded(photo.width, 1, 20000, 0), height: bounded(photo.height, 1, 20000, 0),
+    zoom: bounded(photo.zoom, 1, 3, 1), x: bounded(photo.x, -100, 100, 0), y: bounded(photo.y, -100, 100, 0) };
+}
+
+function cleanCard(value) {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) throw new Error('Invalid card');
+  const template = Object.hasOwn(templates, value.template) ? value.template : 'license';
+  const card = fresh(template);
+  if (typeof value.id === 'string' && /^[a-zA-Z0-9-]{1,64}$/.test(value.id)) card.id = value.id;
+  for (const [key, max] of Object.entries(textFields)) if (typeof value[key] === 'string') card[key] = value[key].slice(0, max);
+  if (Object.hasOwn(palettes, value.theme) || value.theme === 'custom') card.theme = value.theme;
+  if (typeof value.customColor === 'string' && /^#[\da-f]{6}$/i.test(value.customColor)) card.customColor = value.customColor;
+  if (['classic', 'poster', 'simple'].includes(value.layout)) card.layout = value.layout;
+  if (['sans', 'serif'].includes(value.font)) card.font = value.font;
+  for (const key of ['showArt', 'showStamp', 'showCode']) if (typeof value[key] === 'boolean') card[key] = value[key];
+  for (const side of ['front', 'back']) card.photos[side] = cleanPhoto(value.photos?.[side]);
+  return card;
+}
+
+function legacyCards(legacy) {
+  if (!legacy || typeof legacy.nameA !== 'string' || typeof legacy.nameB !== 'string') throw new Error('Invalid legacy file');
+  const themes = { blue: 'sky', lilac: 'lavender', rose: 'rose', mint: 'mint' };
+  const mapping = { heading: 'title', subtitle: 'subtitle', level: 'level', licenseType: 'kind', issued: 'issued', expiry: 'valid', caption: 'caption',
+    quote: 'frontFooter', codeTitle: 'frontListTitle', rules: 'frontRules', seal: 'stamp', backHeading: 'backTitle', backSubtitle: 'backSubtitle',
+    noteTitle: 'noteTitle', backPromisesTitle: 'backListTitle', backRules: 'backRules', backQuote: 'backFooter' };
+  return [0, 1].map(i => {
+    const letter = i ? 'B' : 'A', other = i ? 'A' : 'B';
+    const card = { ...fresh(), owner: legacy['name' + letter], friend: legacy['name' + other], theme: themes[legacy['theme' + letter]] || (i ? 'lavender' : 'sky') };
+    for (const key of Object.keys(labelDefaults)) if (typeof legacy[key] === 'string') card[key] = legacy[key];
+    for (const [oldKey, newKey] of Object.entries(mapping)) if (typeof legacy[oldKey] === 'string') card[newKey] = legacy[oldKey];
+    if (typeof legacy['backNote' + letter] === 'string') card.note = legacy['backNote' + letter];
+    if (typeof legacy['signature' + letter] === 'string') card.ownerSig = legacy['signature' + letter];
+    if (typeof legacy['signature' + other] === 'string') card.friendSig = legacy['signature' + other];
+    card.photos.front = legacy.photos?.[i];
+    return cleanCard(card);
+  });
+}
+
+
+const W = 1200, H = 757;
+const escapeHTML = value => String(value ?? '').replace(/[&<>"']/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[ch]);
+const cleanXML = value => escapeHTML(String(value ?? '').replace(/[\u0000-\u0008\u000b\u000c\u000e-\u001f\ufffe\uffff\ud800-\udfff]/gu, ''));
+const mix = (a, b, part) => '#' + [1, 3, 5].map(i => Math.round(parseInt(a.slice(i, i + 2), 16) * (1 - part) + parseInt(b.slice(i, i + 2), 16) * part).toString(16).padStart(2, '0')).join('');
+function colors(card) {
+  if (card.theme !== 'custom') return palettes[card.theme];
+  const chosen = card.customColor;
+  return { accent: mix(chosen, '#000000', .38), ink: mix(chosen, '#142329', .73), base: mix(chosen, '#ffffff', .96),
+    soft: mix(chosen, '#ffffff', .83), edge: mix(chosen, '#ffffff', .65) };
+}
+const lettering = { sans: 'Segoe UI, Tahoma, Arial, sans-serif', serif: 'Georgia, Times New Roman, Tahoma, serif' };
+const measure = document.createElement('canvas').getContext('2d');
+function line(x, y, value, width, size, options = {}) {
+  if (!value) return '';
+  const { color = 'currentColor', weight = 600, align = 'left', font = lettering.sans, spacing = 0, italic = false } = options;
+  const label = String(value).replace(/\s+/g, ' ').trim();
+  measure.font = `${italic ? 'italic ' : ''}${weight} ${size}px ${font}`;
+  const natural = measure.measureText(label).width + Math.max(0, [...label].length - 1) * spacing;
+  const scale = natural > width ? width / natural : 1;
+  const rtl = /^[^\p{L}]*[\p{Script=Arabic}\p{Script=Hebrew}]/u.test(label);
+  // Anchor the physical left edge or centre even when the string is right-to-left.
+  const anchor = align === 'center' ? 'middle' : (align === 'right') !== rtl ? 'end' : 'start';
+  return `<text x="${x}" y="${y}" direction="${rtl ? 'rtl' : 'ltr'}" unicode-bidi="plaintext" text-anchor="${anchor}" font-family="${font}" font-size="${(size * scale).toFixed(2)}" font-weight="${weight}"${italic ? ' font-style="italic"' : ''} letter-spacing="${rtl ? 0 : spacing * scale}" fill="${color}">${cleanXML(label)}</text>`;
+}
+
+function wrap(value, width, size, font) {
+  measure.font = `500 ${size}px ${font}`;
+  const rows = [];
+  for (const paragraph of String(value).split('\n')) {
+    let current = '';
+    for (const word of paragraph.trim().split(/\s+/).filter(Boolean)) {
+      const attempt = current ? current + ' ' + word : word;
+      if (measure.measureText(attempt).width <= width) { current = attempt; continue; }
+      if (current) rows.push(current);
+      current = '';
+      for (const glyph of word) {
+        if (current && measure.measureText(current + glyph).width > width) { rows.push(current); current = ''; }
+        current += glyph;
+      }
+    }
+    rows.push(current);
+  }
+  return rows;
+}
+
+function paragraph(x, y, value, width, size, count, rowHeight, options) {
+  if (!value) return '';
+  const content = value.trim().replace(/\n{3,}/g, '\n\n');
+  let rows = wrap(content, width, size, options.font);
+  while (rows.length > count && size > 17) rows = wrap(content, width, --size, options.font);
+  if (rows.length > count) rows = wrap(content.replace(/\s+/g, ' '), width, size, options.font);
+  if (rows.length > count) {
+    rows = rows.slice(0, count);
+    rows[count - 1] = rows[count - 1].trimEnd() + '…';
+  }
+  return rows.map((row, i) => line(x, y + rowHeight * i, row, width, size, { ...options, weight: 500 })).join('');
+}
+
+function heart(x, y, scale, color, angle = 0) {
+  return `<path transform="translate(${x} ${y}) rotate(${angle}) scale(${scale})" d="M0 6C-13-8-26 10 0 25C26 10 13-8 0 6Z" fill="${color}"/>`;
+}
+function sparkle(x, y, size, color) {
+  return `<path d="M${x} ${y - size}q0 ${size} ${size} ${size}q${-size} 0 ${-size} ${size}q0 ${-size} ${-size} ${-size}q${size} 0 ${size} ${-size}Z" fill="${color}"/>`;
+}
+function doodle(x, y, scale, p) {
+  return `<g transform="translate(${x} ${y}) scale(${scale})" stroke="${p.ink}" stroke-width="3.1" stroke-linejoin="round">
+    <path d="M-78 37V-7C-78-58-9-61-9-7V36Q-17 48-26 37Q-37 49-46 38Q-59 49-68 38Q-75 46-78 37Z" fill="#fff"/>
+    <path d="M-8 35V-16C-8-69 62-69 62-16V36Q54 47 45 37Q34 48 24 37Q12 47 4 37Q-4 45-8 35Z" fill="#fff"/>
+    <path d="M-26 11Q-8 25 9 10M-49-2q5 6 10 0m57-8q5 6 10 0" fill="none" stroke-linecap="round"/>
+    <path d="M-57-14v2m20-2v2m52-9v2m20-2v2" stroke-linecap="round" stroke-width="5"/>
+    <ellipse cx="-63" cy="-3" rx="7" ry="4" fill="#ec9dbc" stroke="none" opacity=".66"/>
+    <ellipse cx="41" cy="-10" rx="7" ry="4" fill="#ec9dbc" stroke="none" opacity=".66"/>
+  </g>`;
+}
+
+function picture(card, side, p, id, x, y, width, height) {
+  const photo = card.photos[side];
+  if (!photo && !card.showArt) return '';
+  let contents;
+  if (photo) {
+    const originalW = photo.width || width, originalH = photo.height || height;
+    const scale = Math.max(width / originalW, height / originalH) * photo.zoom;
+    const wide = originalW * scale, tall = originalH * scale;
+    const left = x - (wide - width) * ((100 + photo.x) / 200), top = y - (tall - height) * ((100 + photo.y) / 200);
+    contents = `<image x="${left}" y="${top}" width="${wide}" height="${tall}" preserveAspectRatio="xMidYMid slice" href="${photo.data}" xlink:href="${photo.data}"/>`;
+  } else {
+    const center = x + width / 2, middle = y + height / 2, size = Math.min(width / 163, height / 155);
+    contents = `<ellipse cx="${center}" cy="${middle}" rx="${width * .4}" ry="${height * .34}" fill="${p.base}"/>
+      ${doodle(center + size * 8, middle, size, p)}${heart(x + width * .75, y + height * .2, .8, '#d6759e', 12)}
+      ${sparkle(x + width * .14, y + height * .21, 7, p.accent)}${sparkle(x + width * .88, y + height * .76, 8, p.accent)}
+      ${line(center, y + height - 25, card.photoLabel, width - 28, 19, { align: 'center', weight: 800, spacing: 2, color: p.ink })}`;
+  }
+  return `<defs><clipPath id="${id}-photo"><rect x="${x}" y="${y}" width="${width}" height="${height}" rx="17"/></clipPath></defs>
+    <rect x="${x}" y="${y}" width="${width}" height="${height}" rx="17" fill="${p.soft}"/>
+    <g clip-path="url(#${id}-photo)">${contents}</g><rect x="${x}" y="${y}" width="${width}" height="${height}" rx="17" fill="none" stroke="${p.edge}" stroke-width="2"/>`;
+}
+
+function ruleBox(x, y, width, height, heading, rules, p) {
+  const entries = rules.split('\n').map(value => value.trim()).filter(Boolean).slice(0, 6);
+  if (!heading && !entries.length) return '';
+  const top = heading ? 76 : 40, row = Math.min(62, (height - top - 11) / Math.max(1, entries.length));
+  return `<rect x="${x}" y="${y}" width="${width}" height="${height}" rx="16" fill="white" fill-opacity=".67" stroke="${p.edge}" stroke-width="2"/>
+    ${line(x + width / 2, y + 35, heading, width - 25, 21, { color: p.ink, weight: 800, align: 'center', spacing: 1.3 })}
+    ${heading ? `<path d="M${x + 18} ${y + 49}h${width - 36}" stroke="${p.edge}"/>` : ''}
+    ${entries.map((text, i) => heart(x + 25, y + top + row * i - 12, .26, p.accent) + line(x + 44, y + top + row * i, text, width - 61, 19, { color: p.ink })).join('')}`;
+}
+
+function certified(card, p, x, y) {
+  if (!card.showStamp || !card.stamp) return '';
+  return `<g transform="translate(${x} ${y}) rotate(-12)">
+    <circle r="72" fill="none" stroke="${p.accent}" stroke-width="2"/><circle r="63" fill="none" stroke="${p.accent}" stroke-dasharray="2 4"/>
+    ${line(0, -32, card.sealTop, 115, 12, { color: p.ink, weight: 750, align: 'center', spacing: 1.2 })}${heart(0, -27, .65, p.accent)}
+    <rect x="-86" y="-6" width="172" height="35" rx="3" fill="${p.accent}"/>${line(0, 18, card.stamp, 156, 23, { color: '#fff', weight: 800, align: 'center', spacing: 1.5 })}
+    ${line(0, 49, card.sealBottom, 114, 11, { color: p.ink, weight: 750, align: 'center', spacing: 1.3 })}
+  </g>`;
+}
+
+function barcode(p) {
+  let cursor = 0;
+  const bars = Array.from({ length: 42 }, (_, i) => {
+    const wide = [2, 4, 1, 3, 2, 5, 1][i % 7];
+    const mark = `<rect x="${cursor}" y="0" width="${wide}" height="20"/>`;
+    cursor += wide + (i % 3 ? 2 : 4);
+    return mark;
+  }).join('');
+  return `<g transform="translate(32 534) rotate(-90)" fill="${p.ink}" opacity=".77">${bars}</g>`;
+}
+
+function frontLicense(card, p, id, font) {
+  const hasImage = card.showArt || card.photos.front;
+  const x = hasImage ? 385 : 65, right = 830, width = right - x;
+  const label = (at, y, value, max = width) => line(at, y, value, max, 16, { color: p.accent, weight: 800, spacing: 1.65 });
+  const field = (y, tag, value, size) => label(x, y, tag) + line(x, y + 36, value, width, size, { color: p.ink, font, weight: 750 });
+  const second = x + width * .53;
+  return `${hasImage ? `<rect x="65" y="177" width="280" height="452" rx="12" fill="#fff" stroke="${p.edge}" stroke-width="2" transform="rotate(-2 205 404)"/>
+    ${picture(card, 'front', p, id, 77, 191, 255, 352)}
+    ${line(205, 589, card.caption, 248, 27, { color: p.ink, align: 'center', font: lettering.serif, italic: true })}` : ''}
+    ${card.showCode && hasImage ? barcode(p) : ''}
+    ${field(192, card.holderLabel, card.owner, 39)}${field(275, card.friendLabel, card.friend, 34)}
+    <path d="M${x} 336H${right}" stroke="${p.edge}" stroke-width="1.5"/>
+    ${field(374, card.levelLabel, card.level, 30)}${field(452, card.typeLabel, card.kind, 28)}
+    ${label(x, 536, card.issuedLabel, second - x - 18)}${line(x, 567, card.issued, second - x - 18, 23, { color: p.ink, font })}
+    ${label(second, 536, card.expiryLabel, right - second)}${line(second, 567, card.valid, right - second, 23, { color: p.ink, font })}
+    ${line(x, 618, card.approved, width, 20, { color: p.ink, font, italic: true })}
+    ${certified(card, p, 998, 236)}${ruleBox(856, 337, 282, 291, card.frontListTitle, card.frontRules, p)}`;
+}
+
+function frontPostcard(card, p, id, font) {
+  const usePicture = card.photos.front || card.showArt;
+  const isSimple = card.layout === 'simple';
+  const wide = usePicture ? (isSimple ? 748 : 681) : 1040;
+  const frameX = isSimple ? 868 : 795, frameWidth = 1140 - frameX;
+  return `${usePicture ? picture(card, 'front', p, id, frameX, 185, frameWidth, 376) : ''}
+    ${usePicture ? line(frameX + frameWidth / 2, 601, card.caption, frameWidth, 24, { align: 'center', color: p.ink, font: lettering.serif, italic: true }) : ''}
+    ${line(64, 262, card.owner, wide, 71, { color: p.ink, font, weight: 750 })}
+    ${line(67, 324, card.friend, wide, 32, { color: p.accent, font, italic: true })}
+    <path d="M67 374h${Math.min(wide, 165)}" stroke="${p.edge}" stroke-width="3"/>
+    ${paragraph(66, 434, card.frontMessage, wide, 35, 5, 44, { color: p.ink, font })}
+    ${card.showStamp ? certified(card, p, usePicture ? 716 : 1046, 557) : ''}`;
+}
+
+function backContent(card, p, id, font) {
+  const photo = card.photos.back, hasRules = card.backListTitle || card.backRules.trim();
+  const sideColumn = photo || hasRules;
+  const width = sideColumn ? 717 : 1075;
+  const label = (x, y, value, max = width) => line(x, y, value, max, 15, { color: p.accent, weight: 800, spacing: 1.65 });
+  const second = 64 + width * .53, right = 64 + width;
+  return `${label(64, 192, card.backOwnerLabel)}${line(64, 230, card.owner, width, 40, { color: p.ink, font, weight: 750 })}
+    ${label(64, 268, card.backFriendLabel)}${line(64, 305, card.friend, width, 33, { color: p.ink, font })}
+    <path d="M64 332H${right}" stroke="${p.edge}" stroke-width="1.5"/>
+    ${line(64, 376, card.noteTitle, width, 28, { color: p.ink, font: lettering.serif, italic: true })}
+    ${paragraph(64, 421, card.note, width, 27, 5, 32, { color: p.ink, font })}
+    ${line(64, 589, card.ownerSig || card.owner, second - 85, 29, { color: p.ink, font: lettering.serif, italic: true })}
+    ${line(second, 589, card.friendSig || card.friend, right - second, 29, { color: p.ink, font: lettering.serif, italic: true })}
+    <path d="M64 601H${second - 24}M${second} 601H${right}" stroke="${p.accent}" stroke-width="1.2"/>
+    ${label(64, 627, card.signatureLabelA, second - 85)}${label(second, 627, card.signatureLabelB, right - second)}
+    ${photo ? picture(card, 'back', p, id, 835, 176, 303, hasRules ? 192 : 446) : ''}
+    ${hasRules ? ruleBox(835, photo ? 388 : 176, 303, photo ? 237 : 449, card.backListTitle, card.backRules, p) : ''}`;
+}
+
+function art(card, side) {
+  const p = colors(card), front = side === 'front', font = lettering[card.font];
+  const id = `art-${card.id}-${side}-${++art.sequence}`;
+  const title = front ? card.title : card.backTitle, subtitle = front ? card.subtitle : card.backSubtitle;
+  const footer = front ? card.frontFooter : card.backFooter, footnote = front ? card.footnote : card.backFootnote;
+  const minimal = card.layout === 'simple';
+  return `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="img">
+    <title>${cleanXML(`${card.owner || title || 'Friendship card'} · ${side}`)}</title>
+    <defs><clipPath id="${id}-trim"><rect x="1" y="1" width="1198" height="755" rx="36"/></clipPath>
+      <linearGradient id="${id}-paper" x2="1" y2="1"><stop stop-color="${front ? p.soft : p.base}"/><stop offset=".55" stop-color="${p.base}"/><stop offset="1" stop-color="${p.soft}"/></linearGradient>
+      <radialGradient id="${id}-glow"><stop stop-color="${p.edge}" stop-opacity=".6"/><stop offset="1" stop-color="${p.edge}" stop-opacity="0"/></radialGradient></defs>
+    <g clip-path="url(#${id}-trim)">
+    <rect width="1200" height="757" fill="url(#${id}-paper)"/>
+    ${minimal ? '' : `<ellipse cx="${front ? 90 : 1140}" cy="45" rx="460" ry="275" fill="url(#${id}-glow)"/>
+      <path d="M-35 663Q174 529 352 649T620 642M806-22Q958 144 1231 98" fill="none" stroke="${p.edge}" opacity=".65" stroke-width="1.5"/>`}
+    <rect x="15" y="15" width="1170" height="727" rx="26" fill="none" stroke="${p.edge}" stroke-width="1.5"/>
+    ${line(60, 87, title, card.showArt ? 914 : 1079, 55, { color: p.ink, font, weight: 800, spacing: 1.6 })}
+    ${line(62, 121, subtitle, card.showArt ? 895 : 1075, 19, { color: p.ink, font, weight: 650, spacing: front && card.layout === 'classic' ? 2.3 : 0 })}
+    ${card.showArt ? doodle(1056, 85, .73, p) + heart(1057, 23, .64, '#d6759e', -12) + sparkle(1147, 89, 9, p.accent) : ''}
+    <path d="M60 147H1140" stroke="${p.edge}" stroke-width="1.4"/>
+    ${front ? (card.layout === 'classic' ? frontLicense(card, p, id, font) : frontPostcard(card, p, id, font)) : backContent(card, p, id, font)}
+    ${line(1139, 651, footnote, 1078, 13, { align: 'right', color: p.ink, weight: 650, spacing: 1.1 })}
+    ${footer ? `<rect y="669" width="1200" height="88" fill="${p.accent}"/>
+      ${heart(80, 696, .54, '#fff', -12)}${heart(1120, 696, .54, '#fff', 12)}
+      ${line(600, 722, footer, 974, 29, { align: 'center', color: '#fff', font, weight: 700 })}` : ''}
+    </g><rect x="1" y="1" width="1198" height="755" rx="36" fill="none" stroke="${p.edge}" stroke-width="2"/>
+  </svg>`;
+}
+art.sequence = 0;
+
+
+const $ = selector => document.querySelector(selector);
+const $$ = selector => Array.from(document.querySelectorAll(selector));
+const PORTABLE_FORMAT = 'friendship-card-studio';
+const LIMIT = 60;
+const sourceDocument = '<!doctype html>\n' + document.documentElement.outerHTML;
+const embedded = JSON.parse($('#studio-data').textContent);
+const storageKey = embedded?.projectId ? 'copy-' + embedded.projectId : 'main';
+const modal = $('#modal');
+const editor = $('#editor');
+let lang = 'en', cards = [], activeId = '', view = 'front', editSide = 'front', tab = 'text';
+let database, storageState = 'saving', toastTimer, busy = false, saveTimer, saveVersion = 0;
+let printSelection;
+
+function t(key) { return (phrases[key] || labelNames[key] || [key, key])[lang === 'ur' ? 1 : 0]; }
+function cardNow() { return cards.find(card => card.id === activeId); }
+function cardName(card) { return card.owner.trim() || card.title.trim() || card.backTitle.trim() || t('unnamed'); }
+const currentDeck = () => ({ format: PORTABLE_FORMAT, version: 2, lang, activeId, cards });
+
+function openDatabase() {
+  return new Promise((resolve, reject) => {
+    const request = indexedDB.open('friendship-card-studio', 1);
+    request.onupgradeneeded = () => request.result.createObjectStore('projects');
+    request.onsuccess = () => resolve(request.result);
+    request.onerror = () => reject(request.error);
+    request.onblocked = () => reject(new Error('Storage blocked'));
+  });
+}
+function storedDeck() {
+  return new Promise((resolve, reject) => {
+    const request = database.transaction('projects').objectStore('projects').get(storageKey);
+    request.onsuccess = () => resolve(request.result);
+    request.onerror = () => reject(request.error);
+  });
+}
+function storageLabel(state) {
+  storageState = state;
+  $('#save-status').textContent = t(state);
+  $('#save-status').toggleAttribute('data-error', state === 'storageError');
+}
+function saveNow() {
+  clearTimeout(saveTimer);
+  saveTimer = undefined;
+  if (!database) return storageLabel('storageError');
+  const stamp = ++saveVersion;
+  try {
+    const transaction = database.transaction('projects', 'readwrite');
+    transaction.objectStore('projects').put(currentDeck(), storageKey);
+    transaction.oncomplete = () => { if (stamp === saveVersion && !saveTimer) storageLabel('saved'); };
+    transaction.onabort = () => storageLabel('storageError');
+  } catch { storageLabel('storageError'); }
+}
+function scheduleSave(immediate = false) {
+  if (immediate) return saveNow();
+  storageLabel(database ? 'saving' : 'storageError');
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(saveNow, 180);
+}
+addEventListener('pagehide', () => { if (saveTimer) saveNow(); });
+
+function hydrate(deck) {
+  if (deck && Array.isArray(deck.cards)) {
+    cards = deck.cards.slice(0, LIMIT).map(cleanCard);
+    const seen = new Set();
+    for (const card of cards) {
+      if (seen.has(card.id)) card.id = id();
+      seen.add(card.id);
+    }
+    activeId = cards.some(card => card.id === deck.activeId) ? deck.activeId : cards[0]?.id || '';
+    lang = deck.lang === 'ur' ? 'ur' : 'en';
+  } else {
+    cards = starterCards();
+    activeId = cards[0].id;
+  }
+}
+
+function translate() {
+  document.documentElement.lang = lang;
+  document.documentElement.dir = lang === 'ur' ? 'rtl' : 'ltr';
+  $$('[data-i]').forEach(node => {
+    node.innerHTML = (node.dataset.icon ? icon(node.dataset.icon) : '') + escapeHTML(t(node.dataset.i));
+  });
+  $$('[data-icon]:not([data-i])').forEach(node => { node.innerHTML = icon(node.dataset.icon); });
+  $$('[data-label]').forEach(node => { node.setAttribute('aria-label', t(node.dataset.label)); node.title = t(node.dataset.label); });
+  $('#language').textContent = lang === 'en' ? 'اردو' : 'English';
+  $('#language').setAttribute('aria-label', lang === 'en' ? 'اردو میں دکھائیں' : 'Switch to English');
+  $('.sides').setAttribute('aria-label', t('editSide'));
+  $('.editor-tabs').setAttribute('aria-label', t('edit'));
+  storageLabel(storageState);
+}
+
+function redrawLibrary() {
+  $('#card-count').textContent = `${cards.length} ${t('total')}`;
+  $('#library-list').innerHTML = cards.map(card => {
+    const palette = colors(card);
+    return `<button type="button" class="library-item" data-card="${card.id}" aria-current="${card.id === activeId}">
+      <span class="thumb" style="background:${palette.soft};color:${palette.ink}">${icon(templateIcons[card.template])}</span>
+      <span class="item-copy"><strong dir="auto">${escapeHTML(cardName(card))}</strong><small>${escapeHTML(t(card.template))}</small></span></button>`;
+  }).join('');
+}
+function redrawPreview() {
+  const card = cardNow();
+  $('#preview-heading').textContent = card ? cardName(card) : t('myCards');
+  $('#edit-description').textContent = card ? t(editSide === 'front' ? 'editingFront' : 'editingBack') : '';
+  $$('[data-view]').forEach(button => button.setAttribute('aria-pressed', button.dataset.view === view));
+  $$('[data-tab]').forEach(button => button.setAttribute('aria-pressed', button.dataset.tab === tab));
+  $('#artboard').innerHTML = card ? (view === 'both' ? ['front', 'back'] : [view]).map(side =>
+    `<figure class="preview-side">${art(card, side)}${view === 'both' ? `<figcaption>${escapeHTML(t(side))}</figcaption>` : ''}</figure>`).join('') : `<p>${escapeHTML(t('empty'))}</p>`;
+  for (const key of ['duplicate', 'delete', 'print', 'export']) $('#' + key).disabled = !card;
+}
+
+function optionMarkup(values, selected) {
+  return values.map(value => `<option value="${value}"${value === selected ? ' selected' : ''}>${escapeHTML(t(value))}</option>`).join('');
+}
+function field(key, label, value, multiline = false, placeholder = '') {
+  const id = 'field-' + key, max = textFields[key];
+  const attributes = `id="${id}" data-field="${key}" dir="auto" maxlength="${max}" placeholder="${escapeHTML(placeholder)}"`;
+  const control = multiline ? `<textarea ${attributes} rows="${key.endsWith('Rules') ? 5 : 3}">${escapeHTML(value)}</textarea>` : `<input ${attributes} value="${escapeHTML(value)}">`;
+  return `<div class="field"><label for="${id}">${escapeHTML(t(label))}</label>${control}</div>`;
+}
+function selectField(key, label, value, options, attribute = 'data-field') {
+  return `<div class="field"><label for="field-${key}">${escapeHTML(t(label))}</label><select id="field-${key}" ${attribute}="${key}">${optionMarkup(options, value)}</select></div>`;
+}
+function details(fields) {
+  return `<details class="field-detail"><summary>${escapeHTML(t('more'))}</summary>${fields}</details>`;
+}
+function textPanel(card) {
+  const f = (key, label = key, multiline = false, placeholder = '') => field(key, label, card[key], multiline, placeholder);
+  const names = f('owner', 'holder') + f('friend');
+  if (editSide === 'back') {
+    return names + f('backTitle', 'mainTitle') + f('backSubtitle', 'subtitle') + f('noteTitle') + f('note', 'note', true) + f('backFooter', 'footer') +
+      details(f('backListTitle', 'ruleTitle') + f('backRules', 'backRules', true) + f('ownerSig', 'ownerSig', false, card.owner) + f('friendSig', 'friendSig', false, card.friend) +
+        ['backOwnerLabel', 'backFriendLabel', 'signatureLabelA', 'signatureLabelB', 'backFootnote'].map(key => f(key)).join(''));
+  }
+  const classic = card.layout === 'classic';
+  const added = classic ? f('level') + f('kind') + `<div class="field-pair">${f('issued')}${f('valid')}</div>` : f('frontMessage', 'note', true);
+  return names + f('title', 'mainTitle') + f('subtitle') + added + f('frontFooter', 'footer') + details(f('caption', 'photoCaption') + f('stamp') +
+    (classic ? f('frontListTitle', 'ruleTitle') + f('frontRules', 'frontRules', true) : '') +
+    (classic ? ['holderLabel', 'friendLabel', 'levelLabel', 'typeLabel', 'issuedLabel', 'expiryLabel', 'approved'] : []).concat(['sealTop', 'sealBottom', 'photoLabel', 'footnote']).map(key => f(key)).join(''));
+}
+function designPanel(card) {
+  const paletteButtons = Object.entries(palettes).map(([key, p]) => `<button type="button" class="swatch" data-palette="${key}" aria-pressed="${key === card.theme}"><i style="background:${p.accent}"></i>${escapeHTML(t(key))}</button>`).join('');
+  const checks = ['showArt', 'showStamp', ...(card.layout === 'classic' ? ['showCode'] : [])].map(key => `<div class="field"><label class="check-label"><input type="checkbox" data-field="${key}"${card[key] ? ' checked' : ''}>${escapeHTML(t(key))}</label></div>`).join('');
+  return selectField('layout', 'layout', card.layout, ['classic', 'poster', 'simple']) + `<span class="field-label">${escapeHTML(t('colors'))}</span><div class="swatches">${paletteButtons}</div>
+    <div class="field"><label for="field-customColor">${escapeHTML(t('custom'))}</label><input aria-label="${escapeHTML(t('customColor'))}" type="color" id="field-customColor" data-field="customColor" value="${card.customColor}"></div>` +
+    selectField('font', 'font', card.font, ['sans', 'serif']) + checks;
+}
+function photoPanel(card) {
+  const photo = card.photos[editSide];
+  const sliders = photo ? [['zoom', 'zoom', '1', '3', '.01'], ['x', 'positionX', '-100', '100', '1'], ['y', 'positionY', '-100', '100', '1']].map(([key, label, min, max, step]) =>
+    `<div class="field"><label for="crop-${key}">${escapeHTML(t(label))}</label><input dir="ltr" id="crop-${key}" data-crop="${key}" type="range" min="${min}" max="${max}" step="${step}" value="${photo[key]}"></div>`).join('') : '';
+  return `<p class="edit-note">${escapeHTML(t('photoHint'))}</p><div class="field"><label for="photo-file">${escapeHTML(t('photoFile'))}</label><input type="file" class="photo-file" id="photo-file" accept="image/png,image/jpeg,image/webp,image/gif,image/avif,image/bmp"></div>${sliders}
+    ${photo ? `<div class="top-actions"><button type="button" class="button secondary" data-photo-action="reset">${escapeHTML(t('resetCrop'))}</button><button type="button" class="button quiet danger" data-photo-action="remove">${escapeHTML(t('removePhoto'))}</button></div>` : ''}`;
+}
+function redrawEditor() {
+  const card = cardNow();
+  if (!card) { editor.innerHTML = `<p class="edit-note">${escapeHTML(t('empty'))}</p>`; return; }
+  const sidePicker = view === 'both' && tab !== 'design' ? selectField('editSide', 'editSide', editSide, ['front', 'back'], 'data-side-control') : '';
+  editor.innerHTML = sidePicker + (tab === 'text' ? textPanel(card) : tab === 'design' ? designPanel(card) : photoPanel(card));
+}
+function redraw() { redrawLibrary(); redrawPreview(); redrawEditor(); }
+
+function chooseCard(card) {
+  if (!card) return;
+  activeId = card.id;
+  scheduleSave(true);
+  redraw();
+  $(`[data-card="${activeId}"]`)?.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+}
+function toast(key, action) {
+  const notice = $('#toast');
+  notice.textContent = t(key);
+  if (action) {
+    const button = document.createElement('button');
+    button.className = 'button secondary';
+    button.style.marginInlineStart = '8px';
+    button.textContent = t('undo');
+    button.onclick = () => { action(); notice.hidden = true; };
+    notice.append(button);
+  }
+  notice.hidden = false;
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => { notice.hidden = true; }, action ? 8000 : 3500);
+}
+function modalOpen(title, content) {
+  $('#modal-title').textContent = t(title);
+  $('#modal-body').innerHTML = content;
+  if (!modal.open) modal.showModal();
+}
+function modalOption(action, title, description, symbol) {
+  return `<button type="button" class="option" data-action="${action}">${icon(symbol)}<span><strong>${escapeHTML(t(title))}</strong><small>${escapeHTML(t(description))}</small></span></button>`;
+}
+function modalButton(action, label, primary = false) {
+  return `<button type="button" class="button ${primary ? 'primary' : 'secondary'}" data-action="${action}">${escapeHTML(t(label))}</button>`;
+}
+const maxCards = () => {
+  toast(lang === 'ur' ? `ایک پروجیکٹ میں زیادہ سے زیادہ ${LIMIT} کارڈ رکھ سکتے ہیں۔` : `A project can hold up to ${LIMIT} cards.`);
+};
+function showTemplates() {
+  if (cards.length >= LIMIT) { maxCards(); return; }
+  const pairOption = cards.length <= LIMIT - 2 ? modalOption('pair', 'pair', 'pairDesc', 'copy') : '';
+  modalOpen('newCard', `<p class="modal-description">${escapeHTML(t('chooseTemplate'))}</p><div class="modal-options">${pairOption}${Object.keys(templates).map(template => modalOption(template, template, template + 'Desc', templateIcons[template])).join('')}</div>`);
+  $('#modal-body').onclick = event => {
+    const template = event.target.closest('[data-action]')?.dataset.action;
+    if (template === 'pair') { showPair(); return; }
+    if (!Object.hasOwn(templates, template)) return;
+    const card = fresh(template);
+    cards.push(card);
+    view = editSide = 'front';
+    tab = 'text';
+    modal.close();
+    chooseCard(card);
+    $('#field-owner')?.focus({ preventScroll: true });
+  };
+}
+
+function showPair() {
+  const nameInput = (key, label) => `<div class="field"><label for="${key}">${escapeHTML(t(label))}</label><input id="${key}" dir="auto" required maxlength="56"></div>`;
+  modalOpen('pair', `<p class="modal-description">${escapeHTML(t('pairDesc'))}</p><form id="pair-form">${nameInput('first-name', 'firstName')}${nameInput('second-name', 'secondName')}
+    <div class="modal-buttons">${modalButton('cancel', 'cancel')}<button type="submit" class="button primary">${escapeHTML(t('createPair'))}</button></div></form>`);
+  $('#modal-body').onclick = event => { if (event.target.closest('[data-action]')?.dataset.action === 'cancel') showTemplates(); };
+  $('#pair-form').onsubmit = event => {
+    event.preventDefault();
+    const first = $('#first-name').value.trim(), second = $('#second-name').value.trim();
+    if (!first || !second) { toast('twoNames'); return; }
+    if (cards.length > LIMIT - 2) { maxCards(); return; }
+    const card = { ...fresh(), owner: first, friend: second };
+    cards.push(card, { ...fresh(), owner: second, friend: first, theme: 'lavender' });
+    view = editSide = 'front'; tab = 'text';
+    modal.close(); chooseCard(card);
+  };
+  $('#first-name').focus();
+}
+
+function duplicateCard() {
+  const original = cardNow();
+  if (!original) return;
+  if (cards.length >= LIMIT) { maxCards(); return; }
+  const card = structuredClone(original);
+  card.id = id();
+  cards.splice(cards.indexOf(original) + 1, 0, card);
+  chooseCard(card);
+}
+function removeCard() {
+  const card = cardNow();
+  if (!card) return;
+  modalOpen('delete', `<p class="modal-description">${escapeHTML(t('deleteQuestion'))} <strong dir="auto">${escapeHTML(cardName(card))}</strong></p><div class="modal-buttons">${modalButton('cancel', 'cancel')}${modalButton('delete', 'delete', true)}</div>`);
+  $('#modal-body').onclick = event => {
+    const action = event.target.closest('[data-action]')?.dataset.action;
+    if (action === 'cancel') modal.close();
+    if (action !== 'delete') return;
+    const index = cards.indexOf(card);
+    if (index === -1) return;
+    cards.splice(index, 1);
+    activeId = cards[Math.min(index, cards.length - 1)]?.id || '';
+    modal.close();
+    scheduleSave(true);
+    redraw();
+    toast('deleted', () => {
+      if (cards.length >= LIMIT) { maxCards(); return; }
+      cards.splice(Math.min(index, cards.length), 0, card);
+      chooseCard(card);
+    });
+  };
+}
+
+function changeField(input) {
+  const card = cardNow();
+  if (!card || !input.dataset.field) return;
+  const key = input.dataset.field;
+  card[key] = input.type === 'checkbox' ? input.checked : input.value;
+  if (key === 'customColor') {
+    card.theme = 'custom';
+    $$('[data-palette]').forEach(button => button.setAttribute('aria-pressed', 'false'));
+  }
+  redrawPreview();
+  if (key === 'owner' || key === 'title' || key === 'backTitle' || key === 'customColor') redrawLibrary();
+  if (key === 'layout') redrawEditor();
+  scheduleSave();
+}
+async function loadImage(file) {
+  if (file.size > 32_000_000) throw new Error('Image too large');
+  const bitmap = await createImageBitmap(file);
+  try {
+    const ratio = Math.min(1, 1400 / Math.max(bitmap.width, bitmap.height));
+    const width = Math.max(1, Math.round(bitmap.width * ratio)), height = Math.max(1, Math.round(bitmap.height * ratio));
+    const canvas = document.createElement('canvas');
+    canvas.width = width; canvas.height = height;
+    const context = canvas.getContext('2d');
+    context.fillStyle = '#fff'; context.fillRect(0, 0, width, height);
+    context.drawImage(bitmap, 0, 0, width, height);
+    return { data: canvas.toDataURL('image/jpeg', .88), width, height, zoom: 1, x: 0, y: 0 };
+  } finally { bitmap.close(); }
+}
+editor.addEventListener('input', event => {
+  const input = event.target, card = cardNow();
+  if (!card) return;
+  if (input.dataset.crop) {
+    const photo = card.photos[editSide];
+    if (photo) photo[input.dataset.crop] = Number(input.value);
+    redrawPreview();
+    scheduleSave();
+  } else if (input.matches('input:not([type="file"]), textarea, select[data-field]')) {
+    changeField(input);
+  }
+});
+editor.addEventListener('change', async event => {
+  const input = event.target, card = cardNow(), side = editSide;
+  if (input.dataset.sideControl) {
+    editSide = input.value;
+    redrawPreview(); redrawEditor();
+    return;
+  }
+  if (!card || input.id !== 'photo-file' || !input.files[0]) return;
+  const file = input.files[0];
+  input.disabled = true;
+  try {
+    const photo = await loadImage(file);
+    if (!cards.includes(card)) return;
+    card.photos[side] = photo;
+    scheduleSave(true);
+    redrawPreview();
+    if (cardNow() === card && editSide === side && tab === 'photo') redrawEditor();
+  } catch { toast('badPhoto'); }
+  finally { input.disabled = false; input.value = ''; }
+});
+editor.addEventListener('click', event => {
+  const button = event.target.closest('button'), card = cardNow();
+  if (!button || !card) return;
+  if (button.dataset.palette) {
+    card.theme = button.dataset.palette;
+    $$('[data-palette]').forEach(choice => choice.setAttribute('aria-pressed', String(choice === button)));
+  } else if (button.dataset.photoAction === 'remove') {
+    card.photos[editSide] = null;
+    redrawEditor();
+  } else if (button.dataset.photoAction === 'reset' && card.photos[editSide]) {
+    Object.assign(card.photos[editSide], { zoom: 1, x: 0, y: 0 });
+    redrawEditor();
+  } else return;
+  redrawLibrary(); redrawPreview(); scheduleSave(true);
+});
+
+function download(data, name, mediaType) {
+  const blob = data instanceof Blob ? data : new Blob([data], { type: mediaType });
+  const url = URL.createObjectURL(blob), anchor = document.createElement('a');
+  anchor.href = url; anchor.download = name;
+  document.body.append(anchor); anchor.click(); anchor.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 10000);
+}
+function basename(card) {
+  return (card.owner.trim() || card.title.trim() || 'Friendship-Card').replace(/[^\p{L}\p{N}]+/gu, '-').replace(/^-|-$/g, '') || 'Friendship-Card';
+}
+async function png(svg) {
+  const url = URL.createObjectURL(new Blob([svg], { type: 'image/svg+xml' }));
+  try {
+    const image = new Image(); image.src = url;
+    await image.decode();
+    const canvas = document.createElement('canvas');
+    canvas.width = W * 2; canvas.height = H * 2;
+    canvas.getContext('2d').drawImage(image, 0, 0, canvas.width, canvas.height);
+    return await new Promise((resolve, reject) => canvas.toBlob(blob => blob ? resolve(blob) : reject(new Error('PNG creation failed')), 'image/png'));
+  } finally { URL.revokeObjectURL(url); }
+}
+
+const crcTable = Uint32Array.from({ length: 256 }, (_, i) => {
+  for (let bit = 0; bit < 8; bit++) i = (i & 1) ? (i >>> 1) ^ 0xedb88320 : i >>> 1;
+  return i >>> 0;
+});
+function crc32(bytes) {
+  let value = 0xffffffff;
+  for (const b of bytes) value = crcTable[(value ^ b) & 255] ^ (value >>> 8);
+  return (value ^ 0xffffffff) >>> 0;
+}
+const encoder = new TextEncoder();
+function zip(entries) {
+  const files = [], directory = [];
+  let offset = 0, dirSize = 0;
+  for (const { filename, bytes } of entries) {
+    const name = encoder.encode(filename), crc = crc32(bytes);
+    const local = new DataView(new ArrayBuffer(30)), central = new DataView(new ArrayBuffer(46));
+    local.setUint32(0, 0x04034b50, true); central.setUint32(0, 0x02014b50, true);
+    central.setUint16(4, 20, true);
+    for (const [header, shift] of [[local, 0], [central, 2]]) {
+      header.setUint16(4 + shift, 20, true); header.setUint16(6 + shift, 0x0800, true);
+      header.setUint16(12 + shift, 33, true);
+      header.setUint32(14 + shift, crc, true); header.setUint32(18 + shift, bytes.length, true);
+      header.setUint32(22 + shift, bytes.length, true); header.setUint16(26 + shift, name.length, true);
+    }
+    central.setUint32(42, offset, true);
+    files.push(local.buffer, name, bytes); directory.push(central.buffer, name);
+    offset += 30 + name.length + bytes.length; dirSize += 46 + name.length;
+  }
+  const end = new DataView(new ArrayBuffer(22));
+  end.setUint32(0, 0x06054b50, true); end.setUint16(8, entries.length, true); end.setUint16(10, entries.length, true);
+  end.setUint32(12, dirSize, true); end.setUint32(16, offset, true);
+  return new Blob([...files, ...directory, end.buffer], { type: 'application/zip' });
+}
+async function pack(format) {
+  const entries = [], collection = structuredClone(cards);
+  for (const [i, card] of collection.entries()) {
+    for (const side of ['front', 'back']) {
+      const svg = art(card, side);
+      const bytes = format === 'png' ? new Uint8Array(await (await png(svg)).arrayBuffer()) : encoder.encode(svg);
+      entries.push({ filename: `${String(i + 1).padStart(2, '0')}-${basename(card)}-${side}.${format}`, bytes });
+    }
+  }
+  return zip(entries);
+}
+
+async function runDownload(button, action) {
+  if (busy) return;
+  busy = true; button.disabled = true;
+  toast('exporting');
+  try { await action(); toast('ready'); }
+  catch { toast('exportError'); }
+  finally { busy = false; button.disabled = false; }
+}
+function showExport() {
+  const card = cardNow();
+  if (!card) return;
+  modalOpen('export', `<p class="modal-description">${escapeHTML(t('exportHint'))}</p>` +
+    selectField('export-side', 'exportSide', view === 'both' ? editSide : view, ['front', 'back']) +
+    `<div class="modal-options">${modalOption('png', 'PNG', 'pngDesc', 'photo')}${modalOption('svg', 'SVG', 'svgDesc', 'star')}</div>` +
+    `<div class="field"><label for="zip-format">${escapeHTML(t('zipFormat'))}</label><select id="zip-format"><option value="svg">SVG</option><option value="png">PNG</option></select></div>` +
+    `<div class="modal-buttons">${modalButton('zip', 'zip', true)}</div>`);
+  $('#modal-body').onclick = event => {
+    const button = event.target.closest('[data-action]');
+    if (!button) return;
+    const action = button.dataset.action;
+    const side = $('#field-export-side').value, format = $('#zip-format').value;
+    runDownload(button, async () => {
+      if (action === 'zip') download(await pack(format), `Friendship-Cards-${format.toUpperCase()}.zip`);
+      else {
+        const content = art(card, side);
+        download(action === 'png' ? await png(content) : content, `${basename(card)}-${side}.${action}`, 'image/svg+xml');
+      }
+    });
+  };
+}
+
+function showProject() {
+  modalOpen('project', `<div class="modal-options">${modalOption('json', 'jsonBackup', 'jsonDesc', 'folder')}${modalOption('html', 'htmlBackup', 'htmlDesc', 'download')}</div><p class="modal-description">${escapeHTML(t('publishNotice'))}</p>`);
+  $('#modal-body').onclick = event => {
+    const action = event.target.closest('[data-action]')?.dataset.action;
+    if (action === 'json') download(JSON.stringify(currentDeck(), null, 2), 'Friendship-Studio-Backup.json', 'application/json');
+    else if (action === 'html') {
+      const state = JSON.stringify({ ...currentDeck(), projectId: id() }).replace(/</g, '\\u003c');
+      const complete = sourceDocument.replace(/(<script id="studio-data" type="application\/json">)[\s\S]*?(<\/script>)/, (_, start, end) => start + state + end);
+      download(complete, 'index.html', 'text/html;charset=utf-8');
+    } else return;
+    toast('ready');
+  };
+}
+
+function readImport(text) {
+  const studio = text.match(/<script\b[^>]*\bid=["']studio-data["'][^>]*>([\s\S]*?)<\/script>/i);
+  const legacy = text.match(/<script\b[^>]*\bid=["']card-state["'][^>]*>([\s\S]*?)<\/script>/i);
+  if (legacy) return legacyCards(JSON.parse(legacy[1]));
+  const payload = JSON.parse(studio ? studio[1] : text.replace(/^\uFEFF/, ''));
+  if (payload?.format !== PORTABLE_FORMAT || payload.version !== 2 || !Array.isArray(payload.cards)) throw new Error('Invalid backup');
+  if (payload.cards.length > LIMIT) throw new Error('Too many cards');
+  return payload.cards.map(cleanCard);
+}
+async function setImportedDimensions(card) {
+  for (const photo of Object.values(card.photos)) {
+    if (!photo) continue;
+    try {
+      const image = new Image(); image.src = photo.data;
+      await image.decode(); photo.width = image.naturalWidth; photo.height = image.naturalHeight;
+    } catch { throw new Error('Invalid embedded photo'); }
+  }
+}
+async function importFile(file) {
+  if (file.size > 75_000_000) { toast('uploadError'); return; }
+  try {
+    const incoming = readImport(await file.text());
+    if (!incoming.length) throw new Error('Empty backup');
+    for (const card of incoming) { await setImportedDimensions(card); card.id = id(); }
+    modalOpen('importTitle', `<p class="modal-description">${incoming.length} ${escapeHTML(t('total'))}. ${escapeHTML(t('importConfirm'))}</p><div class="modal-buttons">${modalButton('cancel', 'cancel')}${modalButton('replace', 'replace')}${modalButton('append', 'append', true)}</div>`);
+    $('#modal-body').onclick = event => {
+      const action = event.target.closest('[data-action]')?.dataset.action;
+      if (action === 'cancel') modal.close();
+      if (action !== 'append' && action !== 'replace') return;
+      if (action === 'append' && cards.length + incoming.length > LIMIT) { maxCards(); return; }
+      cards = action === 'append' ? cards.concat(incoming) : incoming;
+      modal.close();
+      chooseCard(incoming[0]);
+    };
+  } catch { toast('importError'); }
+}
+
+function printSheets(selection = printSelection) {
+  const collection = selection?.scope === 'allCards' ? cards : cardNow() ? [cardNow()] : [];
+  const sides = selection?.sides || 'both';
+  const pages = [];
+  for (let start = 0; start < collection.length; start += 8) {
+    const group = collection.slice(start, start + 8);
+    for (const side of (sides === 'both' ? ['front', 'back'] : [sides])) {
+      const mirror = side === 'back' && sides === 'both';
+      const slots = group.map((card, index) => {
+        const column = mirror ? 1 - index % 2 : index % 2, row = Math.floor(index / 2);
+        return `<div class="print-card" style="top:${15 + 63 * row}mm;left:${12 + 100.4 * column}mm">${art(card, side)}</div>`;
+      }).join('');
+      pages.push(`<section class="print-sheet">${slots}<p class="print-note" dir="auto">${escapeHTML(t(side))} · A4 · 100% / Actual size${sides === 'both' ? ' · ' + escapeHTML(lang === 'ur' ? 'لمبے کنارے سے پلٹیں' : 'Flip on the long edge') : ''}</p></section>`);
+    }
+  }
+  $('#print-output').innerHTML = pages.join('');
+}
+function showPrint() {
+  modalOpen('print', `<p class="modal-description">${escapeHTML(t('printHint'))}</p>` +
+    selectField('print-scope', 'printCards', 'selected', ['selected', 'allCards']) +
+    selectField('print-sides', 'printSides', 'both', ['both', 'front', 'back']) + `<div class="modal-buttons">${modalButton('print', 'openPrint', true)}</div>`);
+  $('#modal-body').onclick = event => {
+    if (event.target.closest('[data-action]')?.dataset.action !== 'print') return;
+    printSelection = { scope: $('#field-print-scope').value, sides: $('#field-print-sides').value };
+    modal.close();
+    printSheets();
+    window.print();
+  };
+}
+addEventListener('beforeprint', () => printSheets());
+addEventListener('afterprint', () => { printSelection = undefined; $('#print-output').replaceChildren(); });
+
+function wireControls() {
+  $('#new-card').onclick = $('#library-add').onclick = showTemplates;
+  $('#duplicate').onclick = duplicateCard;
+  $('#delete').onclick = removeCard;
+  $('#export').onclick = showExport;
+  $('#print').onclick = showPrint;
+  $('#project').onclick = showProject;
+  $('#import').onclick = () => $('#import-file').click();
+  $('#import-file').onchange = event => {
+    const file = event.target.files[0]; event.target.value = '';
+    if (file) importFile(file);
+  };
+  $('#language').onclick = () => {
+    lang = lang === 'en' ? 'ur' : 'en';
+    translate(); redraw(); scheduleSave(true);
+  };
+  $('#help').onclick = () => {
+    modalOpen('help', `<ol class="help-list">${[1, 2, 3, 4].map(i => `<li>${escapeHTML(t('help' + i))}</li>`).join('')}</ol>`);
+    $('#modal-body').onclick = null;
+  };
+  $('#library-list').onclick = event => {
+    const cardId = event.target.closest('[data-card]')?.dataset.card;
+    if (cardId === activeId) return;
+    chooseCard(cards.find(card => card.id === cardId));
+    $(`[data-card="${cardId}"]`)?.focus({ preventScroll: true });
+  };
+  $$('[data-view]').forEach(button => button.onclick = () => {
+    view = button.dataset.view;
+    if (view !== 'both') editSide = view;
+    redrawPreview(); redrawEditor();
+  });
+  $$('[data-tab]').forEach(button => button.onclick = () => {
+    tab = button.dataset.tab;
+    redrawPreview(); redrawEditor();
+  });
+}
+
+async function start() {
+  let deck = embedded;
+  try {
+    database = await openDatabase();
+    deck = (await storedDeck()) || embedded;
+  } catch { database = null; }
+  try { hydrate(deck); }
+  catch { hydrate(embedded === deck ? null : embedded); }
+  translate();
+  wireControls();
+  redraw();
+  saveNow();
+}
+start();
 
 </script>
 </body></html>
