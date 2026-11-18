@@ -119,6 +119,22 @@ dialog::backdrop { background: #142c266b; }
 .option small { color: var(--muted); font-size: 12px; margin-top: 2px; }
 .option svg { width: 22px; height: 22px; flex: none; }
 .modal-buttons { display: flex; gap: 8px; justify-content: end; flex-wrap: wrap; }
+.gallery-modal { width: min(860px, calc(100% - 28px)); }
+.gallery-modal .modal-head { position: sticky; top: 0; background: white; z-index: 1; }
+.template-gallery { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.template-option { display: flex; flex-direction: column; width: 100%; min-width: 0; background: #fff; color: inherit; border: 1px solid var(--border); border-radius: 11px; padding: 7px; text-align: start; }
+.template-option:hover { background: #f4f8f3; border-color: #8daf9c; }
+.template-thumb { display: block; aspect-ratio: 1200 / 757; overflow: hidden; width: 100%; border-radius: 7px; background: #f3f5f1; }
+.template-thumb > svg { display: block; width: 100%; height: 100%; }
+.template-blank { height: 100%; display: grid; place-items: center; color: #507666; }
+.template-blank svg { width: 28px; height: 28px; }
+.template-copy { display: block; padding: 7px 4px 3px; }
+.template-copy strong, .template-copy small { display: block; }
+.template-copy strong { color: var(--dark); font-size: 13px; }
+.template-copy small { margin-block-start: 2px; color: var(--muted); font-size: 11px; }
+.pair-option { margin-block-start: 13px; }
+.pair-option .option { width: 100%; }
+@media (max-width: 610px) { .template-gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; } }
 .help-list { padding-inline-start: 22px; font-size: 13px; }
 .help-list li { margin-bottom: 9px; }
 #toast { position: fixed; z-index: 10; inset-block-end: 18px; inset-inline-start: 50%; translate: -50% 0; background: #234e41; color: #fff; padding: 11px 16px; border-radius: 9px; width: max-content; max-width: calc(100vw - 24px); box-shadow: 0 4px 19px #213c3080; font-size: 13px; }
@@ -237,6 +253,8 @@ const phrases = {
   memory: ['Memory Card', 'یادگار کارڈ'], memoryDesc: ['A favourite moment and a note to keep.', 'ایک پسندیدہ لمحہ اور یادگار پیغام۔'],
   birthday: ['Birthday Card', 'سالگرہ کا کارڈ'], birthdayDesc: ['A birthday wish with room for a personal message.', 'ذاتی پیغام کے ساتھ سالگرہ کی مبارک باد۔'],
   thanks: ['Thank You Card', 'شکریے کا کارڈ'], thanksDesc: ['A small thank you for someone who showed up.', 'ایک عزیز دوست کے لیے شکریے کا کارڈ۔'],
+  graduation: ['Graduation Card', 'گریجویشن کارڈ'], graduationDesc: ['Midnight blue, gold stars and a graduation cap.', 'گہرا نیلا، سنہری ستارے اور گریجویشن کی ٹوپی۔'],
+  eid: ['Eid Card', 'عید کارڈ'], eidDesc: ['An emerald arch, crescent and lanterns.', 'زمردی محراب، ہلال اور فانوس۔'],
   blank: ['Blank design', 'خالی ڈیزائن'], blankDesc: ['Start with empty text fields.', 'خالی خانوں سے اپنا ڈیزائن شروع کریں۔'],
   holder: ['Name on card', 'کارڈ پر نام'], friend: ['Friend’s name', 'دوست کا نام'], mainTitle: ['Title', 'عنوان'], subtitle: ['Subtitle', 'ذیلی عنوان'],
   note: ['Message', 'پیغام'], noteTitle: ['Message heading', 'پیغام کا عنوان'], footer: ['Bottom caption', 'نیچے کا جملہ'],
@@ -249,8 +267,12 @@ const phrases = {
   zoom: ['Zoom', 'زوم'], positionX: ['Horizontal position', 'دائیں بائیں پوزیشن'], positionY: ['Vertical position', 'اوپر نیچے پوزیشن'],
   removePhoto: ['Remove photo', 'تصویر ہٹائیں'], resetCrop: ['Reset crop', 'کراپ دوبارہ سیٹ کریں'], badPhoto: ['This photo could not be opened. Try JPG, PNG or WebP.', 'تصویر نہیں کھلی۔ JPG، PNG یا WebP آزمائیں۔'],
   layout: ['Layout', 'ترتیب'], classic: ['License', 'لائسنس'], poster: ['Postcard', 'پوسٹ کارڈ'], simple: ['Minimal', 'سادہ'],
+  scrapbook: ['Scrapbook', 'یادوں کی البم'], confetti: ['Birthday Confetti', 'سالگرہ کی خوشیاں'], botanical: ['Botanical Note', 'پھولوں بھرا پیغام'],
+  starlight: ['Graduation Night', 'گریجویشن کی رات'], moonlight: ['Eid Moonlight', 'عید کا چاند'], illustrations: ['Show illustrations', 'تصویری آرائش دکھائیں'],
+  styleHint: ['Change the artwork for both sides. Your text and photos stay in the card.', 'دونوں رخوں کا ڈیزائن بدلیں۔ آپ کا متن اور تصاویر کارڈ میں رہیں گی۔'],
   colors: ['Colour palette', 'رنگوں کا انتخاب'], sky: ['Sky', 'آسمانی'], lavender: ['Lavender', 'لیونڈر'], rose: ['Rose', 'گلابی'],
-  mint: ['Mint', 'پودینہ'], amber: ['Honey', 'شہد'], dusk: ['Indigo', 'نیلا جامنی'], custom: ['Custom accent', 'اپنا رنگ'],
+  mint: ['Mint', 'پودینہ'], amber: ['Honey', 'شہد'], dusk: ['Indigo', 'نیلا جامنی'], coral: ['Coral', 'مرجانی'],
+  sage: ['Sage', 'زیتونی سبز'], midnight: ['Midnight', 'گہرا نیلا'], emerald: ['Emerald', 'زمردی'], custom: ['Custom accent', 'اپنا رنگ'],
   customColor: ['Pick an accent', 'پسند کا رنگ منتخب کریں'], font: ['Card lettering', 'کارڈ کا فونٹ'], sans: ['Clean', 'صاف'], serif: ['Classic', 'روایتی'],
   showArt: ['Show friendship doodles', 'دوستی کی ڈرائنگ دکھائیں'], showStamp: ['Show stamp', 'مہر دکھائیں'], showCode: ['Show decorative barcode', 'سجاوٹی بارکوڈ دکھائیں'],
   editingFront: ['Editing the front', 'اگلے رخ کی ایڈیٹنگ'], editingBack: ['Editing the back', 'پچھلے رخ کی ایڈیٹنگ'],
@@ -289,22 +311,34 @@ const templates = {
     backFooter: 'One friendship. A million memories. Forever to go.'
   },
   memory: {
-    layout: 'poster', theme: 'mint', title: 'A MEMORY TO KEEP', subtitle: 'One of my favourite moments with you',
-    frontMessage: 'The best stories always start with us.', caption: 'Our favourite moment', frontFooter: 'Here’s to more days like this.',
-    backTitle: 'THE STORY BEHIND IT', backSubtitle: 'A little piece of our friendship', noteTitle: 'What I remember',
+    layout: 'scrapbook', theme: 'amber', font: 'serif', title: 'A day to remember', subtitle: 'FROM OUR CAMERA ROLL',
+    frontMessage: 'One of those days I wish I could do all over again.', caption: 'One for the album', frontFooter: 'Here’s to more days like this.',
+    backTitle: 'The story behind it', backSubtitle: 'A LITTLE PIECE OF OUR FRIENDSHIP', noteTitle: 'What I remember',
     note: 'I hope we keep telling this story for years. Even the small details make me smile.', backFooter: 'Keep this one close.'
   },
   birthday: {
-    layout: 'poster', theme: 'amber', title: 'HAPPY BIRTHDAY!', subtitle: 'For someone who makes ordinary days fun',
-    frontMessage: 'Here’s to your best year yet, bestie.', caption: 'Birthday memories', frontFooter: 'Make a wish!',
-    backTitle: 'A WISH FOR YOU', backSubtitle: 'Today is yours', noteTitle: 'Happy birthday',
+    layout: 'confetti', theme: 'coral', title: 'Happy birthday!', subtitle: 'TODAY IS YOURS',
+    frontMessage: 'Here’s to another year of laughing way too loudly.', caption: 'Birthday memories', frontFooter: 'Make a wish!',
+    backTitle: 'A wish for you', backSubtitle: 'ANOTHER TRIP AROUND THE SUN', noteTitle: 'Happy birthday',
     note: 'I hope this year brings you good surprises, big laughs and plenty of things worth celebrating.', backFooter: 'So glad I get to celebrate you.'
   },
   thanks: {
-    layout: 'simple', theme: 'rose', title: 'THANK YOU, BESTIE', subtitle: 'For the big things and the little things',
+    layout: 'botanical', theme: 'sage', font: 'serif', title: 'Thank you', subtitle: 'FOR THE BIG THINGS AND THE LITTLE THINGS',
     frontMessage: 'You made a difference just by being there.', frontFooter: 'With love and gratitude.',
-    backTitle: 'A LITTLE NOTE', backSubtitle: 'For a friend I’m lucky to have', noteTitle: 'What it meant to me',
+    backTitle: 'A little note', backSubtitle: 'FOR A FRIEND I’M LUCKY TO HAVE', noteTitle: 'What it meant to me',
     note: 'Thank you for listening, making me laugh and always knowing when to check in. I’m glad we found each other.', backFooter: 'I’ll be there for you, too.'
+  },
+  graduation: {
+    layout: 'starlight', theme: 'midnight', font: 'serif', title: 'You did it!', subtitle: 'HAPPY GRADUATION', caption: 'Made it!',
+    frontMessage: 'All that work brought you to this moment. I’m proud of you.', frontFooter: 'Here’s to what comes next.',
+    backTitle: 'Your next chapter', backSubtitle: 'THE START OF SOMETHING GOOD', noteTitle: 'To the graduate',
+    note: 'I saw how much it took to get here. Take a moment to celebrate what you accomplished. I can’t wait to see where you go next.', backFooter: 'Go make it yours.'
+  },
+  eid: {
+    layout: 'moonlight', theme: 'emerald', font: 'serif', title: 'Eid Mubarak', subtitle: 'WARM WISHES FOR YOU AND YOUR FAMILY', caption: 'Eid memories',
+    frontMessage: 'May your Eid be full of joy, peace and time with the people you love.', frontFooter: 'With warm wishes',
+    backTitle: 'A little Eid wish', backSubtitle: 'SENT WITH LOVE', noteTitle: 'For you and yours',
+    note: 'May this Eid bring happiness to your home and give you beautiful memories to carry into the year ahead.', backFooter: 'Eid Mubarak'
   },
   blank: { layout: 'simple', theme: 'dusk' }
 };
@@ -315,8 +349,15 @@ const palettes = {
   rose:   { accent: '#a74c70', ink: '#70324e', base: '#fff8fb', soft: '#f8e4ed', edge: '#e4b5ca' },
   mint:   { accent: '#397766', ink: '#28564b', base: '#f4fcf7', soft: '#ddf1e9', edge: '#a9d5c5' },
   amber:  { accent: '#91581f', ink: '#663d20', base: '#fffaf1', soft: '#faedce', edge: '#e3c38f' },
-  dusk:   { accent: '#4d609f', ink: '#353e71', base: '#f7f8ff', soft: '#e4e9fa', edge: '#b7c3e6' }
+  dusk:   { accent: '#4d609f', ink: '#353e71', base: '#f7f8ff', soft: '#e4e9fa', edge: '#b7c3e6' },
+  coral:  { accent: '#aa4262', ink: '#63293e', base: '#fff5eb', soft: '#f9d8dc', edge: '#e7a9b6' },
+  sage:   { accent: '#55705b', ink: '#304b39', base: '#fcf8ec', soft: '#e4e9d8', edge: '#a9bba0' },
+  midnight: { accent: '#4c5691', ink: '#242b56', base: '#f8f4ff', soft: '#dce0f9', edge: '#a9b2e4' },
+  emerald:  { accent: '#276b5e', ink: '#173f38', base: '#fffaec', soft: '#dceee2', edge: '#a6c9b0' }
 };
+
+const layouts = ['classic', 'scrapbook', 'confetti', 'botanical', 'starlight', 'moonlight', 'poster', 'simple'];
+const designedTemplates = { scrapbook: 'memory', confetti: 'birthday', botanical: 'thanks', starlight: 'graduation', moonlight: 'eid' };
 
 const iconPaths = {
   heart: '<path d="M20.8 8.4c0 4.3-8.8 9.1-8.8 9.1S3.2 12.7 3.2 8.4a4.5 4.5 0 0 1 8.8-1.3 4.5 4.5 0 0 1 8.8 1.3Z"/>',
@@ -336,7 +377,7 @@ const iconPaths = {
 function icon(name) {
   return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${iconPaths[name] || iconPaths.heart}</svg>`;
 }
-const templateIcons = { license: 'ticket', memory: 'photo', birthday: 'star', thanks: 'heart', blank: 'plus' };
+const templateIcons = { license: 'ticket', memory: 'photo', birthday: 'star', thanks: 'heart', graduation: 'star', eid: 'star', blank: 'plus' };
 
 const textFields = {
   owner: 56, friend: 56, title: 55, subtitle: 100, level: 44, kind: 60, issued: 35, valid: 35,
@@ -370,19 +411,40 @@ function fresh(template = 'license') {
   const content = templates[template];
   return {
     ...Object.fromEntries(Object.keys(textFields).map(key => [key, ''])),
-    ...(template === 'blank' ? {} : labelDefaults), ...content,
-    id: id(), template, owner: '', friend: '', customColor: '#397766', font: 'sans',
+    ...(template === 'license' ? labelDefaults : {}), ...content,
+    id: id(), template, owner: '', friend: '', customColor: '#397766', font: content.font || 'sans',
     showArt: template !== 'blank', showStamp: template === 'license', showCode: template === 'license',
     photos: { front: null, back: null }
   };
 }
 
+const starterLabels = ['Bestie One', 'Bestie Two'];
 function starterCards() {
   return [
-    { ...fresh(), owner: 'Sami ullah', friend: 'Mushaf Ali Tanoli', issued: '13 NOV 2026' },
-    { ...fresh(), owner: 'Mushaf Ali Tanoli', friend: 'Sami ullah', issued: '13 NOV 2026', theme: 'lavender',
+    { ...fresh(), owner: starterLabels[0], friend: starterLabels[1], issued: '13 NOV 2026' },
+    { ...fresh(), owner: starterLabels[1], friend: starterLabels[0], issued: '13 NOV 2026', theme: 'lavender',
       note: 'From our random laughs to our biggest dreams, every memory is better with you. Here’s to a friendship that stays.' }
   ];
+}
+
+// Checksums identify the two earlier sample pairs without embedding their names in the published file.
+const formerSampleLabels = [
+  new Set([0x2044a203, 0x6de55284]),
+  new Set([0x57b1dbd8, 0xe4a71af1])
+];
+
+function refreshUntouchedSamples(cards) {
+  const samples = starterCards();
+  const matchingSample = (card, sample) => Object.keys(sample).every(key => {
+    if (['id', 'owner', 'friend'].includes(key)) return true;
+    if (key === 'photos') return !card.photos.front && !card.photos.back;
+    return card[key] === sample[key];
+  });
+  return cards.map(card => {
+    const labelSignature = crc32(encoder.encode(card.owner + '\0' + card.friend));
+    const index = samples.findIndex((sample, slot) => formerSampleLabels[slot].has(labelSignature) && matchingSample(card, sample));
+    return index < 0 ? card : { ...card, owner: starterLabels[index], friend: starterLabels[1 - index] };
+  });
 }
 
 const bounded = (value, low, high, fallback) => Number.isFinite(value) ? Math.max(low, Math.min(high, value)) : fallback;
@@ -403,7 +465,7 @@ function cleanCard(value) {
   for (const [key, max] of Object.entries(textFields)) if (typeof value[key] === 'string') card[key] = value[key].slice(0, max);
   if (Object.hasOwn(palettes, value.theme) || value.theme === 'custom') card.theme = value.theme;
   if (typeof value.customColor === 'string' && /^#[\da-f]{6}$/i.test(value.customColor)) card.customColor = value.customColor;
-  if (['classic', 'poster', 'simple'].includes(value.layout)) card.layout = value.layout;
+  if (layouts.includes(value.layout)) card.layout = value.layout;
   if (['sans', 'serif'].includes(value.font)) card.font = value.font;
   for (const key of ['showArt', 'showStamp', 'showCode']) if (typeof value[key] === 'boolean') card[key] = value[key];
   for (const side of ['front', 'back']) card.photos[side] = cleanPhoto(value.photos?.[side]);
@@ -613,6 +675,7 @@ function backContent(card, p, id, font) {
 function art(card, side) {
   const p = colors(card), front = side === 'front', font = lettering[card.font];
   const id = `art-${card.id}-${side}-${++art.sequence}`;
+  if (Object.hasOwn(designedTemplates, card.layout)) return designArt(card, side, p, id, font);
   const title = front ? card.title : card.backTitle, subtitle = front ? card.subtitle : card.backSubtitle;
   const footer = front ? card.frontFooter : card.backFooter, footnote = front ? card.footnote : card.backFootnote;
   const minimal = card.layout === 'simple';
@@ -639,6 +702,233 @@ function art(card, side) {
   </svg>`;
 }
 art.sequence = 0;
+
+
+function illustrationPhoto(card, side, palette, id, x, y, width, height) {
+  if (!card.photos[side]) return '';
+  return picture(card, side, palette, id, x, y, width, height);
+}
+
+function corners(x, y, width, height, color) {
+  return `<g fill="none" stroke="${color}" stroke-width="2.5" stroke-linecap="round">
+    <path d="M${x + 39} ${y}h-26q-13 0-13 13v26m${width - 39}-39h26q13 0 13 13v26M${x} ${y + height - 39}v26q0 13 13 13h26m${width - 39}-39v26q0 13-13 13h-26"/>
+  </g>`;
+}
+
+function stem(x, y, scale, color, turn = 0) {
+  return `<g transform="translate(${x} ${y}) rotate(${turn}) scale(${scale})" stroke="${color}" stroke-width="2.6" stroke-linecap="round" fill="none">
+    <path d="M3 104C4 65 20 20 46-20M11 67C-8 62-19 48-18 37C-3 37 10 50 11 67ZM18 48C37 46 49 35 51 19C36 19 24 31 18 48ZM27 31C13 23 8 12 10 1C23 3 28 16 27 31ZM37 5C53 4 65-6 68-21C53-21 43-8 37 5Z"/>
+  </g>`;
+}
+
+function flower(x, y, size, petals, middle) {
+  const blooms = Array.from({ length: 5 }, (_, i) => `<ellipse cy="-16" rx="11" ry="16" transform="rotate(${72 * i})"/>`).join('');
+  return `<g transform="translate(${x} ${y}) scale(${size})"><g fill="${petals}">${blooms}</g><circle r="8" fill="${middle}"/></g>`;
+}
+
+function mountainPicture(x, y, width, height, p, id, showArt) {
+  return `<defs><clipPath id="${id}-landscape"><rect x="${x}" y="${y}" width="${width}" height="${height}" rx="8"/></clipPath></defs>
+    <g clip-path="url(#${id}-landscape)"><rect x="${x}" y="${y}" width="${width}" height="${height}" rx="8" fill="${p.soft}"/>
+    ${showArt ? `<g transform="translate(${x} ${y}) scale(${width / 460} ${height / 400})">
+      <rect width="460" height="400" fill="${mix(p.soft, '#efb78d', .34)}"/><circle cx="328" cy="125" r="60" fill="#fff0cc"/>
+      <path d="M0 279 113 133l75 100 45-46 150 213H0Z" fill="${mix(p.edge, '#8e725c', .25)}"/>
+      <path d="m112 135 31 42-25-8-29 8Z" fill="#fbeddc"/>
+      <path d="M0 316q75-61 155-37t128 0q91-52 177-1v122H0Z" fill="${mix(p.accent, '#748b6c', .65)}"/>
+      <path d="M0 362q92-66 182-45t129-7q88-40 149 14v76H0Z" fill="${mix(p.ink, '#587259', .56)}"/>
+      <path d="M311 400q-45-27-133-29 66-31 174-45-78 23-100 39 100 8 156 35Z" fill="#d9b789"/>
+    </g>` : ''}</g>`;
+}
+
+function balloon(x, y, scale, fill, string, angle = 0) {
+  return `<g transform="translate(${x} ${y}) rotate(${angle}) scale(${scale})">
+    <path d="M0 66C-3 111 19 115 4 151S-1 206 7 219" fill="none" stroke="${string}" stroke-width="3"/>
+    <path d="m0 55-9 17H9Z" fill="${fill}"/><ellipse rx="48" ry="61" fill="${fill}"/>
+    <path d="M-30-15q4-19 15-26" fill="none" stroke="#fff" stroke-opacity=".67" stroke-width="5.5" stroke-linecap="round"/>
+  </g>`;
+}
+
+function birthdayConfetti(p) {
+  const confetti = [[60,91,20],[129,648,-15],[253,74,-10],[350,628,22],[619,106,-20],[695,653,18],[818,84,-17],[966,651,20],[1100,171,32],[1107,627,-31],[1170,367,24],[56,481,-12],[566,686,14],[1069,99,-29],[1142,536,18],[803,652,-17]];
+  const hues = [p.accent, '#db8f6c', '#d3a43f', '#8c6ca7'];
+  return confetti.map(([x, y, rotate], i) => i % 3 === 0 ? sparkle(x, y, 9, hues[i % 4]) : `<rect x="${x}" y="${y}" width="${i % 2 ? 9 : 6}" height="${i % 2 ? 14 : 8}" rx="3" fill="${hues[i % 4]}" transform="rotate(${rotate} ${x} ${y})"/>`).join('');
+}
+
+function archPath(x, y, width, height) {
+  const center = x + width / 2, spring = y + width / 2;
+  return `M${x} ${y + height}V${spring}Q${x} ${y + width * .22} ${center} ${y}Q${x + width} ${y + width * .22} ${x + width} ${spring}V${y + height}Z`;
+}
+
+function lantern(x, y, scale, gold) {
+  return `<g transform="translate(${x} ${y}) scale(${scale})" stroke="${gold}" stroke-width="2.8" fill="none" stroke-linecap="round" stroke-linejoin="round">
+     <path d="M0-145v118m0 0-13 15H13ZM-15-6h30l-4 28h-22Zm4 34h22l-11 10Zm11-33v25m-7-20 2 18m12-18-2 18"/><circle cy="-31" r="5"/>
+   </g>`;
+}
+
+function crescent(x, y, size, gold) {
+  return `<g transform="translate(${x} ${y}) scale(${size})"><path d="M27-55A63 63 0 1 0 60 27 55 55 0 0 1 27-55Z" fill="${gold}" transform="rotate(-13)"/></g>`;
+}
+
+function graduationCap(x, y, scale, gold, night) {
+  return `<g transform="translate(${x} ${y}) scale(${scale})" stroke="${gold}" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M-63-6v48q63 35 126 0V-6" fill="${night}"/><path d="m-110-16 110-45 110 45L0 30Z" fill="${gold}"/>
+    <path d="M5-15 83 3v51" fill="none" stroke="${night}"/><path d="M83 47v30" fill="none"/><path d="M75 80h16l-3-18H78Z" fill="${gold}"/>
+  </g>`;
+}
+
+const softGold = '#f1d695';
+const styleInk = '#fff4d9';
+const stars = [[88,96,10],[120,565,8],[261,104,5],[352,668,8],[505,77,6],[657,574,10],[760,122,8],[801,636,6],[954,75,10],[1068,162,6],[1132,497,10],[1114,669,6],[85,428,4]];
+
+function welcomeText(card, x, y, width, font, ink, accent, align = 'left') {
+  const heading = { align, color: accent, weight: 800, spacing: 2.7 };
+  const body = { align, color: ink, font };
+  return line(x, y, card.subtitle, width, 21, heading) + line(x, y + 95, card.title, width, 84, { ...body, weight: 750 }) +
+    line(x, y + 160, card.owner, width, 36, { ...body, weight: 650 }) +
+    paragraph(x, y + 218, card.frontMessage, width, 27, 4, 37, body) +
+    line(x, y + 406, card.frontFooter, width, 22, { ...body, italic: true }) +
+    line(x, y + 453, card.friend, width, 22, { ...body, color: accent, weight: 750 });
+}
+
+function scrapbookFront(card, p, id, font) {
+  const x = 655, y = 154, w = 430, h = 387;
+  const tape = mix(p.edge, '#e7c38d', .45);
+  return `<rect width="1200" height="757" fill="${p.base}"/>
+    <path d="M0 604 109 625 195 608 328 637 493 611 658 638 804 613 926 632 1042 610 1200 632v125H0Z" fill="${p.soft}"/>
+    <path d="M53 64v629" stroke="${p.edge}" stroke-width="2" stroke-dasharray="6 8"/>
+    ${welcomeText(card, 91, 181, 508, font, p.ink, p.accent)}
+    <g transform="rotate(4 875 395)"><rect x="636" y="126" width="470" height="506" rx="12" fill="#fffdfa" stroke="${p.edge}" stroke-width="2"/>
+    ${illustrationPhoto(card, 'front', p, id, x, y, w, h) || mountainPicture(x, y, w, h, p, id, card.showArt)}
+    ${line(x + w / 2, 592, card.caption, w, 29, { align: 'center', font: lettering.serif, italic: true, color: p.ink })}</g>
+    <path d="M795 111q3-3 8-2l156 8 4 52-175-8Z" fill="${tape}" opacity=".8" transform="rotate(-7 875 138)"/>
+    ${card.showArt ? heart(1087, 642, 1.45, p.accent, 15) + sparkle(628, 652, 13, p.accent) : ''}`;
+}
+
+function confettiFront(card, p, id, font) {
+  const dark = mix(p.ink, '#381b36', .22), yellow = '#ffe49f';
+  const photo = illustrationPhoto(card, 'front', p, id, 805, 177, 292, 394);
+  return `<rect width="1200" height="757" fill="${p.soft}"/><path d="M730-20Q598 122 709 278T754 532Q654 681 744 780H1220V-20Z" fill="${p.base}"/>
+    <path d="M825-10Q734 115 793 202m221 563q-40-78 31-113t147-3" fill="none" stroke="${p.edge}" stroke-width="4"/>
+    ${card.showArt ? birthdayConfetti(p) : ''}
+    <g transform="rotate(-4 160 153)"><rect x="88" y="126" width="212" height="53" rx="26" fill="${dark}"/>
+      ${line(194, 159, card.subtitle, 179, 16, { align: 'center', color: '#fff', weight: 800, spacing: 1.6 })}</g>
+    ${line(82, 305, card.title, 676, 106, { font, color: dark, weight: 900 })}
+    ${line(90, 386, card.owner, 618, 48, { font, color: dark, weight: 750 })}
+    ${paragraph(92, 454, card.frontMessage, 603, 31, 4, 39, { font, color: dark })}
+    ${line(92, 642, card.frontFooter, 600, 28, { font: lettering.serif, color: dark, italic: true })}
+    ${line(92, 688, card.friend, 600, 23, { font, color: dark, weight: 750 })}
+    ${photo ? `<rect x="789" y="161" width="324" height="466" rx="27" fill="#fffdfa" stroke="${p.edge}" stroke-width="3"/>${photo}${line(950, 607, card.caption, 280, 24, { align: 'center', color: dark, font: lettering.serif, italic: true })}` :
+      (card.showArt ? balloon(895, 251, 1.47, p.accent, dark, -13) + balloon(1008, 300, 1.33, '#e999b0', dark, 15) + balloon(1110, 232, 1.2, yellow, dark, 16) : '')}`;
+}
+
+function botanicalFront(card, p, id, font) {
+  const photo = illustrationPhoto(card, 'front', p, id, 805, 192, 281, 348);
+  const center = photo ? 454 : 600, width = photo ? 625 : 740;
+  return `<rect width="1200" height="757" fill="${p.soft}"/>
+    <rect x="37" y="35" width="1126" height="687" rx="20" fill="${p.base}" stroke="${p.edge}" stroke-width="2"/>
+    <rect x="52" y="50" width="1096" height="657" rx="13" fill="none" stroke="${p.edge}" stroke-width="1"/>
+    ${card.showArt ? `<g opacity=".87">
+      ${stem(127, 146, 1.55, p.accent, 147)}${stem(117, 585, 1.55, p.accent, -10)}${stem(1087, 180, 1.5, p.accent, 175)}${stem(1038, 570, 1.65, p.accent, 37)}
+      ${flower(182, 174, 1.05, '#dda28f', '#a06a39')}${flower(99, 532, .7, '#e7bc94', '#99613e')}${flower(1054, 207, .88, '#dda28f', '#a06a39')}${flower(1000, 582, 1.12, '#e4b18f', '#99613e')}
+      </g>` : ''}
+    ${welcomeText(card, center, 179, width, font, p.ink, p.accent, 'center')}
+    <path d="M${center - 56} 552h112" stroke="${p.edge}" stroke-width="2"/>
+    ${photo ? `<rect x="789" y="176" width="313" height="422" rx="14" fill="#fffdfa" stroke="${p.edge}" stroke-width="2"/>${photo}${line(945, 580, card.caption, 285, 24, { align: 'center', color: p.ink, font: lettering.serif, italic: true })}` : ''}`;
+}
+
+function starlightFront(card, p, id, font) {
+  const night = mix(p.ink, '#10142c', .43), glow = mix(p.accent, '#131a36', .45);
+  const photo = illustrationPhoto(card, 'front', p, id, 830, 184, 261, 330);
+  return `<defs><radialGradient id="${id}-sky"><stop stop-color="${glow}"/><stop offset="1" stop-color="${night}"/></radialGradient></defs>
+    <rect width="1200" height="757" fill="url(#${id}-sky)"/>
+    <rect x="27" y="27" width="1146" height="703" rx="22" fill="none" stroke="${softGold}" opacity=".56"/>
+    ${corners(50, 50, 1100, 657, softGold)}
+    ${card.showArt ? stars.map(([x,y,size]) => sparkle(x,y,size,softGold)).join('') : ''}
+    ${welcomeText(card, 99, 184, 655, font, styleInk, softGold)}
+    ${photo ? `<rect x="813" y="165" width="295" height="406" rx="19" fill="${night}" stroke="${softGold}"/>${photo}${line(960, 553, card.caption, 250, 21, { align: 'center', color: styleInk, font: lettering.serif, italic: true })}` :
+      (card.showArt ? `<g><circle cx="958" cy="364" r="156" fill="none" stroke="${softGold}" opacity=".45"/><circle cx="958" cy="364" r="140" fill="none" stroke="${softGold}" stroke-dasharray="2 8" opacity=".72"/>${graduationCap(958, 353, .97, softGold, night)}</g>` : '')}`;
+}
+
+function moonlightFront(card, p, id, font) {
+  const night = mix(p.ink, '#152c2a', .38), frame = mix(p.accent, '#234841', .44);
+  const photo = illustrationPhoto(card, 'front', p, id, 816, 207, 233, 305);
+  return `<rect width="1200" height="757" fill="${night}"/>
+    <path d="${archPath(59, 52, 662, 655)}" fill="${p.base}" stroke="${softGold}" stroke-width="3"/>
+    <path d="${archPath(76, 72, 627, 618)}" fill="none" stroke="${p.edge}" stroke-width="2"/>
+    <path d="${archPath(770, 113, 325, 530)}" fill="${frame}" stroke="${softGold}" stroke-opacity=".65" stroke-width="2"/>
+    ${card.showArt ? `${lantern(759, 202, .91, softGold)}${lantern(1121, 181, 1.2, softGold)}${sparkle(935, 544, 11, softGold)}${sparkle(721, 640, 10, softGold)}${sparkle(1101, 655, 12, softGold)}` : ''}
+    ${welcomeText(card, 390, 221, 493, font, p.ink, p.accent, 'center')}
+    ${photo ? `${photo}${line(932, 566, card.caption, 241, 24, { align: 'center', color: styleInk, font: lettering.serif, italic: true })}` :
+      (card.showArt ? `${crescent(915, 342, 1.36, softGold)}${sparkle(964, 306, 21, softGold)}${sparkle(987, 384, 9, softGold)}${sparkle(875, 443, 7, softGold)}` : '')}`;
+}
+
+const styledFronts = { scrapbook: scrapbookFront, confetti: confettiFront, botanical: botanicalFront, starlight: starlightFront, moonlight: moonlightFront };
+
+function reversePanel(card, p, id, font, options) {
+  const { x = 90, y = 145, wide = 1020, color = p.ink, accent = p.accent } = options;
+  const photo = card.photos.back, rules = card.backListTitle || card.backRules.trim();
+  const sidePanel = !!(photo || rules), aside = sidePanel ? 281 : 0, textWidth = wide - (sidePanel ? aside + 34 : 0);
+  const col = x + textWidth + 34;
+  const top = { color: accent, weight: 800, spacing: 2.15 };
+  const body = { color, font };
+  const signedBy = card.friendSig || card.friend;
+  const signedFor = card.ownerSig || card.owner;
+  const sigWidth = (textWidth - 35) / 2;
+  return `${line(x, y, card.backSubtitle, textWidth, 17, top)}
+    ${line(x, y + 80, card.backTitle, textWidth, 65, { ...body, weight: 750 })}
+    <path d="M${x} ${y + 106}h${textWidth}" stroke="${accent}" stroke-width="1.5" opacity=".52"/>
+    ${line(x, y + 152, card.noteTitle, textWidth, 28, { ...body, italic: true })}
+    ${paragraph(x, y + 194, card.note, textWidth, 29, 6, 31, body)}
+    ${line(x, y + 397, signedFor, sigWidth, 23, { ...body, italic: true })}
+    ${line(x + sigWidth + 35, y + 397, signedBy, sigWidth, 23, { ...body, italic: true })}
+    ${line(x, y + 438, card.backFooter, textWidth, 21, { ...body, color: accent, weight: 750 })}
+    ${line(x + textWidth, y + 470, card.backFootnote, textWidth, 12, { ...body, align: 'right', color: accent })}
+    ${photo ? illustrationPhoto(card, 'back', p, id, col, y + 25, aside, rules ? 208 : 407) : ''}
+    ${rules ? ruleBox(col, y + (photo ? 251 : 25), aside, photo ? 187 : 407, card.backListTitle, card.backRules, p) : ''}`;
+}
+
+function styledBack(card, p, id, font) {
+  const layout = card.layout, gold = softGold;
+  let background, rim = '', ornaments = '', panel = { x: 93, y: 138, wide: 1014 };
+  if (layout === 'scrapbook') {
+    background = p.base;
+    rim = `<path d="M31 41h1138v675H31Z" fill="#fffdfa" stroke="${p.edge}" stroke-width="2"/>
+      <path d="M70 85v584" stroke="${p.edge}" stroke-dasharray="5 7" stroke-width="2"/>
+      <path d="M38 46h153v42H38z" fill="${p.edge}" opacity=".55" transform="rotate(-7 112 67)"/>`;
+    ornaments = sparkle(1117, 121, 16, p.accent) + heart(1114, 655, 1.1, p.accent, 12);
+  } else if (layout === 'confetti') {
+    background = p.soft;
+    rim = `<rect x="65" y="67" width="1070" height="621" rx="43" fill="${p.base}" stroke="${p.edge}" stroke-width="3"/><path d="M155 628q85 40 184 0m628-510q48-12 83 5" stroke="${p.edge}" stroke-width="5" stroke-linecap="round" fill="none"/>`;
+    ornaments = birthdayConfetti(p);
+    panel = { x: 119, y: 147, wide: 962 };
+  } else if (layout === 'botanical') {
+    background = p.soft;
+    rim = `<rect x="57" y="47" width="1086" height="662" rx="20" fill="${p.base}" stroke="${p.edge}" stroke-width="2"/>
+      <rect x="71" y="61" width="1058" height="634" rx="13" fill="none" stroke="${p.edge}"/>`;
+    ornaments = stem(102, 188, .97, p.accent, 183) + stem(1102, 620, 1.35, p.accent, 28) + flower(1082, 588, .74, '#dda28f', '#a06a39');
+    panel = { x: 136, y: 151, wide: 926 };
+  } else {
+    const night = mix(p.ink, '#131c29', .4);
+    background = night;
+    rim = layout === 'starlight'
+      ? `<rect x="51" y="49" width="1098" height="658" rx="22" fill="${p.base}" stroke="${gold}" stroke-width="4"/>${corners(71, 69, 1058, 618, p.edge)}`
+      : `<rect x="54" y="49" width="1092" height="659" rx="48" fill="${p.base}" stroke="${gold}" stroke-width="4"/>
+        <rect x="68" y="64" width="1064" height="629" rx="39" fill="none" stroke="${p.edge}" stroke-width="1.8"/>`;
+    ornaments = layout === 'starlight' ? sparkle(1079, 113, 17, p.accent) + sparkle(124, 642, 9, p.accent) :
+      crescent(1069, 102, .45, p.accent) + sparkle(1090, 95, 8, p.accent);
+    panel = { x: 112, y: 149, wide: 968 };
+  }
+  return `<rect width="1200" height="757" fill="${background}"/>${rim}${card.showArt ? ornaments : ''}${reversePanel(card, p, id, font, panel)}`;
+}
+
+function designArt(card, side, p, id, font) {
+  const content = side === 'front' ? styledFronts[card.layout](card, p, id, font) : styledBack(card, p, id, font);
+  return `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="img">
+    <title>${cleanXML(`${card.owner || card.title || 'Friendship card'} · ${side}`)}</title>
+    <defs><clipPath id="${id}-trim"><rect x="1" y="1" width="1198" height="755" rx="36"/></clipPath></defs>
+    <g clip-path="url(#${id}-trim)">${content}</g>
+    <rect x="1" y="1" width="1198" height="755" rx="36" fill="none" stroke="${p.edge}" stroke-width="1.8"/>
+  </svg>`;
+}
 
 
 const $ = selector => document.querySelector(selector);
@@ -703,6 +993,7 @@ addEventListener('pagehide', () => { if (saveTimer) saveNow(); });
 function hydrate(deck) {
   if (deck && Array.isArray(deck.cards)) {
     cards = deck.cards.slice(0, LIMIT).map(cleanCard);
+    if (deck !== embedded && !embedded) cards = refreshUntouchedSamples(cards);
     const seen = new Set();
     for (const card of cards) {
       if (seen.has(card.id)) card.id = id();
@@ -782,8 +1073,10 @@ function textPanel(card) {
 }
 function designPanel(card) {
   const paletteButtons = Object.entries(palettes).map(([key, p]) => `<button type="button" class="swatch" data-palette="${key}" aria-pressed="${key === card.theme}"><i style="background:${p.accent}"></i>${escapeHTML(t(key))}</button>`).join('');
-  const checks = ['showArt', 'showStamp', ...(card.layout === 'classic' ? ['showCode'] : [])].map(key => `<div class="field"><label class="check-label"><input type="checkbox" data-field="${key}"${card[key] ? ' checked' : ''}>${escapeHTML(t(key))}</label></div>`).join('');
-  return selectField('layout', 'layout', card.layout, ['classic', 'poster', 'simple']) + `<span class="field-label">${escapeHTML(t('colors'))}</span><div class="swatches">${paletteButtons}</div>
+  const styled = Object.hasOwn(designedTemplates, card.layout);
+  const toggles = styled ? ['showArt'] : ['showArt', 'showStamp', ...(card.layout === 'classic' ? ['showCode'] : [])];
+  const checks = toggles.map(key => `<div class="field"><label class="check-label"><input type="checkbox" data-field="${key}"${card[key] ? ' checked' : ''}>${escapeHTML(t(styled && key === 'showArt' ? 'illustrations' : key))}</label></div>`).join('');
+  return selectField('layout', 'layout', card.layout, layouts) + `<p class="edit-note">${escapeHTML(t('styleHint'))}</p><span class="field-label">${escapeHTML(t('colors'))}</span><div class="swatches">${paletteButtons}</div>
     <div class="field"><label for="field-customColor">${escapeHTML(t('custom'))}</label><input aria-label="${escapeHTML(t('customColor'))}" type="color" id="field-customColor" data-field="customColor" value="${card.customColor}"></div>` +
     selectField('font', 'font', card.font, ['sans', 'serif']) + checks;
 }
@@ -825,6 +1118,7 @@ function toast(key, action) {
   toastTimer = setTimeout(() => { notice.hidden = true; }, action ? 8000 : 3500);
 }
 function modalOpen(title, content) {
+  modal.classList.toggle('gallery-modal', title === 'newCard');
   $('#modal-title').textContent = t(title);
   $('#modal-body').innerHTML = content;
   if (!modal.open) modal.showModal();
@@ -841,7 +1135,17 @@ const maxCards = () => {
 function showTemplates() {
   if (cards.length >= LIMIT) { maxCards(); return; }
   const pairOption = cards.length <= LIMIT - 2 ? modalOption('pair', 'pair', 'pairDesc', 'copy') : '';
-  modalOpen('newCard', `<p class="modal-description">${escapeHTML(t('chooseTemplate'))}</p><div class="modal-options">${pairOption}${Object.keys(templates).map(template => modalOption(template, template, template + 'Desc', templateIcons[template])).join('')}</div>`);
+  const gallery = Object.keys(templates).map(template => {
+    const sample = fresh(template);
+    if (template !== 'blank') sample.owner = template === 'license' ? starterLabels[0] : 'For You';
+    if (template === 'license') sample.friend = starterLabels[1];
+    const thumbnail = template === 'blank' ? `<div class="template-blank">${icon('plus')}</div>` : art(sample, 'front');
+    return `<button type="button" class="template-option" data-action="${template}">
+      <span class="template-thumb" aria-hidden="true">${thumbnail}</span>
+      <span class="template-copy"><strong>${escapeHTML(t(template))}</strong><small>${escapeHTML(t(template + 'Desc'))}</small></span>
+    </button>`;
+  }).join('');
+  modalOpen('newCard', `<p class="modal-description">${escapeHTML(t('chooseTemplate'))}</p><div class="template-gallery">${gallery}</div>${pairOption ? `<div class="pair-option">${pairOption}</div>` : ''}`);
   $('#modal-body').onclick = event => {
     const template = event.target.closest('[data-action]')?.dataset.action;
     if (template === 'pair') { showPair(); return; }
