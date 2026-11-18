@@ -203,7 +203,53 @@ dialog::backdrop { background: #142c266b; }
 .drag-guides::before,.drag-guides::after { content:'';position:absolute;z-index:2;pointer-events:none;opacity:.8; }
 .drag-guides::before { width:100%;left:0;top:50%;border-top:1px dashed #178066; }
 .drag-guides::after { height:100%;top:0;left:50%;border-left:1px dashed #178066; }
-.pro-tools-grid { display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px; }
+#pro-tools { background:#235747;color:white;border-color:#235747; }
+#pro-tools:hover { background:#194438; }
+#pro-tools svg { width:14px;height:14px; }
+.pro-tool-gallery { width:min(940px,calc(100% - 28px)); }
+.pro-tool-gallery .modal-head { position:sticky;top:0;background:#fff;z-index:3; }
+.pro-tool-gallery .modal-body { padding:20px 23px 24px; }
+.studio-tools-intro { display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:14px;color:var(--muted); }
+.tool-current { border-radius:5px;background:#e9f3e9;color:#355a4a;padding:5px 9px;font-size:12px;overflow-wrap:anywhere; }
+.tool-current bdi { font-weight:750;margin-inline:4px; }
+.tool-section { margin-top:21px; }
+.tool-section h3 { font-size:14px;font-weight:760;color:var(--dark);margin-bottom:9px; }
+.pro-tools-grid { display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px; }
+@media(min-width:840px) { .tool-section[aria-labelledby="group-toolsEdit"] .pro-tools-grid { grid-template-columns:repeat(4,minmax(0,1fr)); } }
+.studio-tool-card { position:relative;display:grid;align-content:start;min-width:0;border:1px solid #dbe5dd;border-radius:12px;background:#fff;text-align:start;padding:7px;color:#203a31; }
+.studio-tool-card:hover { border-color:#8eab9a;box-shadow:0 3px 10px #244b3020;background:#fcfefb; }
+.tool-picture { display:grid;place-items:center;min-width:0;border-radius:8px;min-height:77px;color:var(--tone-ink);background-color:var(--tone-bg);background-image:radial-gradient(var(--tone-dot) 1px,transparent 1px);background-size:12px 12px; }
+.tool-picture svg { width:115px;height:76px;max-width:100%; }
+.tool-picture .tool-paper { fill:#fffdfb; }
+.tool-picture .tool-solid { fill:currentColor;stroke:none; }
+.tool-picture .tool-tint { fill:var(--tone-fill); }
+.tone-rose { --tone-ink:#974b67;--tone-bg:#f8eaf0;--tone-fill:#ebc4d3;--tone-dot:#dcb9c9; }
+.tone-lilac { --tone-ink:#6c568b;--tone-bg:#f0eafa;--tone-fill:#dcd0ef;--tone-dot:#cdc1e1; }
+.tone-sky { --tone-ink:#376884;--tone-bg:#e9f3fa;--tone-fill:#c8e1ef;--tone-dot:#b9d5e5; }
+.tone-mint { --tone-ink:#356653;--tone-bg:#e9f4ed;--tone-fill:#cbe6d6;--tone-dot:#bad6c7; }
+.tone-amber { --tone-ink:#875f32;--tone-bg:#fbf1e4;--tone-fill:#efd8b6;--tone-dot:#e3cbae; }
+.studio-tool-copy { display:grid;gap:4px;padding:8px 19px 5px 4px;padding-inline:4px 20px; }
+.studio-tool-copy strong { font-size:13px;line-height:1.32;font-weight:760; }
+.studio-tool-copy small { color:#51645b;font-size:11.5px;line-height:1.38; }
+.tool-card-arrow { position:absolute;inset-inline-end:10px;bottom:10px;font-size:20px;font-weight:500;line-height:1;color:var(--green); }
+[dir="rtl"] .tool-card-arrow,[dir="rtl"] .tool-back-arrow { transform:scaleX(-1); }
+.pro-tool-detail .tool-back { min-height:30px;padding:4px 7px;margin:0 0 10px; }
+.tool-guide { display:grid;grid-template-columns:100px 1fr;align-items:center;gap:12px;border:1px solid var(--border);border-radius:10px;padding:7px;margin-bottom:16px; }
+.tool-guide .tool-picture { min-height:58px; }
+.tool-guide svg { height:57px;width:85px; }
+.tool-guide p { color:#2c4338;font-size:13px;line-height:1.45; }
+.tool-guide small { display:block;color:#537266;font-size:11px;margin-top:4px; }
+#modal-title:focus { outline:none; }
+@media(max-width:740px) { .pro-tools-grid {grid-template-columns:repeat(2,minmax(0,1fr));} }
+@media(max-width:490px) {
+  .pro-tool-gallery .modal-body { padding:13px; }
+  .studio-tools-intro { font-size:13px; }
+  .pro-tools-grid { grid-template-columns:1fr;gap:7px; }
+  .studio-tool-card { grid-template-columns:88px 1fr;align-items:center; }
+  .studio-tool-card .tool-picture { min-height:62px; }
+  .studio-tool-card .tool-picture svg { height:61px; }
+  .studio-tool-copy { padding-inline:9px 17px; }
+}
 .pro-fullscreen { width:min(1330px,calc(100% - 18px));height:calc(100dvh - 20px);max-height:none; }
 .pro-fullscreen .modal-head { position:sticky;top:0;z-index:1;background:white; }
 .pro-full-view { display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-items:start;gap:16px;background:#edf4ec;padding:14px;border-radius:12px; }
@@ -251,7 +297,7 @@ dialog::backdrop { background: #142c266b; }
         <div class="pro-undo-group"><button type="button" class="button quiet" id="pro-undo" data-i="undo" disabled></button><button type="button" class="button quiet" id="pro-redo" data-i="redo" disabled></button></div>
         <button type="button" class="button secondary" id="pro-direct" data-i="direct" aria-pressed="false"></button>
         <button type="button" class="button quiet" id="pro-fullscreen" data-i="fullscreen"></button>
-        <button type="button" class="button secondary" id="pro-tools" data-i="studioTools"></button>
+        <button type="button" class="button secondary" id="pro-tools" data-icon="studio" data-i="studioTools"></button>
       </div>
       <p class="pro-hint" id="pro-hint" hidden></p>
       <div id="artboard" class="artboard"></div>
@@ -3437,6 +3483,82 @@ const proWords = {
   none:['None','کوئی نہیں'], removeLast:['Remove last sticker','آخری اسٹیکر ہٹائیں'], resetPositions:['Reset positions','جگہیں دوبارہ سیٹ کریں']
 };
 Object.assign(phrases, proWords);
+Object.assign(phrases, {
+  toolsIntro: ['Choose what you want to do with your card.', 'منتخب کریں کہ آپ اپنے کارڈ کے ساتھ کیا کرنا چاہتے ہیں۔'],
+  toolsEdit: ['Decorate and write', 'سجائیں اور لکھیں'], toolsSend: ['Personalize and share', 'ذاتی بنائیں اور شیئر کریں'],
+  toolsPrint: ['Get ready to print', 'پرنٹ کی تیاری'], toolsSave: ['Keep your work', 'اپنا کام محفوظ کریں'],
+  toolsBack: ['Back to tools', 'تمام ٹولز پر واپس'], toolsFor: ['Working on', 'منتخب کارڈ'],
+  toolsSideNote: ['Applies to the selected side', 'منتخب رخ پر لاگو ہوگا'],
+  addToCard: ['Add to card', 'کارڈ پر لگائیں'], createCopies: ['Create cards', 'کارڈ بنائیں'], saveQR: ['Save QR code', 'QR کوڈ محفوظ کریں'],
+  clearQR: ['Remove QR code', 'QR کوڈ ہٹائیں']
+});
+iconPaths.studio = '<rect x="3.5" y="3.5" width="6" height="6" rx="1.5"/><rect x="14.5" y="3.5" width="6" height="6" rx="1.5"/><rect x="3.5" y="14.5" width="6" height="6" rx="1.5"/><path d="M17.5 14v7M14 17.5h7"/>';
+
+const visualTools = {
+  stickers: {
+    name:['Add stickers or a logo','اسٹیکر یا لوگو لگائیں'], hint:['Add a heart, flower, frame or your own image.','دل، پھول، فریم یا اپنی تصویر لگائیں۔'],
+    step:['Pick an illustration or upload a logo. Use Edit on card to move it afterward.','آرائش چنیں یا لوگو اپ لوڈ کریں۔ جگہ بدلنے کے لیے «کارڈ پر ایڈٹ کریں» استعمال کریں۔'], tone:'rose', side:true,
+    art:'<rect x="27" y="18" width="57" height="43" rx="6" transform="rotate(-10 55 40)" class="tool-paper"/><path d="M58 49c-6-3-15-12-8-17 4-3 7 0 8 2 2-3 6-5 9-2 7 6-3 14-9 17Z" class="tool-solid"/><path d="M90 16v16m-8-8h16M24 43v9m-4-4h8"/><circle cx="89" cy="53" r="4" class="tool-tint"/>'
+  },
+  messages: {
+    name:['Pick a ready message','تیار پیغام چنیں'], hint:['Start with an Urdu or English greeting.','اردو یا انگریزی کا تیار پیغام چنیں۔'],
+    step:['Choose a message to place on your card. You can edit its wording afterward.','پیغام چنیں اور اسے کارڈ پر لگائیں۔ بعد میں اس کے الفاظ بدل سکتے ہیں۔'], tone:'lilac', side:true,
+    art:'<path d="M26 20h52a7 7 0 0 1 7 7v20a7 7 0 0 1-7 7H52L40 63v-9H26a7 7 0 0 1-7-7V27a7 7 0 0 1 7-7Z" class="tool-paper"/><path d="M34 34h35M34 43h24"/><path d="m86 20 11 1 3 8-8 7" class="tool-tint"/>'
+  },
+  typography: {
+    name:['Set reading direction','متن کی سمت بدلیں'], hint:['Choose how Urdu or English reads on the card.','کارڈ پر اردو یا انگریزی پڑھنے کی سمت چنیں۔'],
+    step:['Use Automatic for mixed text, or select a direction for the whole card.','ملے جلے متن کے لیے «خودکار» چنیں، یا پورے کارڈ کے لیے ایک سمت مقرر کریں۔'], tone:'sky',
+    art:'<rect x="21" y="18" width="77" height="44" rx="7" class="tool-paper"/><path d="M37 34h35m-29-6-6 6 6 6m40 8H48m29-6 6 6-6 6"/><circle cx="86" cy="33" r="3" class="tool-solid"/>'
+  },
+  qrTool: {
+    name:['Turn a link into a QR code','لنک سے QR کوڈ بنائیں'], hint:['Put a map, RSVP form or album link on the card.','نقشہ، RSVP فارم یا البم کا لنک کارڈ پر لگائیں۔'],
+    step:['Paste a web address. Then scan the finished code with your phone to check it.','ویب لنک پیسٹ کریں۔ پھر تیار کوڈ موبائل سے اسکین کر کے چیک کریں۔'], tone:'mint', side:true,
+    art:'<rect x="33" y="12" width="56" height="56" rx="9" class="tool-paper"/><path d="M42 21h12v12H42zm25 0h12v12H67zM42 46h12v12H42z"/><path d="M61 40h5v7h6v5h7v6H67v-5h-6zm13 0h5v5h-5z" class="tool-solid"/><path d="M21 35v10m77-10v10"/>'
+  },
+  batch: {
+    name:['Make a copy for each name','ہر نام کے لیے الگ کاپی'], hint:['Paste a guest list and make a card for each person.','مہمانوں کی فہرست پیسٹ کریں اور ہر شخص کا الگ کارڈ بنائیں۔'],
+    step:['Put one recipient on each line. The copies will appear in My cards.','ہر سطر میں ایک نام لکھیں۔ نئی کاپیاں «میرے کارڈز» میں نظر آئیں گی۔'], tone:'amber',
+    art:'<rect x="25" y="18" width="59" height="39" rx="6" transform="rotate(-11 55 37)" class="tool-tint"/><rect x="38" y="28" width="59" height="39" rx="6" class="tool-paper"/><circle cx="53" cy="43" r="4" class="tool-solid"/><path d="M47 56q6-8 12 0m8-13h19m-19 9h13"/>'
+  },
+  share: {
+    name:['Make a digital envelope','ڈیجیٹل لفافہ بنائیں'], hint:['Send a card that opens to reveal a surprise message.','ایسا کارڈ بھیجیں جو کھلنے پر آپ کا پیغام دکھائے۔'],
+    step:['Add an optional surprise message. Download the envelope as an HTML file to share.','چاہیں تو چھپا ہوا پیغام لکھیں۔ شیئر کرنے کے لیے لفافہ HTML فائل میں ڈاؤن لوڈ کریں۔'], tone:'rose',
+    art:'<path d="M27 37 60 12l33 25v23a5 5 0 0 1-5 5H32a5 5 0 0 1-5-5Z" class="tool-tint"/><rect x="41" y="21" width="38" height="31" rx="4" class="tool-paper"/><path d="M28 39 60 55l32-16v21a5 5 0 0 1-5 5H33a5 5 0 0 1-5-5Z" class="tool-paper"/><path d="M60 42c-6-3-10-7-6-10 2-2 5 0 6 1 2-2 5-3 7-1 3 3-2 7-7 10Z" class="tool-solid"/>'
+  },
+  proof: {
+    name:['Check before printing','پرنٹ سے پہلے چیک کریں'], hint:['Spot blurry photos, small text and content near the cut edge.','دھندلی تصویر، چھوٹا متن اور کٹائی کے قریب مواد دیکھیں۔'],
+    step:['Review the checks for each side, then choose Print when the card is ready.','ہر رخ کی رپورٹ دیکھیں، پھر کارڈ تیار ہو تو پرنٹ کریں۔'], tone:'mint',
+    art:'<path d="M29 20h58m-58 43h58M40 12v59m37-59v59" stroke-dasharray="3 4"/><rect x="37" y="18" width="44" height="45" rx="4" class="tool-paper"/><path d="m47 39 7 7 13-16" stroke-width="3"/><circle cx="85" cy="57" r="11" class="tool-tint"/><path d="M85 52v6m0 3v.1"/>'
+  },
+  fold: {
+    name:['Fold a card or print an envelope','فولڈ کارڈ یا لفافہ پرنٹ کریں'], hint:['Design all four panels and get a matching envelope.','چاروں پینل بنائیں اور اسی سائز کا لفافہ حاصل کریں۔'],
+    step:['Enable the fold, then edit the inside panels. Use the envelope buttons for a matching cut-and-fold sheet.','فولڈ آن کریں، اندر کے پینل بدلیں اور کٹائی و تہہ کے نشان والا لفافہ حاصل کریں۔'], tone:'sky',
+    art:'<path d="M18 22 55 14l37 8v40l-37-8-37 8Z" class="tool-paper"/><path d="M55 14v40m-27-21 17-4m-17 12 17-4"/><path d="M64 45h35v22H64Z" class="tool-tint"/><path d="m65 46 16.5 12L98 46"/>'
+  },
+  myTemplates: {
+    name:['Reuse a saved design','محفوظ ڈیزائن دوبارہ استعمال کریں'], hint:['Keep a template and lock the artwork if you like.','ٹیمپلیٹ محفوظ کریں اور چاہیں تو اس کی آرائش لاک کریں۔'],
+    step:['Name the current design to save it. Use Make a copy to start a new card from it.','موجودہ ڈیزائن کو نام دے کر محفوظ کریں۔ نیا کارڈ بنانے کے لیے اس کی کاپی بنائیں۔'], tone:'amber',
+    art:'<path d="M22 28a6 6 0 0 1 6-6h18l8 8h38a5 5 0 0 1 5 5v25a5 5 0 0 1-5 5H28a6 6 0 0 1-6-6Z" class="tool-tint"/><rect x="39" y="12" width="40" height="37" rx="4" class="tool-paper"/><path d="M48 29h22m-22 8h16M70 12v10h9"/>'
+  },
+  versions: {
+    name:['Save or restore a version','کارڈ کا ورژن محفوظ یا بحال کریں'], hint:['Keep separate drafts for sharing or printing.','شیئر یا پرنٹ کے لیے الگ ڈرافٹ رکھیں۔'],
+    step:['Save a snapshot with a name, then restore it or make a separate copy later.','آج کے ڈیزائن کو نام دے کر محفوظ کریں۔ بعد میں اسے بحال کریں یا الگ کاپی بنائیں۔'], tone:'lilac',
+    art:'<rect x="22" y="24" width="65" height="40" rx="6" class="tool-tint"/><rect x="31" y="15" width="65" height="40" rx="6" class="tool-paper"/><path d="M43 28h28m-28 8h20"/><circle cx="84" cy="52" r="13" class="tool-paper"/><path d="M84 44v9l5 3"/>'
+  },
+  resetPositions: {
+    name:['Reset moved elements','بدلی ہوئی جگہیں بحال کریں'], hint:['Return the selected side’s moved items to their original positions.','منتخب رخ کی منتقل شدہ چیزیں پہلے والی جگہ پر رکھیں۔'],
+    step:['Reset positions on the selected side. Undo is available if you change your mind.','منتخب رخ کی جگہیں بحال کریں۔ ارادہ بدلے تو Undo استعمال کریں۔'], tone:'sky', side:true,
+    art:'<rect x="29" y="18" width="62" height="45" rx="6" class="tool-paper"/><path d="M49 36a13 13 0 1 1 5 14m-5-14v-9m0 9h9" stroke-width="3"/>'
+  }
+};
+const visualGroups = {
+  toolsEdit:['stickers','messages','typography','resetPositions'], toolsSend:['qrTool','batch','share'],
+  toolsPrint:['proof','fold'], toolsSave:['myTemplates','versions']
+};
+const toolCopy = (tool, key) => tool[key][lang === 'ur' ? 1 : 0];
+function toolPicture(tool) {
+  return `<span class="tool-picture tone-${tool.tone}" aria-hidden="true"><svg viewBox="0 0 120 80" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" focusable="false">${tool.art}</svg></span>`;
+}
 const proStr = (value, max = 240) => typeof value === 'string' ? value.slice(0, max) : '';
 function safeQR(value) {
   const text = proStr(value, 601).trim();
@@ -3673,8 +3795,21 @@ function proArea(id,label,value='',max=360) {
   return `<div class="field"><label for="${id}">${escapeHTML(t(label))}</label><textarea id="${id}" dir="auto" rows="4" maxlength="${max}">${escapeHTML(value)}</textarea></div>`;
 }
 function proModal(title, html, actions) {
-  modalOpen(title,html);
+  const visualKey = insideSides.includes(title) ? 'fold' : title;
+  const tool = visualTools[visualKey];
+  const step = insideSides.includes(title) ? (lang === 'ur' ? 'اس پینل کا عنوان، پیغام اور تصویر الگ سے بدلیں۔' : 'Edit the title, message, and photo for this inside panel.') : tool && toolCopy(tool,'step');
+  const guide = tool ? `<button type="button" class="button quiet tool-back" data-to-tools="${visualKey}"><span class="tool-back-arrow" aria-hidden="true">←</span>${escapeHTML(t('toolsBack'))}</button>
+    <div class="tool-guide">${toolPicture(tool)}<div><p>${escapeHTML(step)}</p>${tool.side ? `<small>${escapeHTML(t('toolsSideNote'))} · ${escapeHTML(t(editSide))}</small>` : ''}</div></div>` : '';
+  modalOpen(title,guide+html);
+  if (tool) {
+    modal.classList.add('pro-tool-detail');
+    if (!insideSides.includes(title)) $('#modal-title').textContent=toolCopy(tool,'name');
+    $('#modal-title').tabIndex=-1;
+    $('#modal-title').focus({preventScroll:true});
+  }
   $('#modal-body').onclick = event => {
+    const back=event.target.closest('[data-to-tools]');
+    if (back) { studioTools(back.dataset.toTools); return; }
     const action=event.target.closest('button[data-action]')?.dataset.action;
     if (action && Object.hasOwn(actions,action)) actions[action](event);
   };
@@ -3755,7 +3890,7 @@ function stickersMenu() {
   proModal('stickers',`<p class="edit-note">${escapeHTML(t(editSide))} · ${sides.length}/20</p><div class="field"><label for="sticker-kind">${escapeHTML(t('stickers'))}</label><select id="sticker-kind">${options}</select></div>
     <div class="field-pair">${proInput('sticker-color','custom','#ae6380','type="color"')}${proInput('sticker-size','size','1','type="number" min=".5" max="2" step=".1"')}</div>
     <div class="field" id="sticker-logo-row" hidden><label for="sticker-logo">${escapeHTML(kindLabels.logo)}</label><input id="sticker-logo" type="file" accept="image/*"></div>
-    <div class="modal-buttons">${proButton('remove','removeLast')}${proButton('add','apply',true)}</div>`,{
+    <div class="modal-buttons">${proButton('remove','removeLast')}${proButton('add','addToCard',true)}</div>`,{
       add:async event=>{
         if(sides.length>=20){toast('20 stickers maximum.');return;}
         const kind=$('#sticker-kind').value,file=$('#sticker-logo').files[0];
@@ -3792,8 +3927,8 @@ function messagesMenu() {
 }
 function qrMenu() {
   const card=cardNow(); if(!card)return;
-  proModal('qrTool',`<p class="edit-note">${escapeHTML(t(editSide))} · ${escapeHTML(t('shortLink'))}</p>${proInput('qr-link','qrTool',card.pro.qr[editSide],'type="url" maxlength="600"')}
-    <div class="modal-buttons">${proButton('apply','apply',true)}</div>`,{apply:()=>{
+  proModal('qrTool',`${proInput('qr-link','qrTool',card.pro.qr[editSide],'type="url" maxlength="600" placeholder="https://…"')}
+    <div class="modal-buttons">${card.pro.qr[editSide] ? proButton('remove','clearQR') : ''}${proButton('apply','saveQR',true)}</div>`,{remove:()=>{card.pro.qr[editSide]='';modal.close();savePro();},apply:()=>{
       const input=$('#qr-link'), value=safeQR(input.value);
       if(input.value.trim() && !value){input.setCustomValidity(t('shortLink'));input.reportValidity();return;}
       try {if(value)qrMatrix(value);}catch{toast('QR link is too long.');return;}
@@ -3804,8 +3939,7 @@ function qrMenu() {
 
 function batchMenu() {
   const card=cardNow(); if(!card)return;
-  const hint=lang==='ur'?'ہر سطر میں ایک نام لکھیں۔ نئی کاپی میں کارڈ والے کا نام بدل جائے گا۔':'Enter one recipient per line. Each new card will use that recipient’s name.';
-  proModal('batch',`<p class="edit-note">${escapeHTML(hint)}</p>${proArea('batch-names','holder','',4200)}<div class="modal-buttons">${proButton('create','apply',true)}</div>`,{create:()=>{
+  proModal('batch',`${proArea('batch-names','holder','',4200)}<div class="modal-buttons">${proButton('create','createCopies',true)}</div>`,{create:()=>{
     const names=$('#batch-names').value.split(/\r?\n/).map(name=>name.trim().slice(0,textFields.owner)).filter(Boolean);
     if(!names.length)return;
     if(cards.length+names.length>LIMIT){maxCards();return;}
@@ -3961,15 +4095,32 @@ function typographyMenu() {
     apply:()=>{card.pro.direction=$('#field-direction').value;modal.close();savePro();}
   });
 }
-function studioTools() {
+function studioTools(returnFocus) {
   const actions={stickers:stickersMenu,messages:messagesMenu,qrTool:qrMenu,batch:batchMenu,proof:proofMenu,fold:foldMenu,myTemplates:()=>libraryMenu(),share:shareMenu,versions:()=>libraryMenu(true),typography:typographyMenu,
-    resetPositions:()=>{const card=cardNow();if(!card)return;card.pro.offsets[editSide]={};modal.close();savePro();}};
-  const features=cardNow()?Object.keys(actions):['myTemplates','versions'];
-  proModal('studioTools',`<div class="pro-tools-grid">${features.map(key=>`<button type="button" class="option" data-action="${key}"><strong>${escapeHTML(t(key))}</strong></button>`).join('')}</div>`,actions);
+    resetPositions:()=>{
+      const card=cardNow();if(!card)return;
+      proModal('resetPositions',`<div class="modal-buttons">${proButton('reset','resetPositions',true)}</div>`,{reset:()=>{card.pro.offsets[editSide]={};modal.close();savePro();}});
+    }};
+  const card=cardNow(), groups=card?visualGroups:{toolsSave:visualGroups.toolsSave};
+  const gallery=Object.entries(groups).map(([section,keys])=>`<section class="tool-section" aria-labelledby="group-${section}">
+    <h3 id="group-${section}">${escapeHTML(t(section))}</h3><div class="pro-tools-grid">${keys.map(key=>{
+      const tool=visualTools[key];
+      return `<button type="button" class="studio-tool-card" data-action="${key}">${toolPicture(tool)}
+        <span class="studio-tool-copy"><strong>${escapeHTML(toolCopy(tool,'name'))}</strong><small>${escapeHTML(toolCopy(tool,'hint'))}</small></span><span class="tool-card-arrow" aria-hidden="true">›</span></button>`;
+    }).join('')}</div></section>`).join('');
+  const summary=card?`<span class="tool-current">${escapeHTML(t('toolsFor'))} <bdi>${escapeHTML(cardName(card))}</bdi> <span aria-hidden="true">·</span> ${escapeHTML(t(editSide))}</span>`:'';
+  proModal('studioTools',`<div class="studio-tools-intro"><p>${escapeHTML(t('toolsIntro'))}</p>${summary}</div>${gallery}`,actions);
+  modal.classList.add('pro-tool-gallery');
+  if (typeof returnFocus==='string' && Object.hasOwn(visualTools,returnFocus)) modal.querySelector(`[data-action="${returnFocus}"]`)?.focus();
+  else {$('#modal-title').tabIndex=-1;$('#modal-title').focus({preventScroll:true});}
 }
 
 const baseModalOpen = modalOpen, baseWireControls = wireControls, baseStart = start;
-modalOpen = function(title,content) { modal.classList.remove('pro-fullscreen');baseModalOpen(title,content); };
+modalOpen = function(title,content) {
+  modal.classList.remove('pro-fullscreen','pro-tool-gallery','pro-tool-detail');
+  baseModalOpen(title,content);
+  modal.scrollTop=0;
+};
 wireControls = function() {
   baseWireControls();
   $('#pro-undo').onclick=()=>runHistory(false);$('#pro-redo').onclick=()=>runHistory(true);
